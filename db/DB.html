@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>Database documentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF8"/>
+<style type='text/css'>
+	 #hor-minimalist-b {font-family:'Dialog', Sans-Serif;font-size:11px;background:#fff;width:80%px;border-collapse:collapse;text-align:left;margin:20px;}
+	 #hor-minimalist-b th{font-size:12px;font-weight:bold;color:#039;border-bottom:2px solid #6678b1;padding:7px 8px;}
+	 #hor-minimalist-b td{border-bottom:1px solid #ccc;color:#336;padding:3px 8px;white-space: pre;}
+	 #hor-minimalist-b tbody tr:hover td{color:#000;background:#fffcea;}
+</style>
+</head>
+
+<table id='hor-minimalist-b' >
+<thead>
+<tr><th colspan='2'><b>Project 'Kiosk'</b></th>
+<th align='right'>generated using <a href='http://www.dbschema.com'>DbSchema</a></th>
+</tr>
+
+</thead>
+<tbody>
+<tr><th>Schema 'Default'</th><th colspan='2'></th></tr>
+<tr><td> <a href='#PRODUCTS'>PRODUCTS</a> </td>
+<td> <a href='#PRODUCT_INFO'>PRODUCT_INFO</a> </td>
+<td> <a href='#TAGS'>TAGS</a> </td>
+</tr>
+</tbody>
+</table>
+
+<!-- tables -->
+<br/><br/>
+<table id='hor-minimalist-b' >
+<thead>
+<tr><th colspan='3'><a name='PRODUCTS'>Table PRODUCTS</a> <br/> </th></tr>
+</thead>
+<tbody>
+<tr><td> STORE_ID </td>
+<td> NUMBER    NOT NULL   </td>
+<td> Unique identifier for a store </td>
+</tr>
+<tr><td> PRODUCT_ID </td>
+<td> LONG    NOT NULL   </td>
+<td> Unique identifier for a product </td>
+</tr>
+<tr><td> PRICE </td>
+<td> NUMBER( 0, 2 )     </td>
+<td> Price of the item </td>
+</tr>
+<tr><td> STOCK_STATUS </td>
+<td> NUMBER     </td>
+<td> 1 if the item is in stock, 0 otherwise </td>
+</tr>
+<tr><td> LOCATION </td>
+<td> VARCHAR2     </td>
+<td>  </td>
+</tr>
+<tr><td colspan='3'><b>Indexes</b></td></tr>
+<tr><td>pk_store_id primary key</td>
+<td> ( STORE_ID, PRODUCT_ID) </td><td>  </td>
+</tr>
+<tr><td colspan='3'><b>Foreign Keys</b></td></tr>
+<tr>
+<td>PRODUCTS_ID</td><td > (  PRODUCT_ID  ) ref <a href='#PRODUCT_INFO'>PRODUCT_INFO</a> ( PRODUCT_ID ) </td>
+<td>  </td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='hor-minimalist-b' >
+<thead>
+<tr><th colspan='3'><a name='PRODUCT_INFO'>Table PRODUCT_INFO</a> <br/> </th></tr>
+</thead>
+<tbody>
+<tr><td> PRODUCT_ID </td>
+<td> NUMBER    NOT NULL   </td>
+<td>  </td>
+</tr>
+<tr><td> NAME </td>
+<td> VARCHAR2     </td>
+<td>  </td>
+</tr>
+<tr><td> DESCRIPTION </td>
+<td> VARCHAR2     </td>
+<td>  </td>
+</tr>
+<tr><td> IMAGE_ID </td>
+<td> NUMBER     </td>
+<td>  </td>
+</tr>
+<tr><td> TAG_ID </td>
+<td> NUMBER     </td>
+<td>  </td>
+</tr>
+<tr><td colspan='3'><b>Indexes</b></td></tr>
+<tr><td>PK_PRODUCT_ID primary key</td>
+<td> ( PRODUCT_ID) </td><td>  </td>
+</tr>
+<tr><td colspan='3'><b>Foreign Keys</b></td></tr>
+<tr>
+<td>TAG_ID</td><td > (  TAG_ID  ) ref <a href='#TAGS'>TAGS</a> ( TAG_ID ) </td>
+<td>  </td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='hor-minimalist-b' >
+<thead>
+<tr><th colspan='3'><a name='TAGS'>Table TAGS</a> <br/> </th></tr>
+</thead>
+<tbody>
+<tr><td> TAG_ID </td>
+<td> NUMBER    NOT NULL   </td>
+<td>  </td>
+</tr>
+<tr><td> TAG </td>
+<td> VARCHAR2    NOT NULL   </td>
+<td>  </td>
+</tr>
+<tr><td colspan='3'><b>Indexes</b></td></tr>
+<tr><td>PK_TAG_ID primary key</td>
+<td> ( TAG_ID) </td><td>  </td>
+</tr>
+</tbody>
+</table>
+
+</html>
