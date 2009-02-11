@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Kiosk" version="42" database="Oracle" >
+	<schema schemaname="Default" defo="true" >
+		<table name="PRODUCTS" storage="" >
+			<column name="STORE_ID" type="NUMBER" java_type="2" mandatory="true" >
+				<comment> <![CDATA[Unique identifier for a store]]> </comment>
+			</column>
+			<column name="PRODUCT_ID" type="LONG" java_type="-1" mandatory="true" >
+				<comment> <![CDATA[Unique identifier for a product]]> </comment>
+			</column>
+			<column name="PRICE" type="NUMBER" java_type="2" length="0" decimal="2" >
+				<comment> <![CDATA[Price of the item]]> </comment>
+			</column>
+			<column name="STOCK_STATUS" type="NUMBER" java_type="2" >
+				<comment> <![CDATA[1 if the item is in stock, 0 otherwise]]> </comment>
+			</column>
+			<column name="LOCATION" type="VARCHAR2" java_type="12" />
+			<index name="pk_store_id" unique="PRIMARY_KEY" >
+				<column name="STORE_ID" />
+				<column name="PRODUCT_ID" />
+			</index>
+			<fk name="PRODUCTS_ID" to_schema="Default" to_table="PRODUCT_INFO" delete_action="CASCADE" >
+				<fk_column name="PRODUCT_ID" pk="PRODUCT_ID" />
+			</fk>
+		</table>
+		<table name="PRODUCT_INFO" storage="" >
+			<column name="PRODUCT_ID" type="NUMBER" java_type="2" mandatory="true" />
+			<column name="NAME" type="VARCHAR2" java_type="12" />
+			<column name="DESCRIPTION" type="VARCHAR2" java_type="12" />
+			<column name="IMAGE_ID" type="NUMBER" java_type="2" />
+			<column name="TAG_ID" type="NUMBER" java_type="2" />
+			<index name="PK_PRODUCT_ID" unique="PRIMARY_KEY" >
+				<column name="PRODUCT_ID" />
+			</index>
+			<fk name="TAG_ID" to_schema="Default" to_table="TAGS" delete_action="CASCADE" >
+				<fk_column name="TAG_ID" pk="TAG_ID" />
+			</fk>
+		</table>
+		<table name="TAGS" storage="" >
+			<column name="TAG_ID" type="NUMBER" java_type="2" mandatory="true" />
+			<column name="TAG" type="VARCHAR2" java_type="12" mandatory="true" />
+			<index name="PK_TAG_ID" unique="PRIMARY_KEY" >
+				<column name="TAG_ID" />
+			</index>
+		</table>
+	</schema>
+	<layout name="Default" active="true" joined_routing="true" opened="0" >
+		<entity schema="Default" name="PRODUCTS" show_types="false" x="39" y="39" />
+		<entity schema="Default" name="PRODUCT_INFO" show_types="false" x="91" y="156" />
+		<entity schema="Default" name="TAGS" show_types="false" x="143" y="286" />
+	</layout>
+</project>
