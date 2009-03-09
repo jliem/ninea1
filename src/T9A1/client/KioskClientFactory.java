@@ -2,7 +2,7 @@ package T9A1.client;
 
 import T9A1.client.data.CacheManager;
 import T9A1.client.data.InventoryManager;
-import T9A1.gui.KioskGUI;
+import T9A1.client.gui.KioskGUI;
 import T9A1.common.ConnectionManager;
 
 public class KioskClientFactory {
