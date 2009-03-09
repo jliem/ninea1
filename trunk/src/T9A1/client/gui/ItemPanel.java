@@ -1,4 +1,4 @@
-package T9A1.gui;
+package T9A1.client.gui;
 
 import javax.swing.JPanel;
 
