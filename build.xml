@@ -1,0 +1,85 @@
+<project name="capstone" default="compile-all" basedir=".">
+	<description>
+		build file for T9A1 capstone project
+	</description>
+	
+	<!-- properties -->
+	<property name="src" location="src/T9A1"/>
+	<property name="build" location="build"/>
+	<property name="dist" location="dist"/>
+
+	<target name="compile-common" unless="common.compiled">
+		<property name="common.compiled" value="true"/>
+		
+		<mkdir dir="${build}"/>
+		<javac srcdir="${src}/common" destdir="${build}"/>
+	</target>
+	
+	<target name="compile-client" depends="compile-common">
+		<javac srcdir="${src}/client" destdir="${build}">
+			<classpath>
+				<pathelement path="${build}/common"/>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="compile-server" depends="compile-common">
+		<javac srcdir="${src}/server" destdir="${build}">
+			<classpath>
+				<pathelement path="${build}/common"/>
+			</classpath>
+		</javac>
+		<unzip src="${src}/server/lib/mysql-connector-java-5.1.7-bin.jar" dest="${build}"/>
+	</target>
+
+	<!-- compiles everything -->
+	<target name="compile-all" depends="compile-client, compile-server"
+				description="compile source">
+	</target>
+	
+	<target name="dist-common" unless="common-dist">
+		<tstamp/>
+		<property name="common-dist" value="true"/>
+		<mkdir dir="${dist}"/>
+	</target>
+
+	<target name="dist-server" depends="dist-common, compile-server">	
+		<jar jarfile="${dist}/T9A1-server-${DSTAMP}.jar">
+			<fileset dir="${build}" excludes="**/client, META-INF/**"/>
+			
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Implementation-Vendor" value="T9A1"/>
+				<attribute name="Implementation-Title" value="capstone project"/>
+				<!-- TODO: implement versioning
+					<attribute name="Implementation-Version" value="1.0.0beta2"/>
+				-->
+				<attribute name="Main-Class" value="T9A1.server.KioskServer"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="dist-client" depends="dist-common, compile-client">
+		<jar jarfile="${dist}/T9A1-client-${DSTAMP}.jar">
+			<fileset dir="${build}" excludes="**/server"/>
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Implementation-Vendor" value="T9A1"/>
+				<attribute name="Implementation-Title" value="capstone project"/>
+				<!-- TODO: implement versioning
+					<attribute name="Implementation-Version" value="1.0.0beta2"/>
+				-->
+				<attribute name="Main-Class" value="T9A1.client.Kiosk"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<!-- packages everything -->
+	<target name="dist" depends="dist-client, dist-server" description="generate jarfiles">
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+</project>
