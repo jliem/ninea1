@@ -1,10 +1,10 @@
-package T9A1;
+package T9A1.common;
 /**
  * Class
  * @author Chase
  */
 
-public class ConnectionManager {
+public class ConnectionManager implements IConnectionManager {
 	/**
 	 * Variables
 	 * kioskID: identifies the kiosk
@@ -14,17 +14,17 @@ public class ConnectionManager {
 	private char[] kioskPassword;
 	public ConnectionManager(){
 
-	
+
 	}
-	
+
 	public String[] serializeRequest(){
-		
+
 		return null;
 	}
 
-	
-	
-	
+
+
+
 	public void setKioskPassword(char[] kioskPassword) {
 		this.kioskPassword = kioskPassword;
 	}
@@ -40,8 +40,8 @@ public class ConnectionManager {
 	public char[] getKioskID() {
 		return kioskID;
 	}
-	
-	
-	
-	
+
+
+
+
 }

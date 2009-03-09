@@ -1,6 +1,5 @@
-package T9A1;
+package T9A1.client;
 
-import T9A1.client.KioskClientFactory;
 
 /**
  * Class.
