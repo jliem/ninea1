@@ -1,0 +1,6 @@
+== building / running info ==
+
+Running "ant dist" will compile everything and drop the client and server jar files in dist/.  Once you cd into dist/ you can run "java -jar T9A1-[client|server]-[date].jar to execute.
+
+Currently the server just does a quick test connect to the db and should output a couple lines of data.  I'm not sure what the client does.
+
