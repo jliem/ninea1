@@ -59,7 +59,6 @@ public class DBManager {
 			if (conn != null) {
 				conn.close();
 			}
-			System.out.println("jdbc:mysql://" + url + ":" + port+ "/" + db);
 			conn = DriverManager.getConnection("jdbc:mysql://" + url + ":" + port
 					+ "/" + db, user, pass);
 			status = 2;
