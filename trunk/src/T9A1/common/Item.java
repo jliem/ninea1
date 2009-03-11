@@ -1,5 +1,7 @@
 package T9A1.common;
 
+import java.awt.Image;
+
 /**
  * Represents an item.
  *
@@ -11,6 +13,16 @@ public class Item {
 	private double price;
 	private String description;
 	private boolean inStock;
+	private Image image;
+
+	public Item(String name, Image image, double price, String description, boolean inStock) {
+		this.name = name;
+		this.image = image;
+		this.price = price;
+		this.description = description;
+		this.inStock = inStock;
+	}
+
 	public Item(String name, double price, String description, boolean inStock) {
 		super();
 		this.name = name;
@@ -18,11 +30,18 @@ public class Item {
 		this.description = description;
 		this.inStock = inStock;
 	}
+
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public Image getImage() {
+		return image;
+	}
+	public void setImage(Image image) {
+		this.image = image;
 	}
 	public double getPrice() {
 		return price;
