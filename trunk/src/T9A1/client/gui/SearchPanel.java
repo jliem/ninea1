@@ -28,6 +28,8 @@ public class SearchPanel extends JPanel{
 
 	private KioskGUI gui;
 
+	private SearchListener listener;
+
 	public SearchPanel(KioskGUI g) {
 		super(new BorderLayout());
 
@@ -36,19 +38,18 @@ public class SearchPanel extends JPanel{
 		JLabel label = new JLabel("Enter a search term below:");
 		add(label, BorderLayout.NORTH);
 
+		listener = new SearchListener();
+
 		searchBox = new JTextField(30);
+		searchBox.addActionListener(listener);
 		add(searchBox, BorderLayout.CENTER);
 
 		search = new JButton("GO");
-		search.addActionListener(new SearchListener());
+		search.addActionListener(listener);
 		add(search, BorderLayout.EAST);
 
 		OnScreenKeyboard keyboard = new OnScreenKeyboard();
 		add(keyboard, BorderLayout.SOUTH);
-	}
-
-	public void search(){
-		search.doClick();
 	}
 
 	private class SearchListener implements ActionListener{
@@ -78,7 +79,9 @@ public class SearchPanel extends JPanel{
 			for(int i = 0; i < buttonArray.length; i++){
 				for(int j = 0; j < buttonArray[i].length; j++){
 					buttonArray[i][j] = new JButton(qwertyArray[i][j]);
-					buttonArray[i][j].addActionListener(this);
+					if(qwertyArray[i][j].equalsIgnoreCase("ENTER"))
+						buttonArray[i][j].addActionListener(listener);
+					else buttonArray[i][j].addActionListener(this);
 
 					constraints.fill = GridBagConstraints.HORIZONTAL;
 
@@ -104,7 +107,6 @@ public class SearchPanel extends JPanel{
 			}
 		}
 
-		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			String s = arg0.getActionCommand();
 			if(s.equals("BACK")){
@@ -115,8 +117,6 @@ public class SearchPanel extends JPanel{
 			}
 			else if(s.equalsIgnoreCase("SPACE"))
 				searchBox.setText(searchBox.getText() + " ");
-			else if(s.equalsIgnoreCase("ENTER"))
-				search();
 			else
 				searchBox.setText(searchBox.getText() + s);
 
