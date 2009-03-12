@@ -14,21 +14,27 @@ public class Item {
 	private String description;
 	private boolean inStock;
 	private Image image;
+	private Location location;
 
-	public Item(String name, Image image, double price, String description, boolean inStock) {
-		this.name = name;
-		this.image = image;
-		this.price = price;
-		this.description = description;
-		this.inStock = inStock;
-	}
-
-	public Item(String name, double price, String description, boolean inStock) {
+	public Item(String name, double price, String description, boolean inStock,
+			Image image, Location location) {
 		super();
 		this.name = name;
 		this.price = price;
 		this.description = description;
 		this.inStock = inStock;
+		this.image = image;
+		this.location = location;
+	}
+
+	public Item(String name, double price, String description, boolean inStock,
+			Location location) {
+		super();
+		this.name = name;
+		this.price = price;
+		this.description = description;
+		this.inStock = inStock;
+		this.location = location;
 	}
 
 	public String getName() {
@@ -61,4 +67,13 @@ public class Item {
 	public void setInStock(boolean inStock) {
 		this.inStock = inStock;
 	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 }

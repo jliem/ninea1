@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import T9A1.client.data.InventoryManager;
 import T9A1.common.Item;
+import T9A1.common.Location;
 
 public class KioskGUI {
 	private InventoryManager inventoryManager;
@@ -39,10 +40,18 @@ public class KioskGUI {
 	}
 
 	public void search(String s){
-		Item[] results = inventoryManager.doSearch(s);
+		//Item[] results = inventoryManager.doSearch(s);
+		Item item = new Item(s, 2.5,
+				"It's a bunch of " + s, true, new Location(13, 4));
+		Item[] results = {item, item, item};
 		ResultsPanel resultsPanel = new ResultsPanel(this, s, results);
 		gui.add(resultsPanel, "RESULTS");
 		layoutManager.show(gui, "RESULTS");
+	}
+
+	public void showItem(ItemPanel ip){
+		gui.add(ip.getFullPanel(), "ITEM");
+		layoutManager.show(gui, "ITEM");
 	}
 
 	public void newSearch(){
@@ -50,9 +59,12 @@ public class KioskGUI {
 		gui.add(searchPanel, "SEARCH");
 	}
 
+	public void backToResults(){
+		layoutManager.show(gui, "RESULTS");
+	}
+
 	private class EventHandler implements ActionListener{
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 
