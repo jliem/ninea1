@@ -16,6 +16,18 @@ public class InventoryManager {
 	}
 
 	public Item[] doSearch(String query) {
-		return null;
+
+		Item[] result = null;
+
+		// Check if the item should be handled by the cache
+		if (cacheManager.shouldHandleQuery(query)) {
+			result = cacheManager.doSearch(query);
+		} else {
+
+			// TODO: Finish me
+			result = new Item[0];
+		}
+
+		return result;
 	}
 }
