@@ -1,6 +1,7 @@
 package T9A1.client.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +27,7 @@ public class SearchPanel extends JPanel{
 
 	private JTextField searchBox;
 	private JButton search;
+	private Font font;
 
 	private KioskGUI gui;
 
@@ -35,18 +38,43 @@ public class SearchPanel extends JPanel{
 
 		gui = g;
 
+		JPanel panel = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+
+		font = new Font("Arial", Font.PLAIN, 40);
 		JLabel label = new JLabel("Enter a search term below:");
-		add(label, BorderLayout.NORTH);
+		label.setFont(font);
+		c.anchor = GridBagConstraints.CENTER;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 0;
+		panel.add(label, c);
 
 		listener = new SearchListener();
 
-		searchBox = new JTextField(30);
+		searchBox = new JTextField(20);
+		searchBox.setFont(font);
 		searchBox.addActionListener(listener);
-		add(searchBox, BorderLayout.CENTER);
+		c.anchor = GridBagConstraints.EAST;
+		c.fill = GridBagConstraints.BOTH;
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		panel.add(searchBox, c);
 
 		search = new JButton("GO");
+		search.setFont(font);
 		search.addActionListener(listener);
-		add(search, BorderLayout.EAST);
+		searchBox.addActionListener(listener);
+		c.anchor = GridBagConstraints.WEST;
+		c.fill = GridBagConstraints.BOTH;
+		c.ipadx = 50;
+		c.gridwidth = 1;
+		c.gridx = 1;
+		c.gridy = 1;
+		panel.add(search, c);
+
+		add(panel, BorderLayout.CENTER);
 
 		OnScreenKeyboard keyboard = new OnScreenKeyboard();
 		add(keyboard, BorderLayout.SOUTH);
@@ -55,6 +83,8 @@ public class SearchPanel extends JPanel{
 	private class SearchListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			String s = searchBox.getText().toUpperCase();
+			if(s.equals(""))
+				return;
 			searchBox.setText("");
 			gui.search(s);
 		}
@@ -73,7 +103,8 @@ public class SearchPanel extends JPanel{
 			buttonArray[2] = new JButton[qwertyArray[2].length];
 			buttonArray[3] = new JButton[qwertyArray[3].length];
 
-			Insets inset = new Insets(2, 2, 2, 2);
+			Insets inset = new Insets(5, 5, 5, 5);
+			Font keyboardFont = new Font("Arial", Font.PLAIN, 26);
 			for(int i = 0; i < buttonArray.length; i++){
 				for(int j = 0; j < buttonArray[i].length; j++){
 					buttonArray[i][j] = new JButton(qwertyArray[i][j]);
@@ -83,25 +114,36 @@ public class SearchPanel extends JPanel{
 
 					constraints.fill = GridBagConstraints.HORIZONTAL;
 
-					constraints.gridx = j * 2 + i % 2;
 					constraints.gridy = i;
 					constraints.gridwidth = 2;
-					constraints.ipadx = 10;
-					constraints.ipady = 5;
+					constraints.ipadx = 40;
+					constraints.ipady = 40;
 					constraints.insets = inset;
 
-					if(qwertyArray[i][j].equals("ENTER")){
+					if(i < 2)
+						constraints.gridx = j * 2;
+					else if(i == 2)
+						constraints.gridx = j * 2 + 1;
+					else
+						constraints.gridx = 2;
+
+					if(qwertyArray[i][j].equals("BACK")){
+						constraints.ipadx = 0;
+					}
+					else if(qwertyArray[i][j].equals("ENTER")){
 						constraints.gridwidth = 4;
 					}
 					else if(qwertyArray[i][j].equals("SPACE")){
 						constraints.gridwidth = 16;
 					}
+					buttonArray[i][j].setFont(keyboardFont);
 					add(buttonArray[i][j], constraints);
 				}
-			}
 
-			for(int i = 0; i < buttonArray[0].length; i++){
-
+				constraints.gridwidth = 1;
+				constraints.gridx = 0;
+				constraints.gridy = 2;
+				add(Box.createHorizontalGlue(), constraints);
 			}
 		}
 
