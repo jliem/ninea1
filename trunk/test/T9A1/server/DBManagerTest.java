@@ -1,6 +1,7 @@
 package T9A1.server;
 
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import junit.framework.TestCase;
 
@@ -46,8 +47,13 @@ public class DBManagerTest extends TestCase {
 		dbm.connect();
 
 		// Try executing the query
-		ResultSet resultSet = dbm.execQuery(query);
+		Statement statement = dbm.execQuery(query);
 
-		assertNotNull(resultSet);
+		assertNotNull(statement);
+		assertNotNull(statement.getResultSet());
+		
+		try {
+			statement.close();
+		} catch (SQLException e) {}
 	}
 }

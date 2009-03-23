@@ -17,7 +17,6 @@ public class DBManager {
 	int status = 0;
 	// the db connection
 	Connection conn = null;
-	Statement statement;
 
 
 	/**
@@ -25,7 +24,7 @@ public class DBManager {
 	 */
 	protected DBManager() {
 		try {
-			this.initializeDriver();
+			initializeDriver();
 			status = 1;
 		} catch (Exception e) {
 			System.err.println("Couldn't load JDBC driver: " + e.getMessage());
@@ -36,7 +35,7 @@ public class DBManager {
 	 * Connects to the default db
 	 */
 	public boolean connect() {
-		return connect("javajunkies.webhop.net", 3306, "inventory", "t9a1", "junkies");
+		return connect("javajunkies.webhop.net", 3306, "inventory", "t9a1", "****");
 	}
 
 	/**
@@ -87,15 +86,16 @@ public class DBManager {
 	}
 
 	/**
-	 * Executes a query to the db; not thread-safe
+	 * Executes a query to the db
+	 * - use getResultSet() on the returned Statement to get results
+	 * - call close() on the returned Statement when done
 	 *
 	 * @param q the SQL query to execute
 	 *
-	 * @return the returned ResultSet
+	 * @return the executed Statement
 	 */
-	public ResultSet execQuery(String q) {
-		statement = null;
-		ResultSet rs = null;
+	public Statement execQuery(String q) {
+		Statement statement = null;
 
 		if (status < 2) {
 			// not connected, can't do anything
@@ -105,7 +105,7 @@ public class DBManager {
 
 		try {
 			statement = conn.createStatement();
-			rs = statement.executeQuery(q);
+			statement.executeQuery(q);
 		} catch (SQLException e) {
 			System.out.println("Error executing query: " + e.getMessage());
 
@@ -115,16 +115,10 @@ public class DBManager {
 				} catch (Exception _e) {}
 			}
 
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (Exception _e) {}
-			}
-
 			return null;
 		}
 
-		return rs;
+		return statement;
 	}
 
 
@@ -133,15 +127,22 @@ public class DBManager {
 		DBManager dbm = DBManager.getDBM();
 		if (!dbm.connect()) return;
 
-		ResultSet r = dbm.execQuery("select * from testing");
-		if (r == null) return;
+		Statement s = dbm.execQuery("select * from testing");
+		
+		if (s == null) return;
 		try {
-			while (r.next()) {
-				System.out.println("result: [" + r.getString(1) + "][" + r.getInt(2) + "]");
+			ResultSet rs = s.getResultSet();
+			while (rs.next()) {
+				
+				System.out.println("result: [" + rs.getString(1) + "][" + rs.getInt(2) + "]");
 			}
 		} catch (Exception e) {
 			System.out.println("SQL error: " + e.getMessage());
 		}
+		
+		try {
+			s.close();
+		} catch (SQLException e) {}
 	}
 
 	/**
