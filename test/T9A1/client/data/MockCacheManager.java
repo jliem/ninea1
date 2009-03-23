@@ -8,7 +8,7 @@ public class MockCacheManager implements ICacheManager {
 		return new Item[0];
 	}
 
-	public boolean shouldHandleQuery(String query) {
+	public boolean isCacheHit(String query) {
 		return false;
 	}
 

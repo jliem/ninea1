@@ -20,7 +20,7 @@ public class InventoryManager {
 		Item[] result = null;
 
 		// Check if the item should be handled by the cache
-		if (cacheManager.shouldHandleQuery(query)) {
+		if (cacheManager.isCacheHit(query)) {
 			result = cacheManager.doSearch(query);
 		} else {
 

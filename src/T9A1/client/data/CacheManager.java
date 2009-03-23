@@ -9,7 +9,7 @@ public class CacheManager implements ICacheManager {
 		return new Item[0];
 	}
 
-	public boolean shouldHandleQuery(String query) {
+	public boolean isCacheHit(String query) {
 		// TODO Auto-generated method stub
 		return false;
 	}
