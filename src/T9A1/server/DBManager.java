@@ -92,7 +92,7 @@ public class DBManager {
 	 *
 	 * @param q the SQL query to execute
 	 *
-	 * @return the executed Statement
+	 * @return the executed Statement or null on failure
 	 */
 	public Statement execQuery(String q) {
 		Statement statement = null;
@@ -120,7 +120,24 @@ public class DBManager {
 
 		return statement;
 	}
-
+	
+	/**
+	 * Uses the server connection to create a PreparedStatement for given query string
+	 * 
+	 * @param query the query string
+	 * @return the created PreparedStatement or null on failure
+	 */
+	public PreparedStatement createPreparedStatement(String query) {
+		if (status < 2) {
+			return null;
+		}
+		
+		try {
+			return conn.prepareStatement(query);
+		} catch (SQLException e) {
+			return null;
+		}
+	}
 
 	// does a quick functionality check
 	public static void quickTest() {
