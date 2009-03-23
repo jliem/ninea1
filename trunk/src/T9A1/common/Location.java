@@ -1,6 +1,8 @@
 package T9A1.common;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
 	private int aisle;
 	private int bin;
 	public Location(int aisle, int bin) {

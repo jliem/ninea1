@@ -4,13 +4,18 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
+
+import T9A1.common.Item;
+import T9A1.common.Location;
 /**
  *
  * @author Chase
@@ -65,8 +70,9 @@ public class ServerConnectionManager{
 						                  BufferedInputStream(client.getInputStream()));
 									String line;
 									line = streamIn.readLine();
-									connections.add(client);
-									buffer.add(line);
+									ArrayList al = new ArrayList();
+									al.add(client); al.add(line);
+									buffer.add(al);
 									debug(line + " added to buffer");
 								}catch(IOException e)
 								{ System.out.println("IO Error in streams " + e); }
@@ -113,15 +119,32 @@ public class ServerConnectionManager{
 			debug("Consumer Thread: STARTING");
 			try{
 				while(true){
-					String search = (String) buffer.take();
+					System.out.println(buffer.size());
+					ArrayList al = (ArrayList)(buffer.take());
+
+					Socket client = (Socket)(al.get(0));
+					System.out.println("second size is " + buffer.size());
+					String search = (String)(al.get(1));
+
+					System.out.println("Serach is " + search);
+
 					/**
 					 * IMPLEMENT SEARCH CODE HERE
 					 * SERIALIZE
 					 */
 					ArrayList outgoing = new ArrayList();
-					while(sendRequest((Socket)(connections.take()),outgoing) == false){}
+					Item item = new Item();
+					item.setName(search);
+					Item item2 = new Item();
+					item2.setName("Test item");
+					item2.setLocation(new Location(1, 2));
+					outgoing.add(item);
+					outgoing.add(item2);
+
+					sendRequest(client, outgoing);
 				}
 			}catch(Throwable e){
+				e.printStackTrace();
 				debug("Consumer error");
 			}
 		}
@@ -130,17 +153,18 @@ public class ServerConnectionManager{
 		 * @category Consumer method
 		 * @returns a boolean on whether or not it got sent
 		 */
-		public boolean sendRequest(Socket client, ArrayList request){
+		public boolean sendRequest(Socket client, List request){
 			try{
-				DataOutputStream socketOut = new DataOutputStream(client.getOutputStream());
-				socketOut.writeBytes(request.toString());
+				ObjectOutputStream socketOut = new ObjectOutputStream(client.getOutputStream());
+				socketOut.writeObject(request);
+				debug("Wrote request");
 			    socketOut.close(); client.close();
 			    return true;
 			}
 			catch (UnknownHostException e)
 			{ System.err.println("Unknown host"); return false;}
 			catch (IOException e)
-			{ System.err.println("I/O error"); return false;}
+			{ e.printStackTrace(); System.err.println("I/O error"); return false;}
 		}
 		/**
 		 * @author Chase
