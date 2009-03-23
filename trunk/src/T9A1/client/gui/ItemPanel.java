@@ -53,7 +53,7 @@ public class ItemPanel{
 		GridBagConstraints con = new GridBagConstraints();
 		Insets insets = new Insets(2, 2, 2, 2);
 
-		JButton i = new JButton(new ImageIcon("client/gui/images/NoImage_small.jpg"));
+		JButton i = new JButton(new ImageIcon("client/gui/images/no_image.gif"));
 		i.addActionListener(new ShowItemListener());
 		con.gridheight = 2;
 		con.gridwidth = 1;
@@ -79,10 +79,13 @@ public class ItemPanel{
 		panel.add(price, con);
 
 		JLabel inStock;
-		if(item.isInStock())
+		if(item.isInStock()){
 			inStock = new JLabel("In Stock");
-		else
+			inStock.setForeground(Color.green);
+		}else{
 			inStock = new JLabel("Out of Stock");
+			inStock.setForeground(Color.red);
+		}
 		con.gridheight = 1;
 		con.gridwidth = 1;
 		con.gridx = 2;
@@ -136,10 +139,13 @@ public class ItemPanel{
 		panel.add(price, con);
 
 		JLabel inStock;
-		if(item.isInStock())
+		if(item.isInStock()){
 			inStock = new JLabel("In Stock");
-		else
+			inStock.setForeground(Color.green);
+		}else{
 			inStock = new JLabel("Out of Stock");
+			inStock.setForeground(Color.red);
+		}
 		con.gridheight = 1;
 		con.gridwidth = 1;
 		con.gridx = 2;
@@ -183,7 +189,7 @@ public class ItemPanel{
 		con.anchor = GridBagConstraints.EAST;
 		panel.add(back, con);
 
-		JButton clear = new JButton("New Search:");
+		JButton clear = new JButton("New Search");
 		clear.addActionListener(new NewSearchListener());
 		con.gridheight = 1;
 		con.gridwidth = 1;
@@ -222,7 +228,7 @@ public class ItemPanel{
 	}
 
 	private class ImageContainer extends JPanel{
-		String NO_IMAGE = "client/gui/images/NoImage_large.gif";
+		String NO_IMAGE = "client/gui/images/no_image.gif";
 		ImageIcon image;
 
 		public ImageContainer(Image i){
