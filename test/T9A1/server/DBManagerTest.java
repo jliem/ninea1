@@ -1,6 +1,7 @@
 package T9A1.server;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import junit.framework.TestCase;
@@ -50,8 +51,14 @@ public class DBManagerTest extends TestCase {
 		Statement statement = dbm.execQuery(query);
 
 		assertNotNull(statement);
-		assertNotNull(statement.getResultSet());
-		
+
+		try {
+			assertNotNull(statement.getResultSet());
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		try {
 			statement.close();
 		} catch (SQLException e) {}

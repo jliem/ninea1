@@ -1,6 +1,7 @@
 package T9A1.common;
 
 import java.awt.Image;
+import java.io.Serializable;
 
 /**
  * Represents an item.
@@ -8,7 +9,7 @@ import java.awt.Image;
  * @author Johannes
  *
  */
-public class Item {
+public class Item implements Serializable {
 	private String name;
 	private double price;
 	private String description;
@@ -35,6 +36,10 @@ public class Item {
 		this.description = description;
 		this.inStock = inStock;
 		this.location = location;
+	}
+
+	public Item() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getName() {
