@@ -1,4 +1,13 @@
 package T9A1.common;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 /**
  * Class
  * @author Chase
@@ -11,37 +20,44 @@ public class ConnectionManager implements IConnectionManager {
 	 * kioskPassword: allows the kiosk to access the server
 	 */
 	private char[] kioskID;
-	private char[] kioskPassword;
+	public Inet4Address serverIP;
+	public boolean debug = true;
 	public ConnectionManager(){
 
 
 	}
 
-	public String[] serializeRequest(){
+	public String[] serializeRequest(String[] r){
 
 		return null;
 	}
 
+	public String[] deserializeSearch(String[] s){
 
-
-
-	public void setKioskPassword(char[] kioskPassword) {
-		this.kioskPassword = kioskPassword;
+		return null;
 	}
 
-	public char[] getKioskPassword() {
-		return kioskPassword;
+	public void sendRequest(String request){
+		try{
+			Inet4Address host = (Inet4Address) InetAddress.getLocalHost();
+			Socket           client    = new Socket(host, 4321);
+			DataOutputStream socketOut = new DataOutputStream(client.getOutputStream());
+			DataInputStream  socketIn  = new DataInputStream(client.getInputStream());
+			debug("Gets here");
+		    socketOut.writeBytes(request + '\n');
+	        socketOut.close(); socketIn.close(); client.close();
+			}
+	      catch (UnknownHostException e)
+	      { System.err.println("Unknown host"); }
+	      catch (IOException e)
+	      { System.err.println("I/O error"); }
 	}
 
-	public void setKioskID(char[] kioskID) {
-		this.kioskID = kioskID;
+
+	public void debug(String s){
+		if(this.debug){
+			System.out.println(s);
+		}
 	}
-
-	public char[] getKioskID() {
-		return kioskID;
-	}
-
-
-
 
 }
