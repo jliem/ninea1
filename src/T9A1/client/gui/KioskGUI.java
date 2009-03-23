@@ -11,6 +11,8 @@ import T9A1.common.Location;
 
 public class KioskGUI {
 	private InventoryManager inventoryManager;
+	private Map map;
+
 	private JPanel gui;
 	private CardLayout layoutManager;
 
@@ -20,8 +22,12 @@ public class KioskGUI {
 
 	public KioskGUI(InventoryManager im){
 		inventoryManager = im;
+		map = new Map();
 
 		JFrame frame = new JFrame("Kiosk");
+		Dimension size = new Dimension(1000, 700);
+		frame.setMinimumSize(size);
+		frame.setLocation(150, 150);
 
 		layoutManager = new CardLayout();
 		gui = new JPanel(layoutManager);
@@ -39,12 +45,21 @@ public class KioskGUI {
 		frame.setVisible(true);
 	}
 
+	public Map getMap(){
+		return map;
+	}
+
 	public void search(String s){
-		//Item[] results = inventoryManager.doSearch(s);
-		Item item = new Item(s, 2.5,
-				"It's a bunch of " + s, true, new Location(13, 4));
-		Item[] results = {item, item, item};
-		ResultsPanel resultsPanel = new ResultsPanel(this, s, results);
+		ResultsPanel resultsPanel;
+		Item[] results = inventoryManager.doSearch(s);
+		if(results != null && results.length > 0){
+			resultsPanel = new ResultsPanel(this, s, results);
+		}else{
+			Item item = new Item(s, 2.5,
+					"It's a bunch of " + s, true, new Location(60, 10));
+			Item[] results2 = {item, item, item};
+			resultsPanel = new ResultsPanel(this, s, results2);
+		}
 		gui.add(resultsPanel, "RESULTS");
 		layoutManager.show(gui, "RESULTS");
 	}
