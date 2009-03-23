@@ -53,8 +53,6 @@ public class SearchPanel extends JPanel{
 	}
 
 	private class SearchListener implements ActionListener{
-
-		@Override
 		public void actionPerformed(ActionEvent e) {
 			String s = searchBox.getText().toUpperCase();
 			searchBox.setText("");
