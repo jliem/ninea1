@@ -31,6 +31,8 @@ public class InventoryManager {
 
 			// TODO: Finish me
 			resultList = connectionManager.sendRequest("foo");
+
+			// TODO(jliem): Add to cache
 		}
 
 		return resultList.toArray(new Item[0]);

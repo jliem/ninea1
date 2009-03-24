@@ -11,7 +11,11 @@ import T9A1.common.Item;
 
 public class CacheManager implements ICacheManager {
 
-	private static final int MAX_CACHE_ENTRIES = 500;
+	/**
+	 * Maximum size of the cache. Should be final, but making
+	 * it non-final for testing.
+	 */
+	private static int maxCacheEntries = 500;
 
 	private HashMap<String, CacheEntry> map;
 	private PriorityQueue<CacheEntry> heap;
@@ -33,7 +37,6 @@ public class CacheManager implements ICacheManager {
 		if (map.containsKey(query)) {
 			CacheEntry data = map.get(query);
 			data.incrementCount();
-			System.out.println("Map's count is now " + map.get(query).getCount());
 
 			result = data.getItems();
 		}
@@ -42,7 +45,7 @@ public class CacheManager implements ICacheManager {
 	}
 
 	public void add(String query, List<Item> items) {
-		if (map.size() >= MAX_CACHE_ENTRIES) {
+		if (map.size() >= maxCacheEntries) {
 			// Using least-recently-used cache algorithm
 			String lru = heap.poll().getQuery();
 
@@ -82,6 +85,10 @@ public class CacheManager implements ICacheManager {
 		heap.clear();
 	}
 
+	protected boolean contains(Object o) {
+		return map.containsKey(o);
+	}
+
 	/**
 	 * Getter for testing purposes.
 	 *
@@ -97,6 +104,10 @@ public class CacheManager implements ICacheManager {
 	 */
 	protected HashMap<String, CacheEntry> getMap() {
 		return map;
+	}
+
+	protected void setMaxCacheEntries(int maxCacheEntries) {
+		CacheManager.maxCacheEntries = maxCacheEntries;
 	}
 
 }
