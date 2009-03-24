@@ -117,14 +117,10 @@ public class ServerConnectionManager{
 			debug("Consumer Thread: STARTING");
 			try{
 				while(true){
-					System.out.println(buffer.size());
 					ArrayList al = (ArrayList)(buffer.take());
-
 					Socket client = (Socket)(al.get(0));
-					System.out.println("second size is " + buffer.size());
 					String search = (String)(al.get(1));
-
-					System.out.println("Serach is " + search);
+					debug("Search is " + search);
 					ArrayList outgoing = null;
 					/**
 					 * @dodo IMPLEMENT SEARCH CODE HERE 
