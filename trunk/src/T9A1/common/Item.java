@@ -16,6 +16,7 @@ public class Item implements Serializable {
 	private boolean inStock;
 	private Image image;
 	private Location location;
+	private long id;
 
 	public Item(String name, double price, String description, boolean inStock,
 			Image image, Location location) {
@@ -40,6 +41,10 @@ public class Item implements Serializable {
 
 	public Item() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public String toString() {
+		return name + ": \"" + description + "\" - " + price + "$ - " + (!inStock ? "not " : "") + "in stock - " + location;
 	}
 
 	public String getName() {
@@ -79,6 +84,14 @@ public class Item implements Serializable {
 
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }

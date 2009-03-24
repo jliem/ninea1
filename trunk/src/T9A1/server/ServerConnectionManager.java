@@ -30,11 +30,12 @@ public class ServerConnectionManager{
 	 */
 	public boolean debug = true;
 	public ServerSocket server;
+	protected KioskServer handler;
 	/**
 	 * The intializer method
 	 * @author Chase
 	 */
-	public ServerConnectionManager(){
+	public ServerConnectionManager(KioskServer ks){
 		try{
 	         this.server = new ServerSocket(4321);
 	         debug("Server Established");
@@ -43,6 +44,8 @@ public class ServerConnectionManager{
 	         debug("Error on port: 4321 " + ", " + e);
 	         System.exit(1);
 	    }
+	    
+	    handler = ks;
 	}
 	/**
 	 * Inner class to create producer thread
@@ -120,12 +123,10 @@ public class ServerConnectionManager{
 					ArrayList al = (ArrayList)(buffer.take());
 					Socket client = (Socket)(al.get(0));
 					String search = (String)(al.get(1));
-					debug("Search is " + search);
-					ArrayList<Item> outgoing = new ArrayList<Item>();
-					/**
-					 * @dodo IMPLEMENT SEARCH CODE HERE
-					 * OUTGOING = LIST
-					 */
+					
+					debug("Serach is " + search);
+					List<Item> outgoing = handler.handleRequest(search);
+					
 					sendRequest(client, outgoing);
 				}
 			}catch(Throwable e){

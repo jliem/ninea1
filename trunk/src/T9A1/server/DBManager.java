@@ -125,6 +125,7 @@ public class DBManager {
 	 * Uses the server connection to create a PreparedStatement for given query string
 	 * 
 	 * @param query the query string
+	 * 
 	 * @return the created PreparedStatement or null on failure
 	 */
 	public PreparedStatement createPreparedStatement(String query) {
