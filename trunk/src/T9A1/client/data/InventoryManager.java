@@ -1,6 +1,7 @@
 package T9A1.client.data;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import T9A1.common.IConnectionManager;
@@ -29,9 +30,7 @@ public class InventoryManager {
 		} else {
 
 			// TODO: Finish me
-			List<Item> list = connectionManager.sendRequest("foo");
-			System.out.println(list.get(0));
-			list.get(0).setLocation(new Location(2, 3));
+			resultList = connectionManager.sendRequest("foo");
 		}
 
 		return resultList.toArray(new Item[0]);

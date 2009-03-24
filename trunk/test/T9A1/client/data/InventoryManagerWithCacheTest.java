@@ -15,6 +15,7 @@ public class InventoryManagerWithCacheTest extends InventoryManagerTest {
 	}
 
 	public void setUp() {
+		super.setUp();
 		im = ((KioskClientFactory)kcf).createInventoryManager();
 	}
 }

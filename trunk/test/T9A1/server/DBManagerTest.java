@@ -41,7 +41,7 @@ public class DBManagerTest extends TestCase {
 	/**
 	 * Test executing a query from the database.
 	 */
-	public void testExecQuery() {
+	public void testExecQuery() throws SQLException {
 		String query = "select * from testing";
 
 		// Connect to the DB first
@@ -52,15 +52,10 @@ public class DBManagerTest extends TestCase {
 
 		assertNotNull(statement);
 
-		try {
-			assertNotNull(statement.getResultSet());
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		Exception e = null;
 
-		try {
-			statement.close();
-		} catch (SQLException e) {}
+		assertNotNull(statement.getResultSet());
+
+		statement.close();
 	}
 }

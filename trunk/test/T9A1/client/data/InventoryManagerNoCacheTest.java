@@ -16,6 +16,7 @@ public class InventoryManagerNoCacheTest extends InventoryManagerTest {
 	}
 
 	public void setUp() {
+		super.setUp();
 		im = ((KioskClientMockFactory)kcf).createInventoryManagerWithoutCache();
 	}
 }
