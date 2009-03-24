@@ -1,9 +1,11 @@
 package T9A1.server;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -17,20 +19,20 @@ import java.util.concurrent.BlockingQueue;
 import T9A1.common.Item;
 import T9A1.common.Location;
 /**
- *
+ * Server Connection Manager
  * @author Chase
  */
 
 public class ServerConnectionManager{
 	/**
 	 * Class variables
-	 *
+	 * 
 	 */
 	public boolean debug = true;
 	public ServerSocket server;
 	/**
 	 * The intializer method
-	 *
+	 * @author Chase
 	 */
 	public ServerConnectionManager(){
 		try{
@@ -45,7 +47,6 @@ public class ServerConnectionManager{
 	/**
 	 * Inner class to create producer thread
 	 * @author Chase
-	 *
 	 */
 	class Producer implements Runnable{
 		public boolean debug=true;
@@ -55,42 +56,40 @@ public class ServerConnectionManager{
 			this.buffer = theBuffer;
 			this.connections = theConnections;
 		}
+		/**
+		 * Run method from runnable interface
+		 * @author Chase
+		 */
 		public void run(){
-			try{
-				debug("Producer Thread: STARTING");
-				while(true){
-					Socket client = null;
-				    try {
-				    	client = server.accept();
-				    	try{
-				    		if(client != null){
-				    			try {
-									DataInputStream streamIn = new
-						                  DataInputStream(new
-						                  BufferedInputStream(client.getInputStream()));
-									String line;
-									line = streamIn.readLine();
-									ArrayList al = new ArrayList();
-									al.add(client); al.add(line);
-									buffer.add(al);
-									debug(line + " added to buffer");
-								}catch(IOException e)
-								{ System.out.println("IO Error in streams " + e); }
-				    			int len = buffer.size();
-				    			debug("Buffer is now size " + len);
-
-				    		}
-				    	}catch(Throwable e){debug("Queue error");}
-				    }
-				    catch (IOException e) {
-				    	debug("Did not accept connection");
-				    	System.exit(1);
-				    }
-				}
-			}catch(Throwable e){
-				debug("Producer error");
+			debug("Producer Thread: STARTING");
+			while(true){
+				Socket client = null;
+			    try {
+			    	client = server.accept();
+			    		if(client != null){
+			    			try {
+			    				BufferedReader streamIn = new BufferedReader(new InputStreamReader(client.getInputStream()));
+								String line;
+								line = streamIn.readLine();
+								ArrayList al = new ArrayList();
+								al.add(client); al.add(line);
+								buffer.add(al);
+								debug(line + " added to buffer");
+							}catch(IOException e){ 
+								debug("IO Error in streams"); 
+							}
+			    		}
+			    	}
+			    catch (IOException e) {
+			    	debug("Did not accept connection");
+			    	System.exit(1);
+			    }
 			}
 		}
+		/**
+		 * Debug method to show debugging information
+		 * @author Chase
+		 */
 		public void debug(String s){
 			if(this.debug){
 				System.out.println(s);
@@ -101,7 +100,6 @@ public class ServerConnectionManager{
 	/**
 	 * Inner class to create consumer thread
 	 * @author Chase
-	 *
 	 */
 	class Consumer implements Runnable{
 		public boolean debug = true;
@@ -112,8 +110,8 @@ public class ServerConnectionManager{
 			this.connections = theConnections;
 		}
 		/**
+		 * Run method from runnable interface
 		 * @author Chase
-		 * @category Consumer method
 		 */
 		public void run(){
 			debug("Consumer Thread: STARTING");
@@ -127,20 +125,11 @@ public class ServerConnectionManager{
 					String search = (String)(al.get(1));
 
 					System.out.println("Serach is " + search);
-
+					ArrayList outgoing = null;
 					/**
-					 * IMPLEMENT SEARCH CODE HERE
-					 * SERIALIZE
+					 * @dodo IMPLEMENT SEARCH CODE HERE 
+					 * OUTGOING = LIST
 					 */
-					ArrayList outgoing = new ArrayList();
-					Item item = new Item();
-					item.setName(search);
-					Item item2 = new Item();
-					item2.setName("Test item");
-					item2.setLocation(new Location(1, 2));
-					outgoing.add(item);
-					outgoing.add(item2);
-
 					sendRequest(client, outgoing);
 				}
 			}catch(Throwable e){
@@ -149,9 +138,10 @@ public class ServerConnectionManager{
 			}
 		}
 		/**
+		 * Send request method
 		 * @author Chase
-		 * @category Consumer method
-		 * @returns a boolean on whether or not it got sent
+		 * @returns boolean
+		 * @param client, request
 		 */
 		public boolean sendRequest(Socket client, List request){
 			try{
@@ -167,10 +157,8 @@ public class ServerConnectionManager{
 			{ e.printStackTrace(); System.err.println("I/O error"); return false;}
 		}
 		/**
+		 * Debug method to show debugging information
 		 * @author Chase
-		 * @category Consumer method
-		 * Shows debugging information if debug mode is
-		 * activated.
 		 */
 		public void debug(String s){
 			if(this.debug){
@@ -178,17 +166,10 @@ public class ServerConnectionManager{
 			}
 		}
 	}
-
-	public String[] serializeSearch(String[] s){
-
-		return null;
-	}
-
-	public String[] deserializeRequest(String[] r){
-
-		return null;
-	}
-
+	/**
+	 * Debug method to show debugging information
+	 * @author Chase
+	 */
 	public void debug(String s){
 		if(this.debug){
 			System.out.println(s);
