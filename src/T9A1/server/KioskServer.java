@@ -21,26 +21,9 @@ public class KioskServer {
 		}
 		initPreparedStatements();
 
-		int numProducers = 1;
-		int numConsumers = 1;
-		startThreads(numProducers, numConsumers, this);
+		ServerConnectionManager sm = new ServerConnectionManager(this);
 
 		/* DEBUG */ handleRequest("hammer");
-	}
-
-	public static void startThreads(int p, int c, KioskServer ks){
-		BlockingQueue buffer = new LinkedBlockingQueue();
-		BlockingQueue connections = new LinkedBlockingQueue();
-
-		ServerConnectionManager scm = new ServerConnectionManager(ks);
-
-		for(int i=0;i<p;i++){
-			new Thread(scm.new Producer(buffer, connections)).start();
-		}
-
-		for(int i=0;i<c;i++){
-			new Thread(scm.new Consumer(buffer, connections)).start();
-		}
 	}
 
 	protected void initPreparedStatements() {
