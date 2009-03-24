@@ -79,7 +79,7 @@ public class KioskServer {
 				}
 			} catch (SQLException e) {
 				System.out.println("Error executing search: " + e.getMessage());
-				return null;
+				return new LinkedList<Item>();
 			}
 		}
 		
