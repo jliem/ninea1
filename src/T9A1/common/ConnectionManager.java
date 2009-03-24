@@ -19,7 +19,7 @@ import java.util.List;
 public class ConnectionManager implements IConnectionManager {
 	/**
 	 * Variables
-	 * 
+	 *
 	 */
 	public boolean debug = true;
 	public ConnectionManager(){
@@ -49,8 +49,6 @@ public class ConnectionManager implements IConnectionManager {
 
 				debug("Got arraylist " + items);
 
-				Item i = items.get(0);
-				System.out.println("Item's name: " + i.getName());
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -64,7 +62,7 @@ public class ConnectionManager implements IConnectionManager {
 	      { System.err.println("I/O error"); }
 	      return items;
 	}
-	
+
 	/**
 	 * Debug method to show debugging information
 	 * @author Chase

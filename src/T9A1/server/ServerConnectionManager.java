@@ -26,7 +26,7 @@ import T9A1.common.Location;
 public class ServerConnectionManager{
 	/**
 	 * Class variables
-	 * 
+	 *
 	 */
 	public boolean debug = true;
 	public ServerSocket server;
@@ -75,8 +75,8 @@ public class ServerConnectionManager{
 								al.add(client); al.add(line);
 								buffer.add(al);
 								debug(line + " added to buffer");
-							}catch(IOException e){ 
-								debug("IO Error in streams"); 
+							}catch(IOException e){
+								debug("IO Error in streams");
 							}
 			    		}
 			    	}
@@ -121,9 +121,9 @@ public class ServerConnectionManager{
 					Socket client = (Socket)(al.get(0));
 					String search = (String)(al.get(1));
 					debug("Search is " + search);
-					ArrayList outgoing = null;
+					ArrayList<Item> outgoing = new ArrayList<Item>();
 					/**
-					 * @dodo IMPLEMENT SEARCH CODE HERE 
+					 * @dodo IMPLEMENT SEARCH CODE HERE
 					 * OUTGOING = LIST
 					 */
 					sendRequest(client, outgoing);
