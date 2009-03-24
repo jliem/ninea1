@@ -30,8 +30,8 @@ public class InventoryManager {
 		} else {
 
 			// TODO: Finish me
-			resultList = connectionManager.sendRequest("foo");
-
+			resultList = connectionManager.sendRequest(query);
+			System.out.println("Result list: " + resultList);
 			// TODO(jliem): Add to cache
 		}
 

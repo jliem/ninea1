@@ -4,7 +4,7 @@ import T9A1.client.IKioskClientFactory;
 import T9A1.client.KioskClientFactory;
 import T9A1.common.Item;
 import T9A1.server.KioskServer;
-import T9A1.server.KioskTestServer;
+import T9A1.server.KioskTestServerFactory;
 
 import junit.framework.TestCase;
 
@@ -14,7 +14,7 @@ public abstract class InventoryManagerTest extends TestCase {
 	protected InventoryManager im;
 
 	public void setUp() {
-		KioskServer ks = KioskTestServer.getServerInstance();
+		KioskServer ks = KioskTestServerFactory.getServerInstance();
 	}
 
 	/**
