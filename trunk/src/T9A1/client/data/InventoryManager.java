@@ -21,20 +21,19 @@ public class InventoryManager {
 
 	public Item[] doSearch(String query) {
 
-		Item[] result = null;
+		List<Item> resultList = null;
 
 		// Check if the item should be handled by the cache
 		if (cacheManager.isCacheHit(query)) {
-			result = cacheManager.doSearch(query);
+			resultList = cacheManager.doSearch(query);
 		} else {
 
 			// TODO: Finish me
 			List<Item> list = connectionManager.sendRequest("foo");
 			System.out.println(list.get(0));
 			list.get(0).setLocation(new Location(2, 3));
-			result = list.toArray(new Item[0]);
 		}
 
-		return result;
+		return resultList.toArray(new Item[0]);
 	}
 }
