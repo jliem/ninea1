@@ -19,27 +19,17 @@ import java.util.List;
 public class ConnectionManager implements IConnectionManager {
 	/**
 	 * Variables
-	 * kioskID: identifies the kiosk
-	 * kioskPassword: allows the kiosk to access the server
+	 * 
 	 */
-	private char[] kioskID;
-	public Inet4Address serverIP;
 	public boolean debug = true;
 	public ConnectionManager(){
 
 
 	}
-
-	public String[] serializeRequest(String[] r){
-
-		return null;
-	}
-
-	public String[] deserializeSearch(String[] s){
-
-		return null;
-	}
-
+	/**
+	 * Send request method for client, that sends then blocks for reponse
+	 * @author Chase
+	 */
 	public List<Item> sendRequest(String request){
 		debug("Starting send request in conn manager");
 		List<Item> items = null;
@@ -53,7 +43,7 @@ public class ConnectionManager implements IConnectionManager {
 		    socketOut.writeBytes(request + '\n');
 		    ObjectInputStream  socketIn = null;
 		    try {
-		    	//socketIn.wait();
+		    	// TODO if blocks for too long it should error
 				socketIn = new ObjectInputStream(client.getInputStream());
 				items = (List<Item>) (socketIn.readObject());
 
@@ -74,8 +64,11 @@ public class ConnectionManager implements IConnectionManager {
 	      { System.err.println("I/O error"); }
 	      return items;
 	}
-
-
+	
+	/**
+	 * Debug method to show debugging information
+	 * @author Chase
+	 */
 	public void debug(String s){
 		if(this.debug){
 			System.out.println(s);
