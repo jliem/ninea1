@@ -36,11 +36,18 @@ public class Item implements Serializable {
 		this.price = price;
 		this.description = description;
 		this.inStock = inStock;
+		this.imageID = 0;
 		this.location = location;
 	}
 
 	public Item() {
-		// TODO Auto-generated constructor stub
+		super();
+		this.name = "";
+		this.price = 0;
+		this.description = "";
+		this.inStock = false;
+		this.imageID = 0;
+		this.location = null;
 	}
 
 	public String toString() {
