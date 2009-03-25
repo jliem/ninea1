@@ -2,15 +2,12 @@ package T9A1.client.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -39,6 +36,7 @@ public class SearchPanel extends JPanel{
 		gui = g;
 
 		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBackground(GUIColors.ORANGE);
 		GridBagConstraints c = new GridBagConstraints();
 
 		font = new Font("Arial", Font.PLAIN, 40);
@@ -80,6 +78,10 @@ public class SearchPanel extends JPanel{
 		add(keyboard, BorderLayout.SOUTH);
 	}
 
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+	}
+
 	private class SearchListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			String s = searchBox.getText().toUpperCase();
@@ -93,8 +95,9 @@ public class SearchPanel extends JPanel{
 
 	private class OnScreenKeyboard extends JPanel implements ActionListener{
 		public OnScreenKeyboard(){
-			SpringLayout layout = new SpringLayout();
-			this.setLayout(new GridBagLayout());
+			GridBagLayout layout = new GridBagLayout();
+			this.setLayout(layout);
+			this.setBackground(GUIColors.ORANGE);
 			GridBagConstraints constraints = new GridBagConstraints();
 
 			JButton[][] buttonArray = new JButton[qwertyArray.length][];

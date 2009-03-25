@@ -22,6 +22,9 @@ import T9A1.common.Location;
 
 public class ItemPanel{
 
+	private final String IMAGE_PATH = "client/gui/images/";
+	private final String NO_IMAGE = "no_image.gif";
+
 	private Item item;
 	private Map map;
 
@@ -53,7 +56,7 @@ public class ItemPanel{
 		GridBagConstraints con = new GridBagConstraints();
 		Insets insets = new Insets(2, 2, 2, 2);
 
-		JButton i = new JButton(new ImageIcon("client/gui/images/no_image.gif"));
+		JButton i = new JButton(getImage());
 		i.addActionListener(new ShowItemListener());
 		con.gridheight = 2;
 		con.gridwidth = 1;
@@ -93,7 +96,7 @@ public class ItemPanel{
 		con.insets = insets;
 		panel.add(inStock, con);
 
-		JLabel location = new JLabel("Aisle " + item.getLocation().getAisle() + " - Bin " + item.getLocation().getBin());
+		JLabel location = new JLabel(item.getLocation().toString());
 		con.gridheight = 1;
 		con.gridwidth = 1;
 		con.gridx = 3;
@@ -109,7 +112,7 @@ public class ItemPanel{
 		GridBagConstraints con = new GridBagConstraints();
 		Insets insets = new Insets(2, 2, 2, 2);
 
-		ImageContainer i = new ImageContainer(item.getImage());
+		ImageContainer i = new ImageContainer();
 		con.gridheight = 3;
 		con.gridwidth = 1;
 		con.gridx = 0;
@@ -153,7 +156,7 @@ public class ItemPanel{
 		con.insets = insets;
 		panel.add(inStock, con);
 
-		JLabel location = new JLabel("Aisle " + item.getLocation().getAisle() + " - Bin " + item.getLocation().getBin());
+		JLabel location = new JLabel(item.getLocation().toString());
 		con.gridheight = 1;
 		con.gridwidth = 1;
 		con.gridx = 3;
@@ -202,6 +205,15 @@ public class ItemPanel{
 		fullPanel = panel;
 	}
 
+	private ImageIcon getImage(){
+		ImageIcon i = new ImageIcon(IMAGE_PATH + item.getImageID() + ".gif");
+
+		if(item.getImageID() == 0 || i.getIconHeight() < 0)
+			i = new ImageIcon(IMAGE_PATH + NO_IMAGE);
+
+		return i;
+	}
+
 	private void showItem(){
 		gui.showItem(this);
 	}
@@ -228,17 +240,13 @@ public class ItemPanel{
 	}
 
 	private class ImageContainer extends JPanel{
-		String NO_IMAGE = "client/gui/images/no_image.gif";
 		ImageIcon image;
 
-		public ImageContainer(Image i){
+		public ImageContainer(){
 			this.setMinimumSize(new Dimension(100, 100));
 			this.setPreferredSize(new Dimension(100, 100));
 
-			if(i instanceof Image){
-				image = new ImageIcon(i);
-			}else
-				image = new ImageIcon(NO_IMAGE);
+			image = getImage();
 		}
 
 		public void paintComponent(Graphics g){
