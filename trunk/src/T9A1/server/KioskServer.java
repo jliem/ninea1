@@ -54,7 +54,8 @@ public class KioskServer {
 					i.setInStock(rs.getInt("STOCK_STATUS") > 0);
 					i.setPrice(rs.getDouble("PRICE"));
 					i.setLocation(new Location(rs.getInt("LOCATION_AISLE"), rs.getInt("LOCATION_BIN")));
-					i.setImageID(rs.getInt("IMAGE_ID"));
+					i.setImageID(rs.getLong("IMAGE_ID"));
+					System.out.println(rs.getLong("IMAGE_ID") + ", " + rs.getLong("PRODUCT_ID"));
 
 					/* DEBUG */ System.out.println("> " + i);
 
