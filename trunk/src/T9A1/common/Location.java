@@ -10,11 +10,7 @@ public class Location implements Serializable {
 		this.aisle = aisle;
 		this.bin = bin;
 	}
-	
-	public String toString() {
-		return "{a:" + aisle + " b:" + bin + "}";
-	}
-	
+
 	public int getAisle() {
 		return aisle;
 	}
@@ -26,5 +22,9 @@ public class Location implements Serializable {
 	}
 	public void setBin(int bin) {
 		this.bin = bin;
+	}
+
+	public String toString(){
+		return "Aisle " + aisle + ", Bin " + bin;
 	}
 }
