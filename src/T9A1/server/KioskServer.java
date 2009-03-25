@@ -22,8 +22,6 @@ public class KioskServer {
 		initPreparedStatements();
 
 		ServerConnectionManager sm = new ServerConnectionManager(this);
-
-		/* DEBUG */ handleRequest("hammer");
 	}
 
 	protected void initPreparedStatements() {
@@ -44,6 +42,7 @@ public class KioskServer {
 			try {
 				full_search.setString(1, "%" + query + "%");
 
+				System.out.println("Searching for " + query);
 				ResultSet rs = full_search.executeQuery();  // restrict max results?
 				Item i;
 				while (rs.next()) {
@@ -55,6 +54,7 @@ public class KioskServer {
 					i.setInStock(rs.getInt("STOCK_STATUS") > 0);
 					i.setPrice(rs.getDouble("PRICE"));
 					i.setLocation(new Location(rs.getInt("LOCATION_AISLE"), rs.getInt("LOCATION_BIN")));
+					i.setImageID(rs.getInt("IMAGE_ID"));
 
 					/* DEBUG */ System.out.println("> " + i);
 

@@ -159,6 +159,29 @@ public class CacheManagerTest extends TestCase {
 		}
 	}
 
+	/**
+	 * Tests replacing an existing entry in the cache.
+	 */
+	public void testReplace() {
+		String q = this.IN_CACHE;
+		ArrayList<Item> list1 = new ArrayList<Item>();
+		list1.add(new Item());
+
+		ArrayList<Item> list2 = new ArrayList<Item>();
+
+		cm.add(q, list1);
+
+		List<Item> cachedList = cm.doSearch(q);
+
+		assertEquals(list1, cachedList);
+
+		cm.add(q, list2);
+
+		cachedList = cm.doSearch(q);
+
+		assertEquals(list2, cachedList);
+	}
+
 	public void testClear() {
 		cm.add(this.IN_CACHE, itemList);
 

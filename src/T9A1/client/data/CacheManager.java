@@ -45,6 +45,8 @@ public class CacheManager implements ICacheManager {
 	}
 
 	public void add(String query, List<Item> items) {
+
+		System.out.println("Adding " + query + " to cache");
 		if (map.size() >= maxCacheEntries) {
 			// Using least-recently-used cache algorithm
 			String lru = heap.poll().getQuery();
@@ -52,32 +54,36 @@ public class CacheManager implements ICacheManager {
 			map.remove(lru);
 		}
 
+		// If we are replacing an existing entry, we need
+		// to update the old entry in the heap instead of adding
+		// a new one
+		if (this.contains(query)) {
+			CacheEntry entry = map.remove(query);
+			System.out.println("Removed entry " + entry + " from map");
+			if (heap.remove(entry)) {
+				System.out.println("Removed entry " + entry + " from heap");
+			} else {
+				System.out.println("Cache entry " + entry + " not found in heap");
+			}
+		}
+
 		// Create entry in cache
 		CacheEntry entry = new CacheEntry(query, items);
 		map.put(query, entry);
+
 		heap.add(entry);
+
+		verifyMapAndHeap();
 	}
 
 	public void remove(String query) {
 		map.remove(query);
 
-		// TODO(jliem): Is there a better way to do this?
-
 		// Find the corresponding entry in the heap
-		Iterator<CacheEntry> iter = heap.iterator();
-		CacheEntry target = null, temp = null;;
+		CacheEntry target = new CacheEntry(query, null);
+		heap.remove(target);
 
-		while (iter.hasNext() && target == null) {
-			temp = iter.next();
-
-			if (temp.getQuery().equals(query)) {
-				target = temp;
-			}
-		}
-
-		if (target != null) {
-			heap.remove(target);
-		}
+		verifyMapAndHeap();
 	}
 
 	public void clear() {
@@ -85,8 +91,8 @@ public class CacheManager implements ICacheManager {
 		heap.clear();
 	}
 
-	protected boolean contains(Object o) {
-		return map.containsKey(o);
+	protected boolean contains(String query) {
+		return map.containsKey(query);
 	}
 
 	/**
@@ -108,6 +114,14 @@ public class CacheManager implements ICacheManager {
 
 	protected void setMaxCacheEntries(int maxCacheEntries) {
 		CacheManager.maxCacheEntries = maxCacheEntries;
+	}
+
+	private void verifyMapAndHeap() {
+		if (map.size() != heap.size()) {
+			System.err.println("Map size is " + map.size()
+					+ " and heap size is " + heap.size()
+					+ ", expected them to be equal");
+		}
 	}
 
 }
