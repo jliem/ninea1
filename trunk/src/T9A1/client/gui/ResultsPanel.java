@@ -32,21 +32,6 @@ public class ResultsPanel extends JPanel {
 		searchTerm = s;
 		results = items;
 
-		JPanel displayResults = new JPanel(new GridBagLayout());
-		displayResults.setBackground(GUIColors.ORANGE);
-		JLabel search = new JLabel("You searched for " + searchTerm.toLowerCase());
-		JLabel number = new JLabel("Your search returned " + items.length + " results.");
-		search.setFont(font);
-		number.setFont(font);
-		c.insets = new Insets(5, 5, 5, 5);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.anchor = GridBagConstraints.LINE_START;
-		c.gridy = 0;
-		displayResults.add(search, c);
-		c.gridy = 1;
-		displayResults.add(number, c);
-		add(displayResults, BorderLayout.NORTH);
-
 		JPanel list = new JPanel(new GridBagLayout());
 		list.setBorder(new EmptyBorder(2, 2, 2, 2));
 		list.setBackground(GUIColors.LIGHT_ORANGE);
@@ -65,6 +50,27 @@ public class ResultsPanel extends JPanel {
 		}
 
 		add(new JScrollPane(list), BorderLayout.CENTER);
+
+		JPanel displayResults = new JPanel(new GridBagLayout());
+		displayResults.setBackground(GUIColors.ORANGE);
+		JLabel search = new JLabel("You searched for " + searchTerm.toLowerCase());
+
+		JLabel number;
+		if(results == null || results.length == 0){
+			number = new JLabel("Your search returned no results.");
+		}else{
+			number = new JLabel("Your search returned " + items.length + " results.");
+		}
+		search.setFont(font);
+		number.setFont(font);
+		c.insets = new Insets(5, 5, 5, 5);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridy = 0;
+		displayResults.add(search, c);
+		c.gridy = 1;
+		displayResults.add(number, c);
+		add(displayResults, BorderLayout.NORTH);
 
 		JPanel button = new JPanel(new GridBagLayout());
 		button.setBackground(GUIColors.ORANGE);

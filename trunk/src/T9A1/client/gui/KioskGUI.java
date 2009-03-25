@@ -50,17 +50,17 @@ public class KioskGUI {
 	}
 
 	public void search(String s){
-		ResultsPanel resultsPanel;
+		ResultsPanel resultsPanel = null;
 		Item[] results = inventoryManager.doSearch(s);
-		if(results != null && results.length > 0){
-		if(true){//results != null && results.length > 0){			resultsPanel = new ResultsPanel(this, s, results);
-		}else{
+		//if(results != null && results.length > 0){
+			resultsPanel = new ResultsPanel(this, s, results);
+		/*}else{
 
 			Item item = new Item(s, 2.5,
 					"It's a bunch of " + s, true, new Location(60, 10));
 			Item[] results2 = {item, item, item};
 			resultsPanel = new ResultsPanel(this, s, results2);
-		}
+		}*/
 
 		gui.add(resultsPanel, "RESULTS");
 		layoutManager.show(gui, "RESULTS");
