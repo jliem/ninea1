@@ -14,12 +14,12 @@ public class Item implements Serializable {
 	private double price;
 	private String description;
 	private boolean inStock;
-	private int imageID;
+	private long imageID;
 	private Location location;
 	private long id;
 
 	public Item(String name, double price, String description, boolean inStock,
-			int imageID, Location location) {
+			long imageID, Location location) {
 		super();
 		this.name = name;
 		this.price = price;
@@ -51,7 +51,7 @@ public class Item implements Serializable {
 	}
 
 	public String toString() {
-		return name + ": \"" + description + "\" - " + price + "$ - " + (!inStock ? "not " : "") + "in stock - " + location;
+		return name + ": \"" + description + "\" - " + price + "$ - " + (!inStock ? "not " : "") + "in stock - " + location + " - image name : " + imageID + ".gif";
 	}
 
 	public String getName() {
@@ -60,10 +60,10 @@ public class Item implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getImageID() {
+	public long getImageID() {
 		return imageID;
 	}
-	public void setImageID(int imageID) {
+	public void setImageID(long imageID) {
 		this.imageID = imageID;
 	}
 	public double getPrice() {
