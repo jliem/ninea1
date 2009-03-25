@@ -40,12 +40,16 @@ public class CacheEntry implements Comparable<CacheEntry> {
 		if (o instanceof CacheEntry) {
 			CacheEntry ce = (CacheEntry)o;
 
-			if ((this.count == ce.count) &&
-					this.query.equals(ce.query)) {
-				return true;
+			if (this.query != null) {
+				return (this.query.equals(ce.query));
 			}
 		}
 
 		return false;
+	}
+
+	public String toString() {
+		return String.format("Query: \"%s\", hits: %d, num items: %d", query,
+				count, (items != null ? items.size() : 0));
 	}
 }

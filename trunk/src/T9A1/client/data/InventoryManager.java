@@ -27,13 +27,16 @@ public class InventoryManager {
 		// Check if the item should be handled by the cache
 		if (cacheManager.isCacheHit(query)) {
 			resultList = cacheManager.doSearch(query);
-		} else {
 
-			// TODO: Finish me
+		} else {
 			resultList = connectionManager.sendRequest(query);
-			System.out.println("Result list: " + resultList);
-			// TODO(jliem): Add to cache
+
+			// This result wasn't in the cache (or it's stale), so add it now
+			cacheManager.add(query, resultList);
 		}
+
+		// Return null if the server returned null (indicating an error)
+		if (resultList == null) return null;
 
 		return resultList.toArray(new Item[0]);
 	}

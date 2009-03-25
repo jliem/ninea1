@@ -17,4 +17,19 @@ public class MockCacheManager implements ICacheManager {
 		return new ArrayList<Item>();
 	}
 
+	public void add(String query, List<Item> items) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void clear() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void remove(String query) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
