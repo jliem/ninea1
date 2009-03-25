@@ -35,7 +35,7 @@ public class ConnectionManager implements IConnectionManager {
 		List items = null;
 
 		try{
-			Inet4Address host = (Inet4Address) InetAddress.getLocalHost();
+			Inet4Address host = (Inet4Address) InetAddress.getByName("128.61.120.243");
 			Socket           client    = new Socket(host, 4321);
 			DataOutputStream socketOut = new DataOutputStream(client.getOutputStream());
 
