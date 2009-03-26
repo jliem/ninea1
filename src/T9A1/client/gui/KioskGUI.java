@@ -5,6 +5,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import org.xml.sax.XMLReader;
+
 import T9A1.client.data.InventoryManager;
 import T9A1.common.Item;
 import T9A1.common.Location;
@@ -18,11 +20,9 @@ public class KioskGUI {
 
 	private SearchPanel searchPanel;
 
-	private EventHandler eventHandler;
-
 	public KioskGUI(InventoryManager im){
 		inventoryManager = im;
-		map = new Map();
+		map = new Map(1);
 
 		JFrame frame = new JFrame("Kiosk");
 		Dimension size = new Dimension(1000, 700);
@@ -32,17 +32,17 @@ public class KioskGUI {
 		layoutManager = new CardLayout();
 		gui = new JPanel(layoutManager);
 
-		eventHandler = new EventHandler();
-
 		searchPanel = new SearchPanel(this);
 		gui.add(searchPanel, "SEARCH");
-
-		//layoutManager.show(gui, "SEARCH");
 
 		frame.add(gui);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
+	}
+
+	public int getWidth(){
+		return gui.getWidth();
 	}
 
 	public Map getMap(){
@@ -70,14 +70,5 @@ public class KioskGUI {
 
 	public void backToResults(){
 		layoutManager.show(gui, "RESULTS");
-	}
-
-	private class EventHandler implements ActionListener{
-
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
 	}
 }

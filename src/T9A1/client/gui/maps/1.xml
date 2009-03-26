@@ -1,3 +1,101 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <map store_number="1">
+
+	<!-- Right hand side of store -->
 	<aisle start_x="642" start_y="475" end_x="764" end_y="475" />
+	<aisle start_x="642" start_y="468" end_x="764" end_y="468" />
+	<aisle start_x="642" start_y="431" end_x="764" end_y="431" />
+	<aisle start_x="642" start_y="422" end_x="764" end_y="422" />
+	<aisle start_x="642" start_y="388" end_x="764" end_y="388" />
+	<aisle start_x="642" start_y="381" end_x="764" end_y="381" />
+	<aisle start_x="642" start_y="349" end_x="764" end_y="349" />
+	<aisle start_x="642" start_y="341" end_x="764" end_y="341" />
+	<aisle start_x="642" start_y="306" end_x="764" end_y="306" />
+	<aisle start_x="642" start_y="299" end_x="764" end_y="299" />
+	<aisle start_x="642" start_y="262" end_x="764" end_y="262" />
+	<aisle start_x="642" start_y="255" end_x="764" end_y="255" />
+	<aisle start_x="642" start_y="220" end_x="764" end_y="220" />
+	<aisle start_x="642" start_y="213" end_x="764" end_y="213" />
+	<aisle start_x="642" start_y="179" end_x="764" end_y="179" bins="5" />
+	<aisle start_x="642" start_y="138" end_x="764" end_y="138" />
+	<aisle start_x="642" start_y="131" end_x="764" end_y="131" />
+	<aisle start_x="642" start_y="94" end_x="764" end_y="94" />
+	<aisle start_x="642" start_y="87" end_x="764" end_y="87" />
+	<aisle start_x="642" start_y="49" end_x="764" end_y="49" />
+	<aisle start_x="642" start_y="42" end_x="764" end_y="42" />
+
+	<!-- Main block of aisles -->
+	<aisle start_x="484" start_y="51" end_x="484" end_y="172" />
+	<aisle start_x="484" start_y="200" end_x="484" end_y="218" />
+
+	<aisle start_x="475" start_y="51" end_x="475" end_y="172" />
+	<aisle start_x="475" start_y="200" end_x="475" end_y="218" />
+
+	<aisle start_x="441" start_y="51" end_x="441" end_y="172" />
+	<aisle start_x="441" start_y="200" end_x="441" end_y="218" />
+
+	<aisle start_x="434" start_y="51" end_x="434" end_y="172" />
+	<aisle start_x="434" start_y="200" end_x="434" end_y="218" />
+
+	<aisle start_x="402" start_y="51" end_x="402" end_y="172" />
+	<aisle start_x="402" start_y="200" end_x="402" end_y="218" />
+
+	<aisle start_x="395" start_y="51" end_x="395" end_y="172" />
+	<aisle start_x="395" start_y="200" end_x="395" end_y="218" />
+
+	<aisle start_x="360" start_y="51" end_x="360" end_y="172" />
+	<aisle start_x="360" start_y="200" end_x="360" end_y="218" />
+
+	<aisle start_x="353" start_y="51" end_x="353" end_y="172" />
+	<aisle start_x="353" start_y="200" end_x="353" end_y="218" />
+
+	<aisle start_x="320" start_y="51" end_x="320" end_y="172" />
+	<aisle start_x="320" start_y="200" end_x="320" end_y="218" />
+
+	<aisle start_x="313" start_y="51" end_x="313" end_y="172" />
+	<aisle start_x="313" start_y="200" end_x="313" end_y="218" />
+
+	<aisle start_x="278" start_y="51" end_x="278" end_y="172" />
+	<aisle start_x="278" start_y="200" end_x="278" end_y="218" />
+
+	<aisle start_x="271" start_y="51" end_x="271" end_y="172" />
+	<aisle start_x="271" start_y="200" end_x="271" end_y="218" />
+
+	<aisle start_x="233" start_y="51" end_x="233" end_y="172" />
+	<aisle start_x="233" start_y="200" end_x="233" end_y="218" />
+
+	<aisle start_x="226" start_y="51" end_x="226" end_y="172" />
+	<aisle start_x="226" start_y="200" end_x="226" end_y="218" />
+
+	<aisle start_x="191" start_y="51" end_x="191" end_y="172" />
+	<aisle start_x="191" start_y="200" end_x="191" end_y="218" />
+
+	<aisle start_x="184" start_y="51" end_x="184" end_y="172" />
+	<aisle start_x="184" start_y="200" end_x="184" end_y="218" />
+
+	<aisle start_x="152" start_y="51" end_x="152" end_y="172" />
+	<aisle start_x="152" start_y="200" end_x="152" end_y="218" />
+
+	<aisle start_x="145" start_y="51" end_x="145" end_y="172" />
+	<aisle start_x="145" start_y="200" end_x="145" end_y="218" />
+
+	<aisle start_x="109" start_y="51" end_x="109" end_y="172" />
+	<aisle start_x="109" start_y="200" end_x="109" end_y="218" />
+
+	<aisle start_x="102" start_y="51" end_x="102" end_y="172" />
+	<aisle start_x="102" start_y="200" end_x="102" end_y="218" />
+
+	<aisle start_x="65" start_y="51" end_x="65" end_y="172" />
+	<aisle start_x="65" start_y="200" end_x="65" end_y="218" />
+
+	<aisle start_x="58" start_y="51" end_x="58" end_y="172" />
+	<aisle start_x="58" start_y="200" end_x="58" end_y="218" />
+
+	<!-- Main block of aisles -->
+	<aisle start_x="50" start_y="367" end_x="170" end_y="367" />
+	<aisle start_x="50" start_y="374" end_x="170" end_y="374" />
+	<aisle start_x="50" start_y="411" end_x="170" end_y="411" />
+	<aisle start_x="50" start_y="418" end_x="170" end_y="418" />
+	<aisle start_x="50" start_y="455" end_x="170" end_y="455" />
+	<aisle start_x="50" start_y="462" end_x="170" end_y="462" />
+</map>

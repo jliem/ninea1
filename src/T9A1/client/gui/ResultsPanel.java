@@ -1,6 +1,7 @@
 package T9A1.client.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -70,6 +71,7 @@ public class ResultsPanel extends JPanel {
 		displayResults.add(search, c);
 		c.gridy = 1;
 		displayResults.add(number, c);
+		displayResults.setMinimumSize(new Dimension(0, gui.getWidth()));
 		add(displayResults, BorderLayout.NORTH);
 
 		JPanel button = new JPanel(new GridBagLayout());
