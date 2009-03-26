@@ -7,8 +7,12 @@ import T9A1.common.ConnectionManager;
 
 public class KioskClientFactory {
 
-	public KioskClientFactory(String[] args) {
+	private int storeNumber = 0;
 
+	public KioskClientFactory(String[] args) {
+		if (args.length > 1) {
+			storeNumber = Integer.parseInt(args[0]);
+		}
 	}
 
 	public KioskGUI createKioskGUI(){
@@ -20,7 +24,7 @@ public class KioskClientFactory {
 
 	public InventoryManager createInventoryManager() {
 		InventoryManager im = new InventoryManager(new CacheManager(),
-				new ConnectionManager());
+				new ConnectionManager(), storeNumber);
 
 		return im;
 	}

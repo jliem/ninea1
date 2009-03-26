@@ -12,12 +12,21 @@ public class InventoryManager {
 
 	private ICacheManager cacheManager;
 	private IConnectionManager connectionManager;
+	private int storeNumber;
 
 	public InventoryManager(ICacheManager cacheManager,
 			IConnectionManager connectionManager) {
 
 		this.cacheManager = cacheManager;
 		this.connectionManager = connectionManager;
+	}
+
+	public InventoryManager(ICacheManager cacheManager,
+			IConnectionManager connectionManager, int storeNumber) {
+
+		this.cacheManager = cacheManager;
+		this.connectionManager = connectionManager;
+		this.storeNumber = storeNumber;
 	}
 
 	public Item[] doSearch(String query) {
@@ -39,5 +48,9 @@ public class InventoryManager {
 		if (resultList == null) return null;
 
 		return resultList.toArray(new Item[0]);
+	}
+
+	public int getStoreNumber() {
+		return storeNumber;
 	}
 }

@@ -8,6 +8,10 @@ package T9A1.client;
  */
 public class Kiosk {
 	public static void main(String args[]){
-		new KioskClientFactory(args).createKioskGUI();
+		if (args.length > 0) {
+			new KioskClientFactory(args).createKioskGUI();
+		} else {
+			System.out.println("Usage: java Kiosk [storeNumber]");
+		}
 	}
 }
