@@ -87,7 +87,7 @@ public class CacheManagerTest extends TestCase {
 		assertFalse(isHit);
 	}
 
-	public void testLruRemoval() {
+	public void testLfuRemoval() {
 		for (String query : queries) {
 			cm.add(query, itemList);
 		}
@@ -120,7 +120,7 @@ public class CacheManagerTest extends TestCase {
 		cm.add(this.IN_CACHE, itemList);
 
 		// Construct a CacheEntry that looks like the one
-		// used in thePriorityQueue
+		// used in the PriorityQueue
 		CacheEntry entry = new CacheEntry(this.IN_CACHE, itemList);
 
 		cm.remove(this.IN_CACHE);

@@ -48,10 +48,10 @@ public class CacheManager implements ICacheManager {
 
 		System.out.println("Adding " + query + " to cache");
 		if (map.size() >= maxCacheEntries) {
-			// Using least-recently-used cache algorithm
-			String lru = heap.poll().getQuery();
+			// Using least-frequently-used cache algorithm
+			String lfu = heap.poll().getQuery();
 
-			map.remove(lru);
+			map.remove(lfu);
 		}
 
 		// If we are replacing an existing entry, we need
@@ -59,12 +59,8 @@ public class CacheManager implements ICacheManager {
 		// a new one
 		if (this.contains(query)) {
 			CacheEntry entry = map.remove(query);
-			System.out.println("Removed entry " + entry + " from map");
-			if (heap.remove(entry)) {
-				System.out.println("Removed entry " + entry + " from heap");
-			} else {
-				System.out.println("Cache entry " + entry + " not found in heap");
-			}
+
+			heap.remove(entry);
 		}
 
 		// Create entry in cache
