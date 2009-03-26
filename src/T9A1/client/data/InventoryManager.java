@@ -7,6 +7,7 @@ import java.util.List;
 import T9A1.common.IConnectionManager;
 import T9A1.common.Item;
 import T9A1.common.Location;
+import T9A1.common.Request;
 
 public class InventoryManager {
 
@@ -38,7 +39,8 @@ public class InventoryManager {
 			resultList = cacheManager.doSearch(query);
 
 		} else {
-			resultList = connectionManager.sendRequest(query);
+			resultList = (List<Item>)connectionManager.sendRequest(Request.Type.item_search,
+					query);
 
 			// This result wasn't in the cache (or it's stale), so add it now
 			cacheManager.add(query, resultList);

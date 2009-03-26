@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface IConnectionManager {
 
+	public Object sendRequest(Request.Type type, Object data);
+
 	/**
-	 * Sends a request to the server.
-	 *
-	 * @param request the request to send
-	 * @return a list of results
+	 * Send request method for client, that sends then blocks for reponse
+	 * @author Chase
 	 */
-	public List<Item> sendRequest(String request);
+	public Object sendRequest(Request request);
 }

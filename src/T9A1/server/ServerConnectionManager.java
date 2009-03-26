@@ -6,6 +6,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
@@ -17,11 +18,13 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import T9A1.common.Item;
+import T9A1.common.Request;
 /**
  *
  * @author Chase
@@ -88,15 +91,27 @@ public class ServerConnectionManager{
 			    	numConnections = numConnections + 1;
 			    		if(client != null){
 			    			try {
-			    				BufferedReader streamIn = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			    				//BufferedReader streamIn = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			    				ObjectInputStream streamIn = new ObjectInputStream(client.getInputStream());
+			    				Request request = (Request)streamIn.readObject();
+
+			    				// TODO(chase): think of a better way of getting a string
+			    				String stringData = request.data.toString();
+			    				Scanner dataStream = new Scanner(stringData);
+
 								String line;
-								line = streamIn.readLine();
 								ArrayList al = new ArrayList();
-								al.add(client); al.add(line);
-								buffer.add(al);
-								debug("Producer Thread " + threadNum + ": " + line + " added to buffer");
+
+								while (dataStream.hasNext()) {
+									line = dataStream.nextLine();
+									al.add(client); al.add(line);
+									buffer.add(al);
+									debug("Producer Thread " + threadNum + ": " + line + " added to buffer");
+								}
 							}catch(IOException e){
 								debug("IO Error in streams");
+							} catch (ClassNotFoundException e) {
+								debug("Class not found exception in server");
 							}
 			    		}
 			    	}
