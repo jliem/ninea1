@@ -20,6 +20,7 @@ import T9A1.common.Location;
 
 public class Map {
 	public static final String MAP_PATH = "client/gui/maps/";
+	public static final String FILETYPE = ".gif";
 
 	private ImageIcon map;
 	private int storeNumber;
@@ -30,7 +31,7 @@ public class Map {
 
 		this.storeNumber = storeNumber;
 
-		map = new ImageIcon(MAP_PATH + storeNumber  + ".gif");
+		map = new ImageIcon(MAP_PATH + storeNumber  + FILETYPE);
 
 		Parser p = new Parser();
 		p.fillOutAisles();
