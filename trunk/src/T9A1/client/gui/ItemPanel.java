@@ -23,7 +23,8 @@ import T9A1.common.Location;
 public class ItemPanel{
 
 	private final String IMAGE_PATH = "client/gui/images/";
-	private final String NO_IMAGE = "no_image.gif";
+	private final String NO_IMAGE = "no_image";
+	private final String FILETYPE = ".jpg";
 
 	private Item item;
 	private Map map;
@@ -206,10 +207,10 @@ public class ItemPanel{
 	}
 
 	private ImageIcon getImage(){
-		ImageIcon i = new ImageIcon(IMAGE_PATH + item.getImageID() + ".gif");
+		ImageIcon i = new ImageIcon(IMAGE_PATH + item.getImageID() + FILETYPE);
 
 		if(item.getImageID() == 0 || i.getIconHeight() < 0)
-			i = new ImageIcon(IMAGE_PATH + NO_IMAGE);
+			i = new ImageIcon(IMAGE_PATH + NO_IMAGE + FILETYPE);
 
 		return i;
 	}
