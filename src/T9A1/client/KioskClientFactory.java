@@ -5,7 +5,7 @@ import T9A1.client.data.InventoryManager;
 import T9A1.client.gui.KioskGUI;
 import T9A1.common.ConnectionManager;
 
-public class KioskClientFactory implements IKioskClientFactory {
+public class KioskClientFactory {
 
 	public KioskClientFactory(String[] args) {
 

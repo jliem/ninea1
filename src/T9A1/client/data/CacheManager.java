@@ -25,11 +25,17 @@ public class CacheManager implements ICacheManager {
 		heap = new PriorityQueue<CacheEntry>();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public boolean isCacheHit(String query) {
 		// TODO(jliem): Also need to check if data has been updated in DB
 		return map.containsKey(query);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public List<Item> doSearch(String query) {
 
 		List<Item> result = new ArrayList<Item>();
@@ -44,6 +50,9 @@ public class CacheManager implements ICacheManager {
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void add(String query, List<Item> items) {
 
 		System.out.println("Adding " + query + " to cache");
@@ -72,6 +81,9 @@ public class CacheManager implements ICacheManager {
 		verifyMapAndHeap();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void remove(String query) {
 		map.remove(query);
 
@@ -82,6 +94,9 @@ public class CacheManager implements ICacheManager {
 		verifyMapAndHeap();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void clear() {
 		map.clear();
 		heap.clear();
