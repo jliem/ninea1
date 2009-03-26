@@ -1,7 +1,6 @@
 package T9A1.client.data;
 
-import T9A1.client.KioskClientFactory;
-import T9A1.client.KioskClientMockFactory;
+import T9A1.common.ConnectionManager;
 
 /**
  * Tests the InventoryManager subsystem without the use of the CacheManager.
@@ -11,12 +10,9 @@ import T9A1.client.KioskClientMockFactory;
  */
 public class InventoryManagerNoCacheTest extends InventoryManagerTest {
 
-	public InventoryManagerNoCacheTest() {
-		kcf = new KioskClientMockFactory(null);
-	}
-
 	public void setUp() {
 		super.setUp();
-		im = ((KioskClientMockFactory)kcf).createInventoryManagerWithoutCache();
+		im = new InventoryManager(new MockCacheManager(),
+				new ConnectionManager());
 	}
 }
