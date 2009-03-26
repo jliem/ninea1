@@ -10,7 +10,7 @@ public class KioskClientFactory {
 	private int storeNumber = 0;
 
 	public KioskClientFactory(String[] args) {
-		if (args.length > 1) {
+		if (args.length > 0) {
 			storeNumber = Integer.parseInt(args[0]);
 		}
 	}
