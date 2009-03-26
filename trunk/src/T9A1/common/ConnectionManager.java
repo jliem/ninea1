@@ -30,12 +30,12 @@ public class ConnectionManager implements IConnectionManager {
 	 * Send request method for client, that sends then blocks for reponse
 	 * @author Chase
 	 */
-	public List sendRequest(String request){
+	public List<Item> sendRequest(String request){
 		debug("Starting send request in conn manager");
-		List items = null;
+		List<Item> items = null;
 
 		try{
-			Inet4Address host = (Inet4Address) InetAddress.getByName("128.61.120.243");
+			Inet4Address host = (Inet4Address) InetAddress.getLocalHost();
 			Socket           client    = new Socket(host, 4321);
 			DataOutputStream socketOut = new DataOutputStream(client.getOutputStream());
 
@@ -44,7 +44,7 @@ public class ConnectionManager implements IConnectionManager {
 		    try {
 		    	// TODO if blocks for too long it should error
 				socketIn = new ObjectInputStream(client.getInputStream());
-				items = (List) (socketIn.readObject());
+				items = (List<Item>) (socketIn.readObject());
 
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block

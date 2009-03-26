@@ -4,7 +4,7 @@ public class KioskServerTest {
 	private KioskServer ks;
 
 	public KioskServerTest() {
-		ks = KioskTestServerFactory.getServerInstance();
+		ks = KioskServerFactory.getServerInstance();
 	}
 
 //	public void testHandleRequest() {
