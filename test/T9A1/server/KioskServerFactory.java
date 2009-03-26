@@ -1,10 +1,10 @@
 package T9A1.server;
 
-public final class KioskTestServerFactory {
+public final class KioskServerFactory {
 
 	private static KioskServer serverInstance;
 
-	private KioskTestServerFactory() {
+	private KioskServerFactory() {
 
 	}
 
