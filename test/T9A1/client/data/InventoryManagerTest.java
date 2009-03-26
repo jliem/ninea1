@@ -1,7 +1,5 @@
 package T9A1.client.data;
 
-import T9A1.client.IKioskClientFactory;
-import T9A1.client.KioskClientFactory;
 import T9A1.common.Item;
 import T9A1.server.KioskServer;
 import T9A1.server.KioskServerFactory;
@@ -10,9 +8,13 @@ import junit.framework.TestCase;
 
 public abstract class InventoryManagerTest extends TestCase {
 
-	protected IKioskClientFactory kcf;
 	protected InventoryManager im;
 
+	/**
+	 * Initialize a server. The same server instance will be used for all
+	 * tests. Subclasses should call super.setUp() to initialize the server
+	 * or omit it to conduct tests without a working server.
+	 */
 	public void setUp() {
 		KioskServer ks = KioskServerFactory.getServerInstance();
 	}
