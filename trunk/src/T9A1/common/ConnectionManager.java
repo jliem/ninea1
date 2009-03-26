@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -26,25 +27,29 @@ public class ConnectionManager implements IConnectionManager {
 
 
 	}
+
+	public Object sendRequest(Request.Type type, Object data) {
+		return sendRequest(new Request(type, data));
+	}
 	/**
 	 * Send request method for client, that sends then blocks for reponse
 	 * @author Chase
 	 */
-	public List<Item> sendRequest(String request){
+	public Object sendRequest(Request request){
 		debug("Starting send request in conn manager");
-		List<Item> items = null;
+		Object response = null;
 
 		try{
 			Inet4Address host = (Inet4Address) InetAddress.getLocalHost();
 			Socket           client    = new Socket(host, 4321);
-			DataOutputStream socketOut = new DataOutputStream(client.getOutputStream());
+			ObjectOutputStream socketOut = new ObjectOutputStream(client.getOutputStream());
 
-		    socketOut.writeBytes(request + '\n');
+		    socketOut.writeObject(request);
 		    ObjectInputStream  socketIn = null;
 		    try {
 		    	// TODO if blocks for too long it should error
 				socketIn = new ObjectInputStream(client.getInputStream());
-				items = (List<Item>) (socketIn.readObject());
+				response = (List<Item>) (socketIn.readObject());
 
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -57,7 +62,7 @@ public class ConnectionManager implements IConnectionManager {
 	      { System.err.println("Unknown host"); }
 	      catch (IOException e)
 	      { System.err.println("I/O error"); }
-	      return items;
+	      return response;
 	}
 
 	/**

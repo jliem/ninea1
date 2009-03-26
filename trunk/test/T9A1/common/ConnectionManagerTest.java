@@ -18,7 +18,7 @@ public class ConnectionManagerTest extends TestCase {
 	}
 
 	public void testSendRequest() {
-		List<Item> result = cm.sendRequest("foo");
+		Object result = cm.sendRequest(Request.Type.item_search, "foo");
 
 		assertNotNull(result);
 	}

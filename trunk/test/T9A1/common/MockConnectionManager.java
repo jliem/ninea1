@@ -3,19 +3,25 @@ package T9A1.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import T9A1.common.Request.Type;
+
 public class MockConnectionManager implements IConnectionManager {
 
-	private List<Item> response = new ArrayList<Item>();
+	private Object response = new ArrayList<Item>();
 
-	public List<Item> sendRequest(String request) {
+	public Object sendRequest(Type type, Object data) {
 		return response;
 	}
 
-	protected List<Item> getResponse() {
+	public Object sendRequest(Request request) {
 		return response;
 	}
 
-	protected void setResponse(List<Item> response) {
+	public Object getResponse() {
+		return response;
+	}
+
+	public void setResponse(Object response) {
 		this.response = response;
 	}
 }
