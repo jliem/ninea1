@@ -9,6 +9,12 @@ import java.util.PriorityQueue;
 import T9A1.client.data.ICacheManager;
 import T9A1.common.Item;
 
+/**
+ * Manages the cache used by InventoryManager.
+ *
+ * @author JL
+ *
+ */
 public class CacheManager implements ICacheManager {
 
 	/**

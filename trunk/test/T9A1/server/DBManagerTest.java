@@ -6,6 +6,11 @@ import java.sql.Statement;
 
 import junit.framework.TestCase;
 
+/**
+ * Tests the database manager.
+ * @author JL
+ *
+ */
 public class DBManagerTest extends TestCase {
 
 	private DBManager dbm;

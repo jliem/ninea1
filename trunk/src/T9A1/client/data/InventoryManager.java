@@ -1,14 +1,17 @@
 package T9A1.client.data;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import T9A1.common.IConnection;
 import T9A1.common.Item;
-import T9A1.common.Location;
 import T9A1.common.Request;
 
+/**
+ * Responsible for accessing inventory data.
+ *
+ * @author JL
+ *
+ */
 public class InventoryManager {
 
 	private ICacheManager cacheManager;

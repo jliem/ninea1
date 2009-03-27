@@ -6,6 +6,11 @@ import T9A1.server.KioskServerFactory;
 
 import junit.framework.TestCase;
 
+/**
+ * Parent class for all inventory manager tests.
+ * @author JL
+ *
+ */
 public abstract class InventoryManagerTest extends TestCase {
 
 	protected InventoryManager im;

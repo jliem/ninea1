@@ -1,18 +1,8 @@
 package T9A1.server;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.management.ManagementFactory;
-import java.lang.management.ThreadInfo;
-import java.lang.management.ThreadMXBean;
-import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -25,7 +15,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import T9A1.common.Item;
 import T9A1.common.Request;
+
 /**
+ *
+ * Connects the server to the client.
  *
  * @author Chase
  */

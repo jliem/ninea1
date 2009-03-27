@@ -6,6 +6,12 @@ import junit.framework.TestCase;
 
 import T9A1.common.Item;
 
+/**
+ * Tests for the kiosk server.
+ *
+ * @author JL
+ *
+ */
 public class KioskServerTest extends TestCase {
 	private KioskServer ks;
 

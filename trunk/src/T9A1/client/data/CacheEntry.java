@@ -4,6 +4,12 @@ import java.util.List;
 
 import T9A1.common.Item;
 
+/**
+ * Represents an entry in the cache. Used by the CacheManager.
+ *
+ * @author JL
+ *
+ */
 public class CacheEntry implements Comparable<CacheEntry> {
 	private List<Item> items;
 	private int count;

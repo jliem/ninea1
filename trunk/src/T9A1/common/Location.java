@@ -2,6 +2,12 @@ package T9A1.common;
 
 import java.io.Serializable;
 
+/**
+ * Represents a location on the map.
+ *
+ * @author Catie
+ *
+ */
 public class Location implements Serializable {
 	private int aisle;
 	private int bin;

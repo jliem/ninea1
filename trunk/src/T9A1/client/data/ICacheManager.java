@@ -4,6 +4,12 @@ import java.util.List;
 
 import T9A1.common.Item;
 
+/**
+ * Interface for a cache mechanism.
+ *
+ * @author JL
+ *
+ */
 public interface ICacheManager {
 
 	/**

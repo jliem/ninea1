@@ -1,5 +1,11 @@
 package T9A1.server;
 
+/**
+ * Factory to make kiosk servers.
+ *
+ * @author JL
+ *
+ */
 public final class KioskServerFactory {
 
 	private static KioskServer serverInstance;
