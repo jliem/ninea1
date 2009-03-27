@@ -1,6 +1,6 @@
 package T9A1.client.data;
 
-import T9A1.common.ConnectionManager;
+import T9A1.common.Connection;
 
 /**
  * Tests the InventoryManager subsystem with a working CacheManager and
@@ -13,6 +13,6 @@ public class InventoryManagerFullTest extends InventoryManagerTest {
 
 	public void setUp() {
 		super.setUp();
-		im = new InventoryManager(new CacheManager(), new ConnectionManager());
+		im = new InventoryManager(new CacheManager(), new Connection());
 	}
 }

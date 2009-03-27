@@ -4,7 +4,7 @@ package T9A1.client.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import T9A1.common.IConnectionManager;
+import T9A1.common.IConnection;
 import T9A1.common.Item;
 import T9A1.common.Location;
 import T9A1.common.Request;
@@ -12,18 +12,18 @@ import T9A1.common.Request;
 public class InventoryManager {
 
 	private ICacheManager cacheManager;
-	private IConnectionManager connectionManager;
+	private IConnection connectionManager;
 	private int storeNumber;
 
 	public InventoryManager(ICacheManager cacheManager,
-			IConnectionManager connectionManager) {
+			IConnection connectionManager) {
 
 		this.cacheManager = cacheManager;
 		this.connectionManager = connectionManager;
 	}
 
 	public InventoryManager(ICacheManager cacheManager,
-			IConnectionManager connectionManager, int storeNumber) {
+			IConnection connectionManager, int storeNumber) {
 
 		this.cacheManager = cacheManager;
 		this.connectionManager = connectionManager;
