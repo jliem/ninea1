@@ -20,19 +20,40 @@ import javax.swing.JPanel;
 import T9A1.common.Item;
 import T9A1.common.Location;
 
+/**
+ * A class for getting different item displays. The compact panel can be
+ * used in a list of items, while the full panel displays the item's information
+ * along with the item's location plotted on a store map.
+ *
+ * @author Catie
+ */
 public class ItemPanel{
 
+	/** The location of the product images. */
 	private final String IMAGE_PATH = "client/gui/images/";
+	/** The name of the default product image. */
 	private final String NO_IMAGE = "no_image";
+	/** The filetype of the product images. */
 	private final String FILETYPE = ".jpg";
 
+	/** The item that the panels represent. */
 	private Item item;
+	/** The map that represents the store. */
 	private Map map;
 
+	/** The main GUI component. */
 	private KioskGUI gui;
 
-	private JPanel compactPanel, fullPanel;
+	/** The compact representation of the item. */
+	private JPanel compactPanel;
+	/** The full representation of the item. */
+	private JPanel fullPanel;
 
+	/**
+	 * Creates a new ItemPanel and initializes the compact panel.
+	 * @param g The main GUI component.
+	 * @param i The Item that this panel represents.
+	 */
 	public ItemPanel(KioskGUI g, Item i){
 		item = i;
 		gui = g;
@@ -41,10 +62,18 @@ public class ItemPanel{
 		initializeCompactPanel();
 	}
 
+	/**
+	 * Returns a compact representation of the Item.
+	 * @return the compact panel that represents the Item
+	 */
 	public JPanel getCompactPanel(){
 		return compactPanel;
 	}
 
+	/**
+	 * Returns a full representation of the Item, including the item's location on a map.
+	 * @return the full panel that represents the Item
+	 */
 	public JPanel getFullPanel(){
 		if(fullPanel == null)
 			initializeFullPanel();
@@ -52,6 +81,9 @@ public class ItemPanel{
 		return fullPanel;
 	}
 
+	/**
+	 * Initializes the compact panel.
+	 */
 	private void initializeCompactPanel(){
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints con = new GridBagConstraints();
@@ -108,6 +140,9 @@ public class ItemPanel{
 		compactPanel = panel;
 	}
 
+	/**
+	 * Initializes the full panel
+	 */
 	private void initializeFullPanel(){
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints con = new GridBagConstraints();
@@ -206,6 +241,10 @@ public class ItemPanel{
 		fullPanel = panel;
 	}
 
+	/**
+	 * Gets the image associated with the product's item id number.
+	 * @return an ImageIcon that holds the product image
+	 */
 	private ImageIcon getImage(){
 		ImageIcon i = new ImageIcon(IMAGE_PATH + item.getImageID() + FILETYPE);
 
@@ -215,10 +254,17 @@ public class ItemPanel{
 		return i;
 	}
 
+	/**
+	 * Instructs the main GUI component to display the image.
+	 */
 	private void showItem(){
 		gui.showItem(this);
 	}
 
+	/**
+	 * Listener for the New Search button.
+	 * @author Catie
+	 */
 	private class NewSearchListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
@@ -226,6 +272,10 @@ public class ItemPanel{
 		}
 	}
 
+	/**
+	 * Listener for the Return to Results button.
+	 * @author Catie
+	 */
 	private class ReturnResultsListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {
@@ -233,6 +283,10 @@ public class ItemPanel{
 		}
 	}
 
+	/**
+	 * Listener for the user to chose an item.
+	 * @author Catie
+	 */
 	private class ShowItemListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
@@ -240,6 +294,10 @@ public class ItemPanel{
 		}
 	}
 
+	/**
+	 * Displays the product's image.
+	 * @author Catie
+	 */
 	private class ImageContainer extends JPanel{
 		ImageIcon image;
 
@@ -255,6 +313,10 @@ public class ItemPanel{
 		}
 	}
 
+	/**
+	 * Displays the map and plots the Item's location
+	 * @author Catie
+	 */
 	private class MapPanel extends JPanel{
 
 		private ImageIcon mapImage;

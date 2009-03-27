@@ -18,14 +18,29 @@ import org.xml.sax.SAXException;
 
 import T9A1.common.Location;
 
+/**
+ * A representation of the store map. Uses the store number to
+ * read in the correct map image and aisle information from files.
+ *
+ * @author Catie
+ */
 public class Map {
+	/** The location of the map images. */
 	public static final String MAP_PATH = "client/gui/maps/";
+	/** The filetype of the map image. */
 	public static final String FILETYPE = ".gif";
 
+	/** The map image. */
 	private ImageIcon map;
+	/** The store's number. */
 	private int storeNumber;
+	/** An ArrayList of Aisles in the store. */
 	private ArrayList<Aisle> aisles;
 
+	/**
+	 * Creates a new Map object for the given store number, including parsing the XML file.
+	 * @param storeNumber the number for the store represented by the Map
+	 */
 	public Map(int storeNumber){
 		aisles = new ArrayList();
 
@@ -37,6 +52,11 @@ public class Map {
 		p.fillOutAisles();
 	}
 
+	/**
+	 * Returns the coordinates on the map that represent the provided Location.
+	 * @param l the Location to be plotted
+	 * @return the Location's coordinate on the map
+	 */
 	public Point getCoordinates(Location l){
 		int a = l.getAisle();
 		int b = l.getBin();
@@ -53,18 +73,35 @@ public class Map {
 		return new Point(x, y);
 	}
 
+	/**
+	 * Returns the map image.
+	 * @return the map image
+	 */
 	public ImageIcon getMap(){
 		return map;
 	}
 
+	/**
+	 * Returns the number of aisles in the store.
+	 * @return the number of aisles in the store
+	 */
 	public int getNumAisles(){
 		return aisles.size();
 	}
 
+	/**
+	 * Returns the number of bins in a give aisle.
+	 * @param a the aisle to check
+	 * @return the number of bins in aisle a
+	 */
 	public int getNumBins(int a){
 		return aisles.get(a - 1).getBins();
 	}
 
+	/**
+	 * Parses the XML file that represents the aisles in the store using DOM.
+	 * @author Catie
+	 */
 	private class Parser{
 		Document dom;
 
@@ -117,7 +154,6 @@ public class Map {
 
 		private int getValue(Element e, String tag) {
 			String s = e.getAttribute(tag);
-			System.out.println(s);
 			int i;
 			try{
 				i = Integer.parseInt(s);
@@ -128,6 +164,10 @@ public class Map {
 		}
 	}
 
+	/**
+	 * Represents an aisle in the store.
+	 * @author Catie
+	 */
 	private class Aisle{
 		static final int STANDARD_BINS = 10;
 

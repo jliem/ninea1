@@ -15,21 +15,35 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+/**
+ * The panel used to enter a search term.
+ * @author Catie
+ */
 public class SearchPanel extends JPanel{
+	/** An array that represents a QWERTY keyboard. */
 	private final String[][] qwertyArray =
 			{{"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"},
 			{"A", "S", "D", "F", "G", "H", "J", "K", "L", "BACK"},
 			{"Z", "X", "C", "V", "B", "N", "M", "ENTER"},
 			{"SPACE"}};
 
+	/** The JTextField used to input the search term. */
 	private JTextField searchBox;
+	/** The JButton pressed to initiate a search. */
 	private JButton search;
+	/** The Font used throughout the panel. */
 	private Font font;
 
+	/** The main GUI component. */
 	private KioskGUI gui;
 
+	/** The listener used to initiate a search. */
 	private SearchListener listener;
 
+	/**
+	 * Creates a new search panel.
+	 * @param g the main GUI component
+	 */
 	public SearchPanel(KioskGUI g) {
 		super(new BorderLayout());
 
@@ -82,6 +96,10 @@ public class SearchPanel extends JPanel{
 		super.paintComponent(g);
 	}
 
+	/**
+	 * The listener used to initiate a search.
+	 * @author Catie
+	 */
 	private class SearchListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			String s = searchBox.getText().toUpperCase();
@@ -93,6 +111,10 @@ public class SearchPanel extends JPanel{
 
 	}
 
+	/**
+	 * Panel that displays and control the onscreen keyboard.
+	 * @author Catie
+	 */
 	private class OnScreenKeyboard extends JPanel implements ActionListener{
 		public OnScreenKeyboard(){
 			GridBagLayout layout = new GridBagLayout();

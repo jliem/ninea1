@@ -2,11 +2,13 @@ package T9A1.client;
 
 
 /**
- * Class.
+ * The main class for the kiosk.
  * @author Catie
- *
  */
 public class Kiosk {
+	/**
+	 * @param args takes the store number in at the command line
+	 */
 	public static void main(String args[]){
 		if (args.length > 0) {
 			new KioskClientFactory(args).createKioskGUI();
