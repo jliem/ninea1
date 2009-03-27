@@ -7,6 +7,12 @@ import T9A1.server.KioskServerFactory;
 
 import junit.framework.TestCase;
 
+/**
+ * Tests for the connection class.
+ *
+ * @author JL
+ *
+ */
 public class ConnectionTest extends TestCase {
 
 	private Connection conn;

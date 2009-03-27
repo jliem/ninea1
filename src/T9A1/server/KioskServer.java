@@ -5,6 +5,12 @@ import java.util.*;
 import java.util.concurrent.*;
 import T9A1.common.*;
 
+/**
+ * Entry point for the kiosk server.
+ *
+ * @author JL
+ *
+ */
 public class KioskServer {
 	private DBManager dbm;
 	private PreparedStatement full_search;
@@ -24,6 +30,9 @@ public class KioskServer {
 		ServerConnection sm = new ServerConnection(this);
 	}
 
+	/**
+	 * Create prepared statements.
+	 */
 	protected void initPreparedStatements() {
 		full_search = dbm.createPreparedStatement("SELECT * FROM PRODUCT_INFO INNER JOIN PRODUCTS ON PRODUCT_INFO.PRODUCT_ID = PRODUCTS.PRODUCT_ID WHERE PRODUCT_INFO.NAME LIKE ?");
 
@@ -33,6 +42,12 @@ public class KioskServer {
 		}
 	}
 
+	/**
+	 * Handle a search request from the client.
+	 *
+	 * @param query the query
+	 * @return a list of results
+	 */
 	public List<Item> handleRequest(String query) {
 		List<Item> results = new LinkedList<Item>();
 

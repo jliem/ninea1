@@ -2,6 +2,12 @@ package T9A1.common;
 
 import java.io.Serializable;
 
+/**
+ * Represents a request made to the server.
+ *
+ * @author Chase
+ *
+ */
 public class Request implements Serializable {
 
 	public enum Type {project_search, item_search};

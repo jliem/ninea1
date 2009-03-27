@@ -9,6 +9,11 @@ import T9A1.common.Item;
 
 import junit.framework.TestCase;
 
+/**
+ * Tests the CacheManager.
+ * @author JL
+ *
+ */
 public class CacheManagerTest extends TestCase {
 
 	private CacheManager cm;
@@ -43,6 +48,9 @@ public class CacheManagerTest extends TestCase {
 		heap = cm.getHeap();
 	}
 
+	/**
+	 * Tests a regular search.
+	 */
 	public void testDoSearch() {
 		cm.add(this.IN_CACHE, itemList);
 
@@ -51,6 +59,9 @@ public class CacheManagerTest extends TestCase {
 		assertEquals(itemList, result);
 	}
 
+	/**
+	 * Tests for cache hits after adding and removal.
+	 */
 	public void testIsCacheHit() {
 		// Check for miss
 		boolean isHit = cm.isCacheHit(this.IN_CACHE);
@@ -72,6 +83,9 @@ public class CacheManagerTest extends TestCase {
 		assertFalse(isHit);
 	}
 
+	/**
+	 * Tests for basic cache hit.
+	 */
 	public void testCacheHit() {
 		cm.add(this.IN_CACHE, itemList);
 
@@ -80,6 +94,9 @@ public class CacheManagerTest extends TestCase {
 		assertTrue(isHit);
 	}
 
+	/**
+	 * Tests for basic cache miss.
+	 */
 	public void testCacheMiss() {
 		// Check that a miss is properly flagged as such
 		boolean isHit = cm.isCacheHit(this.NOT_IN_CACHE);
@@ -87,6 +104,9 @@ public class CacheManagerTest extends TestCase {
 		assertFalse(isHit);
 	}
 
+	/**
+	 * Tests least-frequently-used removal algorithm.
+	 */
 	public void testLfuRemoval() {
 		for (String query : queries) {
 			cm.add(query, itemList);
@@ -116,6 +136,9 @@ public class CacheManagerTest extends TestCase {
 		assertTrue(cm.contains(queries[0]));
 	}
 
+	/**
+	 * Tests direct removal from cache.
+	 */
 	public void testDirectRemoval() {
 		cm.add(this.IN_CACHE, itemList);
 
@@ -129,6 +152,9 @@ public class CacheManagerTest extends TestCase {
 		assertFalse(heap.contains(entry));
 	}
 
+	/**
+	 * Tests adding to the cache.
+	 */
 	public void testAdd() {
 
 		// Test single add
@@ -182,6 +208,9 @@ public class CacheManagerTest extends TestCase {
 		assertEquals(list2, cachedList);
 	}
 
+	/**
+	 * Tests clearing the cache.
+	 */
 	public void testClear() {
 		cm.add(this.IN_CACHE, itemList);
 
@@ -204,6 +233,9 @@ public class CacheManagerTest extends TestCase {
 		assertEquals(heap.size(), 0);
 	}
 
+	/**
+	 * Tests the counts of items when they are accessed.
+	 */
 	public void testHeapCount() {
 		String query = this.IN_CACHE;
 
