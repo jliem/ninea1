@@ -28,6 +28,8 @@ public class KioskGUI {
 
 	/** The panel used to search for items. */
 	private SearchPanel searchPanel;
+	/** The current results panel. */
+	private ResultsPanel resultsPanel;
 
 	/**
 	 * Creates and displays a new KioskGUI.
@@ -76,7 +78,6 @@ public class KioskGUI {
 	 * @param s the term to be searched for
 	 */
 	public void search(String s){
-		ResultsPanel resultsPanel = null;
 		Item[] results = inventoryManager.doSearch(s);
 		resultsPanel = new ResultsPanel(this, s, results);
 
@@ -89,7 +90,9 @@ public class KioskGUI {
 	 * @param ip the ItemPanel for the item to be displayed
 	 */
 	public void showItem(ItemPanel ip){
-		gui.add(ip.getFullPanel(), "ITEM");
+		ItemPanel ip2 = ip.copy();
+		ip2.setMouseover(false);
+		gui.add(new MapPanel(this, ip2), "ITEM");
 		layoutManager.show(gui, "ITEM");
 	}
 
@@ -105,6 +108,7 @@ public class KioskGUI {
 	 * Displays the current results page.
 	 */
 	public void backToResults(){
+		resultsPanel.validate();
 		layoutManager.show(gui, "RESULTS");
 	}
 }

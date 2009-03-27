@@ -10,12 +10,17 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.plaf.basic.BasicBorders;
 
 import T9A1.common.Item;
 import T9A1.common.Location;
@@ -27,7 +32,7 @@ import T9A1.common.Location;
  *
  * @author Catie
  */
-public class ItemPanel{
+public class ItemPanel extends JPanel{
 
 	/** The location of the product images. */
 	private final String IMAGE_PATH = "client/gui/images/";
@@ -38,81 +43,55 @@ public class ItemPanel{
 
 	/** The item that the panels represent. */
 	private Item item;
-	/** The map that represents the store. */
-	private Map map;
-
 	/** The main GUI component. */
 	private KioskGUI gui;
 
-	/** The compact representation of the item. */
-	private JPanel compactPanel;
-	/** The full representation of the item. */
-	private JPanel fullPanel;
+	private boolean mouseover;
 
 	/**
 	 * Creates a new ItemPanel and initializes the compact panel.
 	 * @param g The main GUI component.
 	 * @param i The Item that this panel represents.
 	 */
-	public ItemPanel(KioskGUI g, Item i){
-		item = i;
-		gui = g;
-		map = gui.getMap();
+	public ItemPanel(KioskGUI gui, Item item){
+		this.item = item;
+		this.gui = gui;
+		mouseover = true;
 
-		initializeCompactPanel();
-	}
-
-	/**
-	 * Returns a compact representation of the Item.
-	 * @return the compact panel that represents the Item
-	 */
-	public JPanel getCompactPanel(){
-		return compactPanel;
-	}
-
-	/**
-	 * Returns a full representation of the Item, including the item's location on a map.
-	 * @return the full panel that represents the Item
-	 */
-	public JPanel getFullPanel(){
-		if(fullPanel == null)
-			initializeFullPanel();
-
-		return fullPanel;
-	}
-
-	/**
-	 * Initializes the compact panel.
-	 */
-	private void initializeCompactPanel(){
-		JPanel panel = new JPanel(new GridBagLayout());
+		setLayout(new GridBagLayout());
 		GridBagConstraints con = new GridBagConstraints();
-		Insets insets = new Insets(2, 2, 2, 2);
+		Insets insets = new Insets(3, 10, 3, 10);
 
-		JButton i = new JButton(getImage());
-		i.addActionListener(new ShowItemListener());
-		con.gridheight = 2;
+		addMouseListener(new MouseOverListener());
+		setBackground(GUIColors.LIGHT_ORANGE);
+		setPreferredSize(new Dimension(gui.getWidth() - 10, 110));
+
+		ImageContainer i = new ImageContainer();
+		con.gridheight = 4;
 		con.gridwidth = 1;
 		con.gridx = 0;
 		con.gridy = 0;
-		con.insets = insets;
-		panel.add(i, con);
+		con.insets = new Insets(5, 70, 5, 40);
+		add(i, con);
 
 		JLabel name = new JLabel(item.getName());
+		name.setFont(GUIFonts.MEDIUM);
 		con.gridheight = 1;
 		con.gridwidth = 3;
 		con.gridx = 1;
 		con.gridy = 0;
 		con.insets = insets;
-		panel.add(name, con);
+		con.anchor = GridBagConstraints.WEST;
+		add(name, con);
 
 		JLabel price = new JLabel("$" + Double.toString(item.getPrice()));
+		price.setFont(GUIFonts.SMALL);
 		con.gridheight = 1;
 		con.gridwidth = 1;
 		con.gridx = 1;
 		con.gridy = 1;
 		con.insets = insets;
-		panel.add(price, con);
+		add(price, con);
 
 		JLabel inStock;
 		if(item.isInStock()){
@@ -122,136 +101,40 @@ public class ItemPanel{
 			inStock = new JLabel("Out of Stock");
 			inStock.setForeground(Color.red);
 		}
+		inStock.setFont(GUIFonts.SMALL);
 		con.gridheight = 1;
 		con.gridwidth = 1;
 		con.gridx = 2;
 		con.gridy = 1;
 		con.insets = insets;
-		panel.add(inStock, con);
+		add(inStock, con);
 
 		JLabel location = new JLabel(item.getLocation().toString());
+		location.setFont(GUIFonts.SMALL);
 		con.gridheight = 1;
 		con.gridwidth = 1;
 		con.gridx = 3;
 		con.gridy = 1;
 		con.insets = insets;
-		panel.add(location, con);
-
-		compactPanel = panel;
-	}
-
-	/**
-	 * Initializes the full panel
-	 */
-	private void initializeFullPanel(){
-		JPanel panel = new JPanel(new GridBagLayout());
-		GridBagConstraints con = new GridBagConstraints();
-		Insets insets = new Insets(2, 2, 2, 2);
-
-		ImageContainer i = new ImageContainer();
-		con.gridheight = 3;
-		con.gridwidth = 1;
-		con.gridx = 0;
-		con.gridy = 0;
-		con.insets = insets;
-		//con.fill = GridBagConstraints.BOTH;
-		//con.ipadx = 100;
-		//con.ipady = 100;
-		panel.add(i, con);
-
-		JLabel name = new JLabel(item.getName());
-		con.gridheight = 1;
-		con.gridwidth = 1;
-		con.gridx = 1;
-		con.gridy = 0;
-		con.insets = insets;
-		con.ipadx = 0;
-		con.ipady = 0;
-		panel.add(name, con);
-
-		JLabel price = new JLabel("$" + Double.toString(item.getPrice()));
-		con.gridheight = 1;
-		con.gridwidth = 1;
-		con.gridx = 1;
-		con.gridy = 1;
-		con.insets = insets;
-		panel.add(price, con);
-
-		JLabel inStock;
-		if(item.isInStock()){
-			inStock = new JLabel("In Stock");
-			inStock.setForeground(Color.green);
-		}else{
-			inStock = new JLabel("Out of Stock");
-			inStock.setForeground(Color.red);
-		}
-		con.gridheight = 1;
-		con.gridwidth = 1;
-		con.gridx = 2;
-		con.gridy = 1;
-		con.insets = insets;
-		panel.add(inStock, con);
-
-		JLabel location = new JLabel(item.getLocation().toString());
-		con.gridheight = 1;
-		con.gridwidth = 1;
-		con.gridx = 3;
-		con.gridy = 1;
-		con.insets = insets;
-		panel.add(location, con);
+		add(location, con);
 
 		JLabel description = new JLabel(item.getDescription());
+		description.setFont(GUIFonts.SMALL);
 		con.gridheight = 1;
 		con.gridwidth = 6;
 		con.gridx = 1;
 		con.gridy = 2;
 		con.insets = insets;
-		con.anchor = GridBagConstraints.WEST;
-		panel.add(description, con);
+		add(description, con);
 
-		MapPanel mapPanel = new MapPanel();
-		con.gridheight = 1;
-		con.gridwidth = 7;
-		con.gridx = 0;
-		con.gridy = 3;
-		con.insets = insets;
-		con.anchor = GridBagConstraints.CENTER;
-		panel.add(mapPanel, con);
-
-		JButton back = new JButton("Back to Results");
-		back.addActionListener(new ReturnResultsListener());
-		con.gridheight = 1;
+		con.gridheight = 3;
+		con.fill = GridBagConstraints.HORIZONTAL;
 		con.gridwidth = 1;
-		con.gridx = 5;
-		con.gridy = 4;
+		con.weightx = 1;
+		con.gridx = 4;
+		con.gridy = 0;
 		con.insets = insets;
-		con.anchor = GridBagConstraints.EAST;
-		panel.add(back, con);
-
-		JButton clear = new JButton("New Search");
-		clear.addActionListener(new NewSearchListener());
-		con.gridheight = 1;
-		con.gridwidth = 1;
-		con.gridx = 6;
-		con.gridy = 4;
-		con.insets = insets;
-		con.anchor = GridBagConstraints.EAST;
-		panel.add(clear, con);
-
-		fullPanel = panel;
-	}
-
-	/**
-	 * Gets the image associated with the product's item id number.
-	 * @return an ImageIcon that holds the product image
-	 */
-	private ImageIcon getImage(){
-		ImageIcon i = new ImageIcon(IMAGE_PATH + item.getImageID() + FILETYPE);
-
-		if(item.getImageID() == 0 || i.getIconHeight() < 0)
-			i = new ImageIcon(IMAGE_PATH + NO_IMAGE + FILETYPE);
-
-		return i;
+		add(Box.createGlue(), con);
 	}
 
 	/**
@@ -261,37 +144,45 @@ public class ItemPanel{
 		gui.showItem(this);
 	}
 
-	/**
-	 * Listener for the New Search button.
-	 * @author Catie
-	 */
-	private class NewSearchListener implements ActionListener{
+	public Item getItem(){
+		return item;
+	}
 
-		public void actionPerformed(ActionEvent e) {
-			gui.newSearch();
-		}
+	public void setMouseover(boolean b){
+		mouseover = b;
+		if(b)
+			setBackground(GUIColors.LIGHT_ORANGE);
+		else setBackground(GUIColors.ORANGE);
+		this.invalidate();
+	}
+
+	public ItemPanel copy(){
+		return new ItemPanel(gui, item);
 	}
 
 	/**
-	 * Listener for the Return to Results button.
+	 * MouseListener for the user to chose an item.
 	 * @author Catie
 	 */
-	private class ReturnResultsListener implements ActionListener{
+	private class MouseOverListener implements MouseListener{
 
-		public void actionPerformed(ActionEvent arg0) {
-			gui.backToResults();
+		public void mouseClicked(MouseEvent e) {
+			if(mouseover)
+				showItem();
 		}
-	}
 
-	/**
-	 * Listener for the user to chose an item.
-	 * @author Catie
-	 */
-	private class ShowItemListener implements ActionListener{
-
-		public void actionPerformed(ActionEvent e) {
-			showItem();
+		public void mouseEntered(MouseEvent e) {
+			if(mouseover)
+				setBackground(GUIColors.DARK_ORANGE);
 		}
+
+		public void mouseExited(MouseEvent e) {
+			if(mouseover)
+				setBackground(GUIColors.LIGHT_ORANGE);
+		}
+
+		public void mousePressed(MouseEvent e) {}
+		public void mouseReleased(MouseEvent e) {}
 	}
 
 	/**
@@ -305,42 +196,14 @@ public class ItemPanel{
 			this.setMinimumSize(new Dimension(100, 100));
 			this.setPreferredSize(new Dimension(100, 100));
 
-			image = getImage();
+			image = new ImageIcon(IMAGE_PATH + item.getImageID() + FILETYPE);
+
+			if(item.getImageID() == 0 || image.getIconHeight() < 0)
+				image = new ImageIcon(IMAGE_PATH + NO_IMAGE + FILETYPE);
 		}
 
 		public void paintComponent(Graphics g){
 			image.paintIcon(this, g, 0, 0);
-		}
-	}
-
-	/**
-	 * Displays the map and plots the Item's location
-	 * @author Catie
-	 */
-	private class MapPanel extends JPanel{
-
-		private ImageIcon mapImage;
-
-		public MapPanel(){
-			mapImage = map.getMap();
-
-			this.setMinimumSize(new Dimension(mapImage.getIconWidth(), mapImage.getIconHeight()));
-			this.setPreferredSize(new Dimension(mapImage.getIconWidth(), mapImage.getIconHeight()));
-		}
-
-		public void paintComponent(Graphics g){
-			mapImage.paintIcon(this, g, 0, 0);
-
-			Point p = map.getCoordinates(item.getLocation());
-			if(p == null) return;
-			int x = (int)p.getX();
-			int y = (int)p.getY();
-			drawStar(g, x, y);
-		}
-
-		public void drawStar(Graphics g, int x, int y){
-			g.setColor(Color.yellow);
-			g.fillOval(x - 5, y - 5, 10, 10);
 		}
 	}
 }

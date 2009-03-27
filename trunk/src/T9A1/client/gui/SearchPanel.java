@@ -31,8 +31,6 @@ public class SearchPanel extends JPanel{
 	private JTextField searchBox;
 	/** The JButton pressed to initiate a search. */
 	private JButton search;
-	/** The Font used throughout the panel. */
-	private Font font;
 
 	/** The main GUI component. */
 	private KioskGUI gui;
@@ -53,9 +51,8 @@ public class SearchPanel extends JPanel{
 		panel.setBackground(GUIColors.ORANGE);
 		GridBagConstraints c = new GridBagConstraints();
 
-		font = new Font("Arial", Font.PLAIN, 40);
 		JLabel label = new JLabel("Enter a search term below:");
-		label.setFont(font);
+		label.setFont(GUIFonts.LARGE);
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridwidth = 2;
 		c.gridx = 0;
@@ -65,7 +62,7 @@ public class SearchPanel extends JPanel{
 		listener = new SearchListener();
 
 		searchBox = new JTextField(20);
-		searchBox.setFont(font);
+		searchBox.setFont(GUIFonts.LARGE);
 		searchBox.addActionListener(listener);
 		c.anchor = GridBagConstraints.EAST;
 		c.fill = GridBagConstraints.BOTH;
@@ -75,7 +72,7 @@ public class SearchPanel extends JPanel{
 		panel.add(searchBox, c);
 
 		search = new JButton("GO");
-		search.setFont(font);
+		search.setFont(GUIFonts.LARGE);
 		search.addActionListener(listener);
 		searchBox.addActionListener(listener);
 		c.anchor = GridBagConstraints.WEST;
@@ -129,7 +126,6 @@ public class SearchPanel extends JPanel{
 			buttonArray[3] = new JButton[qwertyArray[3].length];
 
 			Insets inset = new Insets(5, 5, 5, 5);
-			Font keyboardFont = new Font("Arial", Font.PLAIN, 26);
 			for(int i = 0; i < buttonArray.length; i++){
 				for(int j = 0; j < buttonArray[i].length; j++){
 					buttonArray[i][j] = new JButton(qwertyArray[i][j]);
@@ -161,7 +157,7 @@ public class SearchPanel extends JPanel{
 					else if(qwertyArray[i][j].equals("SPACE")){
 						constraints.gridwidth = 16;
 					}
-					buttonArray[i][j].setFont(keyboardFont);
+					buttonArray[i][j].setFont(GUIFonts.MEDIUM);
 					add(buttonArray[i][j], constraints);
 				}
 

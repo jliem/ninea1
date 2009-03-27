@@ -1,6 +1,7 @@
 package T9A1.client.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -9,6 +10,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -28,8 +30,8 @@ public class ResultsPanel extends JPanel {
 	private String searchTerm;
 	/** An item array of search results. */
 	private Item[] results;
-	/** The font used on this panel. */
-	private Font font;
+
+	private JPanel list;
 
 	/**
 	 * Creates a new results panel for a given search term and results set.
@@ -40,63 +42,92 @@ public class ResultsPanel extends JPanel {
 	public ResultsPanel(KioskGUI g, String s, Item[] items){
 		super(new BorderLayout());
 
-		font = new Font("Arial", Font.PLAIN, 30);
 		GridBagConstraints c = new GridBagConstraints();
 
 		gui = g;
 		searchTerm = s;
 		results = items;
 
-		JPanel list = new JPanel(new GridBagLayout());
+		//Adds all results to a list for the use to chose.
+		list = new JPanel(new GridBagLayout());
 		list.setBorder(new EmptyBorder(2, 2, 2, 2));
 		list.setBackground(GUIColors.LIGHT_ORANGE);
 		if(results == null || results.length == 0){
 			JLabel empty = new JLabel("Your search returned no results.");
-			empty.setFont(font);
+			empty.setFont(GUIFonts.MEDIUM);
 			list.add(empty);
 		}else{
 			ItemPanel ip;
-			for(int i = 0; i < results.length; i++){
+			int i;
+			c.weighty = 0;
+			for(i = 0; i < results.length; i++){
 				ip = new ItemPanel(gui, results[i]);
 				c.ipady = 50;
 				c.gridy = i;
-				list.add(ip.getCompactPanel(), c);
+				c.gridx = 0;
+				c.weightx = 0;
+				list.add(ip, c);
+				c.gridx = 1;
+				c.weightx = 1;
+				list.add(Box.createGlue(), c);
 			}
+			c.gridy = ++i;
+			c.gridx = 0;
+			c.weighty = 1;
+			c.weightx = 0;
+			list.add(Box.createGlue(), c);
 		}
 
 		add(new JScrollPane(list), BorderLayout.CENTER);
 
+		//Creates and adds a panel to go at the top of the page that displays data on the results.
 		JPanel displayResults = new JPanel(new GridBagLayout());
 		displayResults.setBackground(GUIColors.ORANGE);
-		JLabel search = new JLabel("You searched for " + searchTerm.toLowerCase());
-
+		JLabel search = new JLabel("You searched for \"" + searchTerm + "\"");
 		JLabel number;
 		if(results == null || results.length == 0){
 			number = new JLabel("Your search returned no results.");
 		}else{
 			number = new JLabel("Your search returned " + items.length + " results.");
 		}
-		search.setFont(font);
-		number.setFont(font);
+		search.setFont(GUIFonts.MEDIUM);
+		number.setFont(GUIFonts.MEDIUM);
 		c.insets = new Insets(5, 5, 5, 5);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.anchor = GridBagConstraints.LINE_START;
+		c.anchor = GridBagConstraints.WEST;
 		c.gridy = 0;
 		displayResults.add(search, c);
 		c.gridy = 1;
 		displayResults.add(number, c);
-		displayResults.setMinimumSize(new Dimension(0, gui.getWidth()));
+		c.gridx = 1;
+		c.gridy = 0;
+		c.gridheight = 2;
+		c.weightx = 1;
+		displayResults.add(Box.createGlue(), c);
 		add(displayResults, BorderLayout.NORTH);
 
+		//Creates and adds a panel to display the new search button.
 		JPanel button = new JPanel(new GridBagLayout());
 		button.setBackground(GUIColors.ORANGE);
 		JButton newSearch = new JButton("New Search");
-		newSearch.setFont(font);
+		newSearch.setFont(GUIFonts.MEDIUM);
 		newSearch.addActionListener(new NewSearchListener());
+		c.fill = GridBagConstraints.NONE;
 		c.gridy = 0;
+		c.gridx = 1;
+		c.weightx = 0;
+		c.ipadx = 10;
+		c.ipady = 10;
 		c.anchor = GridBagConstraints.EAST;
 		button.add(newSearch, c);
+		c.gridx = 0;
+		c.weightx = 1;
+		button.add(Box.createGlue(), c);
 		add(button, BorderLayout.SOUTH);
+	}
+
+	public String toString(){
+		return "";//for(ItemPanel i : (ItemPanel)list.getComponents())
 	}
 
 	/**
