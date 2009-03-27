@@ -30,7 +30,7 @@ import T9A1.common.Request;
  * @author Chase
  */
 
-public class ServerConnectionManager{
+public class ServerConnection{
 	/**
 	 * Class variables
 	 *
@@ -47,7 +47,7 @@ public class ServerConnectionManager{
 	 * The intializer method
 	 *
 	 */
-	public ServerConnectionManager(KioskServer kioskServer){
+	public ServerConnection(KioskServer kioskServer){
 		this.kioskServer = kioskServer;
 
 		try{

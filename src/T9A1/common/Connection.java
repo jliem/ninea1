@@ -17,13 +17,13 @@ import java.util.List;
  * @author Chase
  */
 
-public class ConnectionManager implements IConnectionManager {
+public class Connection implements IConnection {
 	/**
 	 * Variables
 	 *
 	 */
 	public boolean debug = true;
-	public ConnectionManager(){
+	public Connection(){
 
 
 	}

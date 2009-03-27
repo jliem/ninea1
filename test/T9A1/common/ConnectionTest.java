@@ -7,18 +7,18 @@ import T9A1.server.KioskServerFactory;
 
 import junit.framework.TestCase;
 
-public class ConnectionManagerTest extends TestCase {
+public class ConnectionTest extends TestCase {
 
-	private ConnectionManager cm;
+	private Connection conn;
 	private KioskServer ks;
 
 	public void setUp() {
-		cm = new ConnectionManager();
+		conn = new Connection();
 		ks = KioskServerFactory.getServerInstance();
 	}
 
 	public void testSendRequest() {
-		Object result = cm.sendRequest(Request.Type.item_search, "foo");
+		Object result = conn.sendRequest(Request.Type.item_search, "foo");
 
 		assertNotNull(result);
 	}

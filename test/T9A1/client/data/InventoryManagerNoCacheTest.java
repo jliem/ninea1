@@ -1,6 +1,6 @@
 package T9A1.client.data;
 
-import T9A1.common.ConnectionManager;
+import T9A1.common.Connection;
 
 /**
  * Tests the InventoryManager subsystem without the use of the CacheManager.
@@ -13,6 +13,6 @@ public class InventoryManagerNoCacheTest extends InventoryManagerTest {
 	public void setUp() {
 		super.setUp();
 		im = new InventoryManager(new MockCacheManager(),
-				new ConnectionManager());
+				new Connection());
 	}
 }

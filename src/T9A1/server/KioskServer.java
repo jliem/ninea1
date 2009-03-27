@@ -21,7 +21,7 @@ public class KioskServer {
 		}
 		initPreparedStatements();
 
-		ServerConnectionManager sm = new ServerConnectionManager(this);
+		ServerConnection sm = new ServerConnection(this);
 	}
 
 	protected void initPreparedStatements() {

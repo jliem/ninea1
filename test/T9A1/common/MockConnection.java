@@ -5,7 +5,7 @@ import java.util.List;
 
 import T9A1.common.Request.Type;
 
-public class MockConnectionManager implements IConnectionManager {
+public class MockConnection implements IConnection {
 
 	private Object response = new ArrayList<Item>();
 

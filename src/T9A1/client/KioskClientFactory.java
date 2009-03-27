@@ -3,7 +3,7 @@ package T9A1.client;
 import T9A1.client.data.CacheManager;
 import T9A1.client.data.InventoryManager;
 import T9A1.client.gui.KioskGUI;
-import T9A1.common.ConnectionManager;
+import T9A1.common.Connection;
 
 /**
  * The class used to initialize the kiosk components.
@@ -40,7 +40,7 @@ public class KioskClientFactory {
 	 */
 	public InventoryManager createInventoryManager() {
 		InventoryManager im = new InventoryManager(new CacheManager(),
-				new ConnectionManager(), storeNumber);
+				new Connection(), storeNumber);
 
 		return im;
 	}
