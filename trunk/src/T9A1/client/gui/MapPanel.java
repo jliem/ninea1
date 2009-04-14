@@ -28,11 +28,11 @@ public class MapPanel extends JPanel {
 		this.map = gui.getMap();
 		this.itemPanel = itemPanel;
 
-		this.setBackground(GUIColors.ORANGE);
+		this.setBackground(GUIConstants.ORANGE);
 		this.setLayout(new BorderLayout());
 
 		JPanel top = new JPanel(new GridBagLayout());
-		top.setBackground(GUIColors.ORANGE);
+		top.setBackground(GUIConstants.ORANGE);
 		GridBagConstraints con = new GridBagConstraints();
 		Insets insets = new Insets(40, 20, 10, 0);
 		con.insets = insets;
@@ -47,11 +47,11 @@ public class MapPanel extends JPanel {
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 		insets = new Insets(10, 10, 10, 10);
-		buttonPanel.setBackground(GUIColors.ORANGE);
+		buttonPanel.setBackground(GUIConstants.ORANGE);
 
 		JButton back = new JButton("Back to Results");
 		back.addActionListener(new ReturnResultsListener());
-		back.setFont(GUIFonts.MEDIUM);
+		back.setFont(GUIConstants.MEDIUM_FONT);
 		con.weightx = 0;
 		con.gridheight = 1;
 		con.gridwidth = 1;
@@ -63,7 +63,7 @@ public class MapPanel extends JPanel {
 
 		JButton clear = new JButton("New Search");
 		clear.addActionListener(new NewSearchListener());
-		clear.setFont(GUIFonts.MEDIUM);
+		clear.setFont(GUIConstants.MEDIUM_FONT);
 		con.gridx = 2;
 		con.gridy = 0;
 		buttonPanel.add(clear, con);
@@ -95,7 +95,7 @@ public class MapPanel extends JPanel {
 	private class NewSearchListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
-			gui.newSearch();
+			gui.newSearch(GUIConstants.ITEM_SEARCH);
 		}
 	}
 
@@ -108,7 +108,7 @@ public class MapPanel extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			itemPanel.setMouseover(true);
 			itemPanel.validate();
-			gui.backToResults();
+			gui.backToItemResults();
 		}
 	}
 
