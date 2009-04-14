@@ -13,6 +13,6 @@ public class InventoryManagerFullTest extends InventoryManagerTest {
 
 	public void setUp() {
 		super.setUp();
-		im = new InventoryManager(new CacheManager(), new Connection());
+		im = new RequestManager(new CacheManager(), new Connection());
 	}
 }

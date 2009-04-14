@@ -1,7 +1,7 @@
 package T9A1.client;
 
 import T9A1.client.data.CacheManager;
-import T9A1.client.data.InventoryManager;
+import T9A1.client.data.RequestManager;
 import T9A1.client.gui.KioskGUI;
 import T9A1.common.Connection;
 
@@ -29,7 +29,7 @@ public class KioskClientFactory {
 	 * @return a KioskGUI that represents the kiosk
 	 */
 	public KioskGUI createKioskGUI(){
-		InventoryManager im = this.createInventoryManager();
+		RequestManager im = this.createInventoryManager();
 		KioskGUI gui = new KioskGUI(im);
 
 		return gui;
@@ -38,8 +38,8 @@ public class KioskClientFactory {
 	/**
 	 * @return an InventoryManager for the kiosk
 	 */
-	public InventoryManager createInventoryManager() {
-		InventoryManager im = new InventoryManager(new CacheManager(),
+	public RequestManager createInventoryManager() {
+		RequestManager im = new RequestManager(new CacheManager(),
 				new Connection(), storeNumber);
 
 		return im;

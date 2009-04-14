@@ -12,7 +12,7 @@ public class InventoryManagerNoCacheTest extends InventoryManagerTest {
 
 	public void setUp() {
 		super.setUp();
-		im = new InventoryManager(new MockCacheManager(),
+		im = new RequestManager(new MockCacheManager(),
 				new Connection());
 	}
 }

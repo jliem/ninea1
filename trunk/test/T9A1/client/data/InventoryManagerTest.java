@@ -13,7 +13,7 @@ import junit.framework.TestCase;
  */
 public abstract class InventoryManagerTest extends TestCase {
 
-	protected InventoryManager im;
+	protected RequestManager im;
 
 	/**
 	 * Initialize a server. The same server instance will be used for all
@@ -28,7 +28,7 @@ public abstract class InventoryManagerTest extends TestCase {
 	 * Runs a search that is expected to return no results.
 	 */
 	public void testEmptySearch() {
-		Item[] arr = im.doSearch("thisqueryshouldreturnnoresults ***");
+		Item[] arr = im.searchItems("thisqueryshouldreturnnoresults ***");
 
 		assertNotNull("Zero length array expected, got null array", arr);
 		assertEquals(arr.length, 0);

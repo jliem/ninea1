@@ -13,7 +13,7 @@ public class InventoryManagerNoConnectionTest extends InventoryManagerTest {
 
 	public void setUp() {
 		super.setUp();
-		im = new InventoryManager(new CacheManager(),
+		im = new RequestManager(new CacheManager(),
 				new MockConnection());
 	}
 }
