@@ -63,13 +63,11 @@ public class ServerConnection{
 		public boolean debug=true;
 		public boolean running=true;
 		protected int threadNum;
-		protected BlockingQueue connections;
 		protected BlockingQueue buffer;
-		Producer(BlockingQueue theBuffer, BlockingQueue theConnections, int threadNum) {
+		Producer(BlockingQueue theBuffer, int threadNum) {
 			numPThreads = numPThreads+1;
 			this.threadNum = threadNum;
 			this.buffer = theBuffer;
-			this.connections = theConnections;
 		}
 		/**
 		 * Run method from runnable interface
@@ -89,18 +87,11 @@ public class ServerConnection{
 			    				Request request = (Request)streamIn.readObject();
 
 			    				// TODO(chase): think of a better way of getting a string
-			    				String stringData = request.data.toString();
-			    				Scanner dataStream = new Scanner(stringData);
 
-								String line;
-								ArrayList al = new ArrayList();
-
-								while (dataStream.hasNext()) {
-									line = dataStream.nextLine();
-									al.add(client); al.add(line);
-									buffer.add(al);
-									debug("Producer Thread " + threadNum + ": " + line + " added to buffer");
-								}
+								ArrayList<Object> al = new ArrayList<Object>();
+								al.add(client); al.add(request);
+								buffer.add(al);
+								debug("Producer Thread " + threadNum + ": " + request.data + " added to buffer");
 							}catch(IOException e){
 								debug("IO Error in streams");
 							} catch (ClassNotFoundException e) {
@@ -133,11 +124,9 @@ public class ServerConnection{
 		public boolean debug = true;
 		protected int threadNum;
 		protected BlockingQueue buffer;
-		protected BlockingQueue connections;
-		Consumer(BlockingQueue theBuffer, BlockingQueue theConnections, int threadNum){
+		Consumer(BlockingQueue theBuffer, int threadNum){
 			numCThreads = numCThreads + 1;
 			this.buffer = theBuffer;
-			this.connections = theConnections;
 			this.threadNum = threadNum;
 		}
 		/**
@@ -145,22 +134,36 @@ public class ServerConnection{
 		 * @author Chase
 		 */
 		public void run(){
-			debug("Consumer Thread " + threadNum + ": STARTING");
-			try{
-				while(true){
+			debug("Consumer Thread " + threadNum + ": STARTING");		
+			while(true){
+				Request outgoing = null;
+				Request request = null;
+				Socket client = null;
+				try{
 					ArrayList al = (ArrayList)(buffer.take());
-
-					Socket client = (Socket)(al.get(0));
-					String search = (String)(al.get(1));
-
-					System.out.println("Consumer Thread " + threadNum + ": " + search + " is removed from the buffer" );
-					List<Item> outgoing = kioskServer.handleRequest(search);
-					sendRequest(client, outgoing);
+	
+					client = (Socket)(al.get(0));
+					request = (Request)(al.get(1));
+	
+					System.out.println("Consumer Thread " + threadNum + ": " + request.data + " is removed from the buffer" );
+					if(request.type == Request.Type.item_search){
+						outgoing = new Request(Request.Type.results,
+								kioskServer.handleRequest((String)request.data));
+						sendRequest(client, outgoing);
+					}
+					else if(request.type == Request.Type.project_search){
+						outgoing = new Request(Request.Type.project_search, null);
+						sendRequest(client, outgoing);
+					}
+					else if(request.type == Request.Type.update_request){
+						
+					}
+				}catch(Throwable e){
+					e.printStackTrace();
+					debug("Consumer error");
 				}
-			}catch(Throwable e){
-				e.printStackTrace();
-				debug("Consumer error");
-			}
+				
+			}		
 		}
 		/**
 		 * Send request method
@@ -168,7 +171,7 @@ public class ServerConnection{
 		 * @returns boolean
 		 * @param client, request
 		 */
-		public boolean sendRequest(Socket client, List request){
+		public boolean sendRequest(Socket client, Request request){
 			try{
 				ObjectOutputStream socketOut = new ObjectOutputStream(client.getOutputStream());
 				socketOut.writeObject(request);
@@ -205,23 +208,22 @@ public class ServerConnection{
 
 		public void run() {
 			BlockingQueue buffer = new LinkedBlockingQueue();
-			BlockingQueue connections = new LinkedBlockingQueue();
 			Vector<Thread> threads = new Vector<Thread>();
 			Thread tempThread;
 
 			//On startup create two threads
 
 			for(int i=0;i<consumers;i++){
-				new Thread(new Consumer(buffer, connections,numCThreads)).start();
+				new Thread(new Consumer(buffer,numCThreads)).start();
 			}
-			new Thread(new Producer(buffer, connections,numPThreads)).start();
+			new Thread(new Producer(buffer,numPThreads)).start();
 			while(true){
 				if (numConnections < 0){
 					System.out.println("This is bad");
 					numConnections = 0;
 				}
 				else if((numConnections + 1) >= numPThreads){
-					tempThread = new Thread(new Producer(buffer, connections,numPThreads));
+					tempThread = new Thread(new Producer(buffer,numPThreads));
 					threads.add(tempThread);
 					tempThread.start();
 				}

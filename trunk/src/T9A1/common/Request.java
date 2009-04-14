@@ -10,13 +10,20 @@ import java.io.Serializable;
  */
 public class Request implements Serializable {
 
-	public enum Type {project_search, item_search};
+	public enum Type {project_search, item_search, update_request, results};
 
 	public Object data;
 	public Type type;
+	public boolean isString = false;
 
 	public Request(Type type, Object data) {
 		this.type = type;
 		this.data = data;
+	}
+	
+	public Request(Type type, String data) {
+		this.type = type;
+		this.data = data;
+		this.isString = true;
 	}
 }
