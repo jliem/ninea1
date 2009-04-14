@@ -35,7 +35,7 @@ import T9A1.common.Location;
 public class ItemPanel extends JPanel{
 
 	/** The location of the product images. */
-	private final String IMAGE_PATH = "client/gui/images/";
+	private final String IMAGE_PATH = "client/gui/images/item/";
 	/** The name of the default product image. */
 	private final String NO_IMAGE = "no_image";
 	/** The filetype of the product images. */
