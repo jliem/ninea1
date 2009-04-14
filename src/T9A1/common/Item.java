@@ -31,23 +31,11 @@ public class Item implements Serializable {
 
 	public Item(String name, double price, String description, boolean inStock,
 			Location location) {
-		super();
-		this.name = name;
-		this.price = price;
-		this.description = description;
-		this.inStock = inStock;
-		this.imageID = 0;
-		this.location = location;
+		this(name, price, description, inStock, 0, location);
 	}
 
 	public Item() {
-		super();
-		this.name = "";
-		this.price = 0;
-		this.description = "";
-		this.inStock = false;
-		this.imageID = 0;
-		this.location = null;
+		this("", 0, "", false, 0, null);
 	}
 
 	public String toString() {
