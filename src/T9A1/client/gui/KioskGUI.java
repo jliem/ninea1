@@ -27,9 +27,13 @@ public class KioskGUI {
 	private CardLayout layoutManager;
 
 	/** The panel used to search for items. */
-	private SearchPanel searchPanel;
-	/** The current results panel. */
-	private ResultsPanel resultsPanel;
+	private ItemSearchPanel itemSearchPanel;
+	/** The panel used to search for projects. */
+	private ProjectSearchPanel projectSearchPanel;
+	/** The current item results panel. */
+	private ItemResultsPanel itemResultsPanel;
+	/** The current project results panel. */
+	private ProjectResultsPanel projectResultsPanel;
 
 	/**
 	 * Creates and displays a new KioskGUI.
@@ -47,8 +51,12 @@ public class KioskGUI {
 		layoutManager = new CardLayout();
 		gui = new JPanel(layoutManager);
 
-		searchPanel = new SearchPanel(this);
-		gui.add(searchPanel, "SEARCH");
+		itemSearchPanel = new ItemSearchPanel(this);
+		gui.add(itemSearchPanel, GUIConstants.ITEM_SEARCH);
+		projectSearchPanel = new ProjectSearchPanel(this);
+		gui.add(projectSearchPanel, GUIConstants.PROJECT_SEARCH);
+
+		layoutManager.show(gui, GUIConstants.ITEM_SEARCH);
 
 		frame.add(gui);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,12 +85,24 @@ public class KioskGUI {
 	 * Runs a search on a given term.
 	 * @param s the term to be searched for
 	 */
-	public void search(String s){
+	public void itemSearch(String s){
 		Item[] results = inventoryManager.doSearch(s);
-		resultsPanel = new ResultsPanel(this, s, results);
+		itemResultsPanel = new ItemResultsPanel(this, s, results);
 
-		gui.add(resultsPanel, "RESULTS");
-		layoutManager.show(gui, "RESULTS");
+		gui.add(itemResultsPanel, GUIConstants.ITEM_RESULTS);
+		layoutManager.show(gui, GUIConstants.ITEM_RESULTS);
+	}
+
+	/**
+	 * Runs a search on a given term.
+	 * @param s the term to be searched for
+	 */
+	public void projectSearch(String s){
+		Item[] results = inventoryManager.doSearch(s);
+		projectResultsPanel = new ProjectResultsPanel(this, s, results);
+
+		gui.add(projectResultsPanel, GUIConstants.PROJECT_RESULTS);
+		layoutManager.show(gui, GUIConstants.PROJECT_RESULTS);
 	}
 
 	/**
@@ -92,23 +112,41 @@ public class KioskGUI {
 	public void showItem(ItemPanel ip){
 		ItemPanel ip2 = ip.copy();
 		ip2.setMouseover(false);
-		gui.add(new MapPanel(this, ip2), "ITEM");
-		layoutManager.show(gui, "ITEM");
+		gui.add(new MapPanel(this, ip2), GUIConstants.MAP_PAGE);
+		layoutManager.show(gui, GUIConstants.MAP_PAGE);
+	}
+
+	public void showProject(){
+
+	}
+
+	public void showSearch(String s){
+		layoutManager.show(gui, s);
 	}
 
 	/**
 	 * Clears out all results and brings up the search page.
 	 */
-	public void newSearch(){
+	public void newSearch(String s){
 		gui.removeAll();
-		gui.add(searchPanel, "SEARCH");
+		gui.add(itemSearchPanel, GUIConstants.ITEM_SEARCH);
+		gui.add(projectSearchPanel, GUIConstants.PROJECT_SEARCH);
+		layoutManager.show(gui, s);
 	}
 
 	/**
 	 * Displays the current results page.
 	 */
-	public void backToResults(){
-		resultsPanel.validate();
-		layoutManager.show(gui, "RESULTS");
+	public void backToItemResults(){
+		itemResultsPanel.validate();
+		layoutManager.show(gui, GUIConstants.ITEM_RESULTS);
+	}
+
+	/**
+	 * Displays the current results page.
+	 */
+	public void backToProjectResults(){
+		projectResultsPanel.validate();
+		layoutManager.show(gui, GUIConstants.PROJECT_RESULTS);
 	}
 }

@@ -63,7 +63,7 @@ public class ItemPanel extends JPanel{
 		Insets insets = new Insets(3, 10, 3, 10);
 
 		addMouseListener(new MouseOverListener());
-		setBackground(GUIColors.LIGHT_ORANGE);
+		setBackground(GUIConstants.LIGHT_ORANGE);
 		setPreferredSize(new Dimension(gui.getWidth() - 10, 110));
 
 		ImageContainer i = new ImageContainer();
@@ -75,7 +75,7 @@ public class ItemPanel extends JPanel{
 		add(i, con);
 
 		JLabel name = new JLabel(item.getName());
-		name.setFont(GUIFonts.MEDIUM);
+		name.setFont(GUIConstants.MEDIUM_FONT);
 		con.gridheight = 1;
 		con.gridwidth = 3;
 		con.gridx = 1;
@@ -85,7 +85,7 @@ public class ItemPanel extends JPanel{
 		add(name, con);
 
 		JLabel price = new JLabel("$" + Double.toString(item.getPrice()));
-		price.setFont(GUIFonts.SMALL);
+		price.setFont(GUIConstants.SMALL_FONT);
 		con.gridheight = 1;
 		con.gridwidth = 1;
 		con.gridx = 1;
@@ -101,7 +101,7 @@ public class ItemPanel extends JPanel{
 			inStock = new JLabel("Out of Stock");
 			inStock.setForeground(Color.red);
 		}
-		inStock.setFont(GUIFonts.SMALL);
+		inStock.setFont(GUIConstants.SMALL_FONT);
 		con.gridheight = 1;
 		con.gridwidth = 1;
 		con.gridx = 2;
@@ -110,7 +110,7 @@ public class ItemPanel extends JPanel{
 		add(inStock, con);
 
 		JLabel location = new JLabel(item.getLocation().toString());
-		location.setFont(GUIFonts.SMALL);
+		location.setFont(GUIConstants.SMALL_FONT);
 		con.gridheight = 1;
 		con.gridwidth = 1;
 		con.gridx = 3;
@@ -119,7 +119,7 @@ public class ItemPanel extends JPanel{
 		add(location, con);
 
 		JLabel description = new JLabel(item.getDescription());
-		description.setFont(GUIFonts.SMALL);
+		description.setFont(GUIConstants.SMALL_FONT);
 		con.gridheight = 1;
 		con.gridwidth = 6;
 		con.gridx = 1;
@@ -151,8 +151,8 @@ public class ItemPanel extends JPanel{
 	public void setMouseover(boolean b){
 		mouseover = b;
 		if(b)
-			setBackground(GUIColors.LIGHT_ORANGE);
-		else setBackground(GUIColors.ORANGE);
+			setBackground(GUIConstants.LIGHT_ORANGE);
+		else setBackground(GUIConstants.ORANGE);
 		this.invalidate();
 	}
 
@@ -173,12 +173,12 @@ public class ItemPanel extends JPanel{
 
 		public void mouseEntered(MouseEvent e) {
 			if(mouseover)
-				setBackground(GUIColors.DARK_ORANGE);
+				setBackground(GUIConstants.DARK_ORANGE);
 		}
 
 		public void mouseExited(MouseEvent e) {
 			if(mouseover)
-				setBackground(GUIColors.LIGHT_ORANGE);
+				setBackground(GUIConstants.LIGHT_ORANGE);
 		}
 
 		public void mousePressed(MouseEvent e) {}

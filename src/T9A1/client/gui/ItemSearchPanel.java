@@ -2,6 +2,7 @@ package T9A1.client.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,7 +20,7 @@ import javax.swing.SpringLayout;
  * The panel used to enter a search term.
  * @author Catie
  */
-public class SearchPanel extends JPanel{
+public class ItemSearchPanel extends JPanel{
 	/** An array that represents a QWERTY keyboard. */
 	private final String[][] qwertyArray =
 			{{"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"},
@@ -42,17 +43,38 @@ public class SearchPanel extends JPanel{
 	 * Creates a new search panel.
 	 * @param g the main GUI component
 	 */
-	public SearchPanel(KioskGUI g) {
+	public ItemSearchPanel(KioskGUI g) {
 		super(new BorderLayout());
 
 		gui = g;
-
-		JPanel panel = new JPanel(new GridBagLayout());
-		panel.setBackground(GUIColors.ORANGE);
 		GridBagConstraints c = new GridBagConstraints();
 
+		//Creates and adds a panel to display the new search button.
+		JPanel button = new JPanel(new GridBagLayout());
+		button.setBackground(GUIConstants.ORANGE);
+		JButton newSearch = new JButton("Project Search");
+		newSearch.setFont(GUIConstants.LARGE_FONT);
+		newSearch.addActionListener(new ProjectSearchListener());
+		c.insets = new Insets(5, 5, 5, 5);
+		c.fill = GridBagConstraints.NONE;
+		c.gridy = 0;
+		c.gridx = 0;
+		c.weightx = 0;
+		c.ipadx = 10;
+		c.ipady = 10;
+		c.anchor = GridBagConstraints.WEST;
+		button.add(newSearch, c);
+		c.gridx = 1;
+		c.weightx = 1;
+		button.add(Box.createGlue(), c);
+		add(button, BorderLayout.NORTH);
+
+		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBackground(GUIConstants.ORANGE);
+
 		JLabel label = new JLabel("Enter a search term below:");
-		label.setFont(GUIFonts.LARGE);
+		label.setFont(GUIConstants.LARGE_FONT);
+		c.weightx = 0;
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridwidth = 2;
 		c.gridx = 0;
@@ -62,7 +84,7 @@ public class SearchPanel extends JPanel{
 		listener = new SearchListener();
 
 		searchBox = new JTextField(20);
-		searchBox.setFont(GUIFonts.LARGE);
+		searchBox.setFont(GUIConstants.LARGE_FONT);
 		searchBox.addActionListener(listener);
 		c.anchor = GridBagConstraints.EAST;
 		c.fill = GridBagConstraints.BOTH;
@@ -72,7 +94,7 @@ public class SearchPanel extends JPanel{
 		panel.add(searchBox, c);
 
 		search = new JButton("GO");
-		search.setFont(GUIFonts.LARGE);
+		search.setFont(GUIConstants.LARGE_FONT);
 		search.addActionListener(listener);
 		searchBox.addActionListener(listener);
 		c.anchor = GridBagConstraints.WEST;
@@ -103,7 +125,18 @@ public class SearchPanel extends JPanel{
 			if(s.equals(""))
 				return;
 			searchBox.setText("");
-			gui.search(s);
+			gui.itemSearch(s);
+		}
+
+	}
+
+	/**
+	 * The listener used to switch to a project search view.
+	 * @author Catie
+	 */
+	private class ProjectSearchListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			gui.showSearch(GUIConstants.PROJECT_SEARCH);
 		}
 
 	}
@@ -116,55 +149,58 @@ public class SearchPanel extends JPanel{
 		public OnScreenKeyboard(){
 			GridBagLayout layout = new GridBagLayout();
 			this.setLayout(layout);
-			this.setBackground(GUIColors.ORANGE);
+			this.setBackground(GUIConstants.ORANGE);
 			GridBagConstraints constraints = new GridBagConstraints();
 
-			JButton[][] buttonArray = new JButton[qwertyArray.length][];
-			buttonArray[0] = new JButton[qwertyArray[0].length];
-			buttonArray[1] = new JButton[qwertyArray[1].length];
-			buttonArray[2] = new JButton[qwertyArray[2].length];
-			buttonArray[3] = new JButton[qwertyArray[3].length];
+			FontMetrics m = this.getFontMetrics(GUIConstants.MEDIUM_FONT);
+			int keyWidth = 70,
+				keyHeight = 50;
 
 			Insets inset = new Insets(5, 5, 5, 5);
-			for(int i = 0; i < buttonArray.length; i++){
-				for(int j = 0; j < buttonArray[i].length; j++){
-					buttonArray[i][j] = new JButton(qwertyArray[i][j]);
+			Insets none = new Insets(0, 0, 0, 0);
+			for(int i = 0; i < qwertyArray.length; i++){
+				JPanel row = new JPanel(new GridBagLayout());
+				row.setBackground(GUIConstants.ORANGE);
+
+				for(int j = 0; j < qwertyArray[i].length; j++){
+					JButton b = new JButton(qwertyArray[i][j]);
 					if(qwertyArray[i][j].equalsIgnoreCase("ENTER"))
-						buttonArray[i][j].addActionListener(listener);
-					else buttonArray[i][j].addActionListener(this);
+						b.addActionListener(listener);
+					else b.addActionListener(this);
 
 					constraints.fill = GridBagConstraints.HORIZONTAL;
 
-					constraints.gridy = i;
-					constraints.gridwidth = 2;
-					constraints.ipadx = 40;
-					constraints.ipady = 40;
+					constraints.gridy = 0;
+					constraints.gridx = j;
+					constraints.gridwidth = 1;
+					constraints.ipadx = keyWidth -
+						m.charsWidth(qwertyArray[i][j].toCharArray(), 0, qwertyArray[i][j].length());
+					constraints.ipady = keyHeight;
 					constraints.insets = inset;
 
-					if(i < 2)
-						constraints.gridx = j * 2;
-					else if(i == 2)
-						constraints.gridx = j * 2 + 1;
-					else
-						constraints.gridx = 2;
-
-					if(qwertyArray[i][j].equals("BACK")){
-						constraints.ipadx = 0;
-					}
-					else if(qwertyArray[i][j].equals("ENTER")){
-						constraints.gridwidth = 4;
+					if(qwertyArray[i][j].equals("ENTER")){
+						constraints.ipadx = keyWidth * 2 -
+							m.charsWidth(qwertyArray[i][j].toCharArray(), 0, qwertyArray[i][j].length());
 					}
 					else if(qwertyArray[i][j].equals("SPACE")){
-						constraints.gridwidth = 16;
+						constraints.ipadx = keyWidth * 8;// -
+							//m.charsWidth(qwertyArray[i][j].toCharArray(), 0, qwertyArray[i][j].length());
 					}
-					buttonArray[i][j].setFont(GUIFonts.MEDIUM);
-					add(buttonArray[i][j], constraints);
+
+
+					b.setFont(GUIConstants.MEDIUM_FONT);
+					row.add(b, constraints);
 				}
 
 				constraints.gridwidth = 1;
+				constraints.insets = none;
+				constraints.ipadx = 0;
+				constraints.ipady = 0;
+				constraints.fill = GridBagConstraints.NONE;
 				constraints.gridx = 0;
-				constraints.gridy = 2;
-				add(Box.createHorizontalGlue(), constraints);
+				constraints.gridy = i;
+				constraints.anchor = GridBagConstraints.CENTER;
+				add(row, constraints);
 			}
 		}
 
