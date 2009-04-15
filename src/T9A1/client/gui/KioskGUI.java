@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import org.xml.sax.XMLReader;
 
-import T9A1.client.data.InventoryManager;
+import T9A1.client.data.RequestManager;
 import T9A1.common.Item;
 import T9A1.common.Location;
 import T9A1.common.Searchable;
@@ -17,8 +17,8 @@ import T9A1.common.Searchable;
  * @author Catie
  */
 public class KioskGUI {
-	/** The InventoryManager that performs searches. */
-	private InventoryManager inventoryManager;
+	/** The RequestManager that performs searches. */
+	private RequestManager inventoryManager;
 	/** The map of the store. */
 	private Map map;
 
@@ -36,7 +36,7 @@ public class KioskGUI {
 	 * Creates and displays a new KioskGUI.
 	 * @param im the InventoryManager associated with the kiosk
 	 */
-	public KioskGUI(InventoryManager im){
+	public KioskGUI(RequestManager im){
 		inventoryManager = im;
 		map = new Map(im.getStoreNumber());
 
@@ -81,7 +81,7 @@ public class KioskGUI {
 	 * @param s the term to be searched for
 	 */
 	public void itemSearch(String s){
-		Item[] results = inventoryManager.doSearch(s);
+		Item[] results = inventoryManager.searchItems(s);
 		resultsPanel = new ResultsPanel(this, s, GUIConstants.ITEM, results);
 
 		gui.add(resultsPanel, GUIConstants.RESULTS);
@@ -93,7 +93,7 @@ public class KioskGUI {
 	 * @param s the term to be searched for
 	 */
 	public void projectSearch(String s){
-		Searchable[] results = inventoryManager.doSearch(s);		resultsPanel = new ResultsPanel(this, s, GUIConstants.PROJECT, results);
+		Searchable[] results = inventoryManager.searchProjects(s);		resultsPanel = new ResultsPanel(this, s, GUIConstants.PROJECT, results);
 		gui.add(resultsPanel, GUIConstants.RESULTS);
 		layoutManager.show(gui, GUIConstants.RESULTS);
 	}
