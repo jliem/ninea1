@@ -49,7 +49,8 @@ public class Connection implements IConnection {
 		    try {
 		    	// TODO if blocks for too long it should error
 				socketIn = new ObjectInputStream(client.getInputStream());
-				response = (List<Item>) (socketIn.readObject());
+
+				response = (Request)(socketIn.readObject());
 
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block

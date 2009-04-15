@@ -43,8 +43,10 @@ public class RequestManager {
 			resultList = cacheManager.doSearch(query);
 
 		} else {
-			resultList = (List<Item>)connectionManager.sendRequest(Request.Type.item_search,
+			Request response = (Request)connectionManager.sendRequest(Request.Type.item_search,
 					query);
+
+			resultList = (List<Item>)response.data;
 
 			// This result wasn't in the cache (or it's stale), so add it now
 			cacheManager.add(query, resultList);
