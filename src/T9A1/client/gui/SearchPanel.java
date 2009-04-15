@@ -111,6 +111,7 @@ public class SearchPanel extends JPanel{
 		projectSearch = new JRadioButton("Projects");
 		projectSearch.setFont(GUIConstants.LARGE_FONT);
 		projectSearch.setBackground(GUIConstants.ORANGE);
+		projectSearch.setEnabled(false);
 		choiceGroup.add(projectSearch);
 		choices.add(projectSearch);
 
