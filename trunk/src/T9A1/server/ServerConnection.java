@@ -227,6 +227,11 @@ public class ServerConnection{
 					threads.add(tempThread);
 					tempThread.start();
 				}
+				try {
+					this.wait(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
