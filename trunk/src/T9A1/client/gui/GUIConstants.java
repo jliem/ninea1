@@ -20,14 +20,16 @@ public class GUIConstants {
 
 	public static final Font SMALL_FONT = new Font("Arial", Font.PLAIN, 18);
 
-	public static final String ITEM_SEARCH = "ITEM";
+	public static final String SEARCH = "SEARCH";
 
-	public static final String PROJECT_SEARCH = "PRODUCT";
+	public static final String RESULTS = "RESULTS";
 
-	public static final String ITEM_RESULTS = "ITEM_RESULTS";
+	public static final String ITEM = "ITEM";
 
-	public static final String PROJECT_RESULTS = "PROJECT_RESULTS";
+	public static final String PROJECT = "PROJECT";
 
 	public static final String MAP_PAGE = "MAP";
+
+	public static final String PROJECT_PAGE = "DESCRIPTION";
 
 }
