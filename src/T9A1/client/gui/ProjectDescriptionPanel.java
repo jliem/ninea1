@@ -17,16 +17,16 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class MapPanel extends JPanel {
+public class ProjectDescriptionPanel extends JPanel {
 
 	private KioskGUI gui;
 	private Map map;
-	private ItemPanel itemPanel;
+	private ProjectPanel projectPanel;
 
-	public MapPanel(KioskGUI gui, ItemPanel itemPanel){
+	public ProjectDescriptionPanel(KioskGUI gui, ProjectPanel projectPanel){
 		this.gui = gui;
 		this.map = gui.getMap();
-		this.itemPanel = itemPanel;
+		this.projectPanel = projectPanel;
 
 		this.setBackground(GUIConstants.ORANGE);
 		this.setLayout(new BorderLayout());
@@ -36,14 +36,14 @@ public class MapPanel extends JPanel {
 		GridBagConstraints con = new GridBagConstraints();
 		Insets insets = new Insets(40, 20, 10, 0);
 		con.insets = insets;
-		top.add(itemPanel, con);
+		top.add(projectPanel, con);
 		con.gridx = 1;
 		con.weightx = 1;
 		top.add(Box.createGlue(), con);
 		add(top, BorderLayout.NORTH);
 
-		MapDisplayPanel mapPanel = new MapDisplayPanel();
-		add(mapPanel, BorderLayout.CENTER);
+		//MapDisplayPanel mapPanel = new MapDisplayPanel();
+		//add(mapPanel, BorderLayout.CENTER);
 
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
 		insets = new Insets(10, 10, 10, 10);
@@ -106,43 +106,9 @@ public class MapPanel extends JPanel {
 	private class ReturnResultsListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {
-			itemPanel.setMouseover(true);
-			itemPanel.validate();
+			projectPanel.setMouseover(true);
+			projectPanel.validate();
 			gui.backToResults();
-		}
-	}
-
-	/**
-	 * Displays the map and plots the Item's location
-	 * @author Catie
-	 */
-	private class MapDisplayPanel extends JPanel{
-
-		private ImageIcon mapImage;
-
-		public MapDisplayPanel(){
-			mapImage = map.getMap();
-
-			this.setMinimumSize(new Dimension(mapImage.getIconWidth(), mapImage.getIconHeight()));
-			this.setPreferredSize(new Dimension(mapImage.getIconWidth(), mapImage.getIconHeight()));
-		}
-
-		public void paintComponent(Graphics g){
-			int startx = (getWidth() / 2) - (mapImage.getIconWidth() / 2);
-			int starty = (getHeight() / 2) - (mapImage.getIconHeight() / 2);
-
-			mapImage.paintIcon(this, g, startx, starty);
-
-			Point p = map.getCoordinates(itemPanel.getItem().getLocation());
-			if(p == null) return;
-			int x = startx + (int)p.getX();
-			int y = starty + (int)p.getY();
-			drawStar(g, x, y);
-		}
-
-		public void drawStar(Graphics g, int x, int y){
-			g.setColor(Color.yellow);
-			g.fillOval(x - 5, y - 5, 10, 10);
 		}
 	}
 

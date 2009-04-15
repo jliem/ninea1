@@ -10,9 +10,11 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Box;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
@@ -20,7 +22,7 @@ import javax.swing.SpringLayout;
  * The panel used to enter a search term.
  * @author Catie
  */
-public class ItemSearchPanel extends JPanel{
+public class SearchPanel extends JPanel{
 	/** An array that represents a QWERTY keyboard. */
 	private final String[][] qwertyArray =
 			{{"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"},
@@ -32,6 +34,8 @@ public class ItemSearchPanel extends JPanel{
 	private JTextField searchBox;
 	/** The JButton pressed to initiate a search. */
 	private JButton search;
+	private JRadioButton itemSearch;
+	private JRadioButton projectSearch;
 
 	/** The main GUI component. */
 	private KioskGUI gui;
@@ -43,31 +47,11 @@ public class ItemSearchPanel extends JPanel{
 	 * Creates a new search panel.
 	 * @param g the main GUI component
 	 */
-	public ItemSearchPanel(KioskGUI g) {
+	public SearchPanel(KioskGUI g) {
 		super(new BorderLayout());
 
 		gui = g;
 		GridBagConstraints c = new GridBagConstraints();
-
-		//Creates and adds a panel to display the new search button.
-		JPanel button = new JPanel(new GridBagLayout());
-		button.setBackground(GUIConstants.ORANGE);
-		JButton newSearch = new JButton("Project Search");
-		newSearch.setFont(GUIConstants.LARGE_FONT);
-		newSearch.addActionListener(new ProjectSearchListener());
-		c.insets = new Insets(5, 5, 5, 5);
-		c.fill = GridBagConstraints.NONE;
-		c.gridy = 0;
-		c.gridx = 0;
-		c.weightx = 0;
-		c.ipadx = 10;
-		c.ipady = 10;
-		c.anchor = GridBagConstraints.WEST;
-		button.add(newSearch, c);
-		c.gridx = 1;
-		c.weightx = 1;
-		button.add(Box.createGlue(), c);
-		add(button, BorderLayout.NORTH);
 
 		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBackground(GUIConstants.ORANGE);
@@ -105,6 +89,39 @@ public class ItemSearchPanel extends JPanel{
 		c.gridy = 1;
 		panel.add(search, c);
 
+		JPanel choices = new JPanel();
+		choices.setBackground(GUIConstants.ORANGE);
+		ButtonGroup choiceGroup = new ButtonGroup();
+
+		JLabel choose = new JLabel("Search for:");
+		choose.setFont(GUIConstants.LARGE_FONT);
+		choices.add(choose);
+
+		choices.add(Box.createHorizontalStrut(20));
+
+		itemSearch = new JRadioButton("Items");
+		itemSearch.setFont(GUIConstants.LARGE_FONT);
+		itemSearch.setBackground(GUIConstants.ORANGE);
+		itemSearch.setSelected(true);
+		choiceGroup.add(itemSearch);
+		choices.add(itemSearch);
+
+		choices.add(Box.createHorizontalStrut(20));
+
+		projectSearch = new JRadioButton("Projects");
+		projectSearch.setFont(GUIConstants.LARGE_FONT);
+		projectSearch.setBackground(GUIConstants.ORANGE);
+		choiceGroup.add(projectSearch);
+		choices.add(projectSearch);
+
+		c.anchor = GridBagConstraints.CENTER;
+		c.fill = GridBagConstraints.VERTICAL;
+		c.ipadx = 0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(choices, c);
+
 		add(panel, BorderLayout.CENTER);
 
 		OnScreenKeyboard keyboard = new OnScreenKeyboard();
@@ -125,18 +142,10 @@ public class ItemSearchPanel extends JPanel{
 			if(s.equals(""))
 				return;
 			searchBox.setText("");
-			gui.itemSearch(s);
-		}
-
-	}
-
-	/**
-	 * The listener used to switch to a project search view.
-	 * @author Catie
-	 */
-	private class ProjectSearchListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			gui.showSearch(GUIConstants.PROJECT_SEARCH);
+			if(itemSearch.isSelected())
+				gui.itemSearch(s);
+			else if(projectSearch.isSelected())
+				gui.projectSearch(s);
 		}
 
 	}
