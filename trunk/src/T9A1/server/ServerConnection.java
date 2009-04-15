@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -51,7 +52,7 @@ public class ServerConnection{
 	         debug("Error on port: 4321 " + ", " + e);
 	         System.exit(1);
 	    }
-	    new Thread(new ThreadStart(5)).start();
+	    new Thread(new ServerStart(5)).start();
 
 	}
 	/**
@@ -78,6 +79,7 @@ public class ServerConnection{
 			while(running){
 				Socket client = null;
 			    try {
+			    	//THIS IS WHERE THE THREAD BLOCKS
 			    	client = server.accept();
 			    	numConnections = numConnections + 1;
 			    		if(client != null){
@@ -85,8 +87,6 @@ public class ServerConnection{
 			    				//BufferedReader streamIn = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			    				ObjectInputStream streamIn = new ObjectInputStream(client.getInputStream());
 			    				Request request = (Request)streamIn.readObject();
-
-			    				// TODO(chase): think of a better way of getting a string
 
 								ArrayList<Object> al = new ArrayList<Object>();
 								al.add(client); al.add(request);
@@ -140,6 +140,7 @@ public class ServerConnection{
 				Request request = null;
 				Socket client = null;
 				try{
+					//THIS IS WHERE THE THREAD BLOCKS
 					ArrayList al = (ArrayList)(buffer.take());
 	
 					client = (Socket)(al.get(0));
@@ -200,9 +201,9 @@ public class ServerConnection{
 	 * whenever the # of connections grow
 	 * @author Chase
 	 */
-	class ThreadStart implements Runnable{
+	class ServerStart implements Runnable{
 		public int consumers;
-		public ThreadStart(int c){
+		public ServerStart(int c){
 			this.consumers = c;
 		}
 
@@ -228,10 +229,12 @@ public class ServerConnection{
 					tempThread.start();
 				}
 				try {
-					this.wait(10);
+					//Determines the amount of sleep time for the main thread
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				
 			}
 		}
 	}
