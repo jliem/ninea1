@@ -51,36 +51,6 @@ public class ResultsPanel extends JPanel {
 		type = t;
 		results = items;
 
-		//Adds all results to a list for the use to chose.
-		list = new JPanel(new GridBagLayout());
-		list.setBorder(new EmptyBorder(2, 2, 2, 2));
-		list.setBackground(GUIConstants.LIGHT_ORANGE);
-		if(results == null || results.length == 0){
-			JLabel empty = new JLabel("Your search returned no results.");
-			empty.setFont(GUIConstants.MEDIUM_FONT);
-			list.add(empty);
-		}else{
-			ItemPanel ip;
-			int i;
-			c.weighty = 0;
-			for(i = 0; i < results.length; i++){
-				ip = (ItemPanel)results[i].getListPanel(gui);
-				c.ipady = 50;
-				c.gridy = i;
-				c.gridx = 0;
-				c.weightx = 0;
-				list.add(ip, c);
-				c.gridx = 1;
-				c.weightx = 1;
-				list.add(Box.createGlue(), c);
-			}
-			c.gridy = ++i;
-			c.gridx = 0;
-			c.weighty = 1;
-			c.weightx = 0;
-			list.add(Box.createGlue(), c);
-		}
-
 		add(new JScrollPane(list), BorderLayout.CENTER);
 
 		//Creates and adds a panel to go at the top of the page that displays data on the results.
@@ -127,6 +97,74 @@ public class ResultsPanel extends JPanel {
 		c.weightx = 1;
 		button.add(Box.createGlue(), c);
 		add(button, BorderLayout.SOUTH);
+	}
+
+	public void fillList(){
+		list = new JPanel(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		list.setBorder(new EmptyBorder(2, 2, 2, 2));
+		list.setBackground(GUIConstants.LIGHT_ORANGE);
+		if(results == null){
+			JLabel empty = new JLabel("Connection problem. Please see store associate for assistance.");
+			empty.setForeground(Color.red);
+			empty.setFont(GUIConstants.MEDIUM_FONT);
+			list.add(empty);
+		}else if(results.length == 0){
+			JLabel empty = new JLabel("Your search returned no results.");
+			empty.setFont(GUIConstants.MEDIUM_FONT);
+			list.add(empty);
+		}else{
+			if(type.equals(GUIConstants.ITEM))
+				addItems();
+			else if(type.equals(GUIConstants.PROJECT))
+				addProjects();
+		}
+	}
+
+	public void addItems(){
+		GridBagConstraints c = new GridBagConstraints();
+		ItemPanel ip;
+		int i;
+		c.weighty = 0;
+		for(i = 0; i < results.length; i++){
+			ip = (ItemPanel)results[i].getListPanel(gui);
+			c.ipady = 50;
+			c.gridy = i;
+			c.gridx = 0;
+			c.weightx = 0;
+			list.add(ip, c);
+			c.gridx = 1;
+			c.weightx = 1;
+			list.add(Box.createGlue(), c);
+		}
+		c.gridy = ++i;
+		c.gridx = 0;
+		c.weighty = 1;
+		c.weightx = 0;
+		list.add(Box.createGlue(), c);
+	}
+
+	public void addProjects(){
+		GridBagConstraints c = new GridBagConstraints();
+		ProjectPanel ip;
+		int i;
+		c.weighty = 0;
+		for(i = 0; i < results.length; i++){
+			ip = (ProjectPanel)results[i].getListPanel(gui);
+			c.ipady = 50;
+			c.gridy = i;
+			c.gridx = 0;
+			c.weightx = 0;
+			list.add(ip, c);
+			c.gridx = 1;
+			c.weightx = 1;
+			list.add(Box.createGlue(), c);
+		}
+		c.gridy = ++i;
+		c.gridx = 0;
+		c.weighty = 1;
+		c.weightx = 0;
+		list.add(Box.createGlue(), c);
 	}
 
 	public String toString(){
