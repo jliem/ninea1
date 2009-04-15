@@ -51,6 +51,7 @@ public class ResultsPanel extends JPanel {
 		type = t;
 		results = items;
 
+		fillList();
 		add(new JScrollPane(list), BorderLayout.CENTER);
 
 		//Creates and adds a panel to go at the top of the page that displays data on the results.
