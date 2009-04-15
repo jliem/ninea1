@@ -3,13 +3,18 @@ package T9A1.common;
 import java.awt.Image;
 import java.io.Serializable;
 
+import javax.swing.JPanel;
+
+import T9A1.client.gui.ItemPanel;
+import T9A1.client.gui.KioskGUI;
+
 /**
  * Represents an item.
  *
  * @author Johannes
  *
  */
-public class Item implements Serializable {
+public class Item implements Serializable, Searchable {
 	private String name;
 	private double price;
 	private String description;
@@ -89,4 +94,7 @@ public class Item implements Serializable {
 		this.id = id;
 	}
 
+	public JPanel getListPanel(KioskGUI gui){
+		return new ItemPanel(gui, this);
+	}
 }
