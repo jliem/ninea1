@@ -73,19 +73,6 @@ public class ProjectDescriptionPanel extends JPanel {
 		buttonPanel.add(Box.createGlue(), con);
 
 		add(buttonPanel, BorderLayout.SOUTH);
-
-		/*c.fill = GridBagConstraints.NONE;
-		c.gridy = 0;
-		c.gridx = 1;
-		c.weightx = 0;
-		c.ipadx = 10;
-		c.ipady = 10;
-		c.anchor = GridBagConstraints.EAST;
-		button.add(newSearch, c);
-		c.gridx = 0;
-		c.weightx = 1;
-		button.add(Box.createGlue(), c);
-		add(button, BorderLayout.SOUTH);*/
 	}
 
 	/**

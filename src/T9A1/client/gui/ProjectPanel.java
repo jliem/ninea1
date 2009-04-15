@@ -24,6 +24,7 @@ import javax.swing.plaf.basic.BasicBorders;
 
 import T9A1.common.Item;
 import T9A1.common.Location;
+import T9A1.common.Project;
 
 /**
  * A class for getting different item displays. The compact panel can be
@@ -35,14 +36,14 @@ import T9A1.common.Location;
 public class ProjectPanel extends JPanel{
 
 	/** The location of the product images. */
-	private final String IMAGE_PATH = "client/gui/images/item/";
+	private final String IMAGE_PATH = "client/gui/images/project/";
 	/** The name of the default product image. */
 	private final String NO_IMAGE = "no_image";
 	/** The filetype of the product images. */
 	private final String FILETYPE = ".jpg";
 
 	/** The item that the panels represent. */
-	private Item item;
+	private Project project;
 	/** The main GUI component. */
 	private KioskGUI gui;
 
@@ -53,8 +54,8 @@ public class ProjectPanel extends JPanel{
 	 * @param g The main GUI component.
 	 * @param i The Item that this panel represents.
 	 */
-	public ProjectPanel(KioskGUI gui, Item item){
-		this.item = item;
+	public ProjectPanel(KioskGUI gui, Project project){
+		this.project = project;
 		this.gui = gui;
 		mouseover = true;
 
@@ -74,7 +75,7 @@ public class ProjectPanel extends JPanel{
 		con.insets = new Insets(5, 70, 5, 40);
 		add(i, con);
 
-		JLabel name = new JLabel(item.getName());
+		JLabel name = new JLabel(project.getTitle());
 		name.setFont(GUIConstants.MEDIUM_FONT);
 		con.gridheight = 1;
 		con.gridwidth = 3;
@@ -83,49 +84,6 @@ public class ProjectPanel extends JPanel{
 		con.insets = insets;
 		con.anchor = GridBagConstraints.WEST;
 		add(name, con);
-
-		JLabel price = new JLabel("$" + Double.toString(item.getPrice()));
-		price.setFont(GUIConstants.SMALL_FONT);
-		con.gridheight = 1;
-		con.gridwidth = 1;
-		con.gridx = 1;
-		con.gridy = 1;
-		con.insets = insets;
-		add(price, con);
-
-		JLabel inStock;
-		if(item.isInStock()){
-			inStock = new JLabel("In Stock");
-			inStock.setForeground(Color.green);
-		}else{
-			inStock = new JLabel("Out of Stock");
-			inStock.setForeground(Color.red);
-		}
-		inStock.setFont(GUIConstants.SMALL_FONT);
-		con.gridheight = 1;
-		con.gridwidth = 1;
-		con.gridx = 2;
-		con.gridy = 1;
-		con.insets = insets;
-		add(inStock, con);
-
-		JLabel location = new JLabel(item.getLocation().toString());
-		location.setFont(GUIConstants.SMALL_FONT);
-		con.gridheight = 1;
-		con.gridwidth = 1;
-		con.gridx = 3;
-		con.gridy = 1;
-		con.insets = insets;
-		add(location, con);
-
-		JLabel description = new JLabel(item.getDescription());
-		description.setFont(GUIConstants.SMALL_FONT);
-		con.gridheight = 1;
-		con.gridwidth = 6;
-		con.gridx = 1;
-		con.gridy = 2;
-		con.insets = insets;
-		add(description, con);
 
 		con.gridheight = 3;
 		con.fill = GridBagConstraints.HORIZONTAL;
@@ -144,8 +102,8 @@ public class ProjectPanel extends JPanel{
 		gui.showProject(this);
 	}
 
-	public Item getItem(){
-		return item;
+	public Project getProject(){
+		return project;
 	}
 
 	public void setMouseover(boolean b){
@@ -157,7 +115,7 @@ public class ProjectPanel extends JPanel{
 	}
 
 	public ProjectPanel copy(){
-		return new ProjectPanel(gui, item);
+		return new ProjectPanel(gui, project);
 	}
 
 	/**
@@ -196,9 +154,9 @@ public class ProjectPanel extends JPanel{
 			this.setMinimumSize(new Dimension(100, 100));
 			this.setPreferredSize(new Dimension(100, 100));
 
-			image = new ImageIcon(IMAGE_PATH + item.getImageID() + FILETYPE);
+			image = new ImageIcon(IMAGE_PATH + project.getId() + "_1" + FILETYPE);
 
-			if(item.getImageID() == 0 || image.getIconHeight() < 0)
+			if(project.getId() == 0 || image.getIconHeight() < 0)
 				image = new ImageIcon(IMAGE_PATH + NO_IMAGE + FILETYPE);
 		}
 
