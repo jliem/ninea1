@@ -10,6 +10,7 @@ import org.xml.sax.XMLReader;
 import T9A1.client.data.RequestManager;
 import T9A1.common.Item;
 import T9A1.common.Location;
+import T9A1.common.Project;
 import T9A1.common.Searchable;
 
 /**
@@ -98,7 +99,18 @@ public class KioskGUI {
 	 * @param s the term to be searched for
 	 */
 	public void projectSearch(String s){
-		Searchable[] results = inventoryManager.searchProjects(s);		resultsPanel = new ResultsPanel(this, s, GUIConstants.PROJECT, results);
+		Searchable[] results = inventoryManager.searchProjects(s);
+		if(results == null || results.length == 0){
+			results = new Searchable[1];
+			String[] tools = {"Hammers", "Nails", "Shit"};
+			String[] materials = {"Food", "Water", "Golf Balls"};
+			String[] instructions = {
+					"Do some shit!",
+					"Do some other shit!",
+					"Do some shit while upside down."};
+			results[0] = new Project("Doing some shit", tools, materials, instructions, 1, 1, 30);
+		}
+		resultsPanel = new ResultsPanel(this, s, GUIConstants.PROJECT, results);
 		gui.add(resultsPanel, GUIConstants.RESULTS);
 		layoutManager.show(gui, GUIConstants.RESULTS);
 	}

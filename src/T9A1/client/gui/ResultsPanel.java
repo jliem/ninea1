@@ -49,7 +49,7 @@ public class ResultsPanel extends JPanel {
 		searchTerm = s;
 		type = t;
 
-		add(new ListPanel(gui, results), BorderLayout.CENTER);
+		add(new JScrollPane(new ListPanel(gui, results)), BorderLayout.CENTER);
 
 		//Creates and adds a panel to go at the top of the page that displays data on the results.
 		JPanel displayResults = new JPanel(new GridBagLayout());

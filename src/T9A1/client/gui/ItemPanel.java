@@ -64,7 +64,7 @@ public class ItemPanel extends JPanel implements SearchResult{
 
 		addMouseListener(new MouseOverListener());
 		setBackground(GUIConstants.LIGHT_ORANGE);
-		setPreferredSize(new Dimension(gui.getWidth() - 10, 110));
+		setPreferredSize(new Dimension(gui.getWidth() - 40, 110));
 
 		ImageContainer i = new ImageContainer();
 		con.gridheight = 4;

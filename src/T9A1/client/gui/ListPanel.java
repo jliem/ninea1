@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import T9A1.common.Item;
