@@ -28,9 +28,6 @@ public class Connection implements IConnection {
 
 	}
 
-	public Object sendRequest(Request.Type type, Object data) {
-		return sendRequest(new Request(type, data));
-	}
 	/**
 	 * Send request method for client, that sends then blocks for reponse
 	 * @author Chase

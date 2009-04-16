@@ -10,7 +10,7 @@ import T9A1.client.data.ICacheManager;
 import T9A1.common.Item;
 
 /**
- * Manages the cache used by InventoryManager.
+ * Manages the cache used by RequestManager.
  *
  * @author JL
  *
