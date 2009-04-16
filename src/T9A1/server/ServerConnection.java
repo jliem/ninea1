@@ -134,7 +134,7 @@ public class ServerConnection{
 		 * @author Chase
 		 */
 		public void run(){
-			debug("Consumer Thread " + threadNum + ": STARTING");		
+			debug("Consumer Thread " + threadNum + ": STARTING");
 			while(true){
 				Request outgoing = null;
 				Request request = null;
@@ -142,10 +142,10 @@ public class ServerConnection{
 				try{
 					//THIS IS WHERE THE THREAD BLOCKS
 					ArrayList al = (ArrayList)(buffer.take());
-	
+
 					client = (Socket)(al.get(0));
 					request = (Request)(al.get(1));
-	
+
 					System.out.println("Consumer Thread " + threadNum + ": " + request.data + " is removed from the buffer" );
 					if(request.type == Request.Type.item_search){
 						outgoing = new Request(Request.Type.results,
@@ -157,14 +157,17 @@ public class ServerConnection{
 						sendRequest(client, outgoing);
 					}
 					else if(request.type == Request.Type.update_request){
-						
+
+					} else {
+						// Unhandled type, send back null to indicate error
+						sendRequest(client, null);
 					}
 				}catch(Throwable e){
 					e.printStackTrace();
 					debug("Consumer error");
 				}
-				
-			}		
+
+			}
 		}
 		/**
 		 * Send request method
@@ -234,7 +237,7 @@ public class ServerConnection{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				
+
 			}
 		}
 	}

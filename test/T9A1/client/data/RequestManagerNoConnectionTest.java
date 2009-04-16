@@ -6,19 +6,19 @@ import T9A1.common.MockConnection;
 import T9A1.common.Request;
 
 /**
- * Tests the InventoryManager subsystem without the use of the
+ * Tests the RequestManager subsystem without the use of the
  * ConnectionManager.
  *
  * @author Johannes Liem
  *
  */
-public class InventoryManagerNoConnectionTest extends InventoryManagerTest {
+public class RequestManagerNoConnectionTest extends RequestManagerTest {
 
 	private MockConnection mockConn;
 	public void setUp() {
 		super.setUp();
 		mockConn = new MockConnection();
-		im = new RequestManager(new CacheManager(), mockConn);
+		requestManager = new RequestManager(new CacheManager(), mockConn);
 	}
 
 	public void testEmptySearch() {
