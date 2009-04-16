@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Johannes
  *
  */
-public class Project implements Serializable {
+public class Project implements Serializable, Searchable {
 
 	private String title;
 	private String[] tools;
