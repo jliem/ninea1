@@ -32,7 +32,7 @@ import T9A1.common.Location;
  *
  * @author Catie
  */
-public class ItemPanel extends JPanel{
+public class ItemPanel extends JPanel implements SearchResult{
 
 	/** The location of the product images. */
 	private final String IMAGE_PATH = "client/gui/images/item/";
@@ -158,6 +158,10 @@ public class ItemPanel extends JPanel{
 
 	public ItemPanel copy(){
 		return new ItemPanel(gui, item);
+	}
+
+	public JPanel getListPanel() {
+		return this;
 	}
 
 	/**
