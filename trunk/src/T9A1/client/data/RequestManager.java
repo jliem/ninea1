@@ -33,6 +33,18 @@ public class RequestManager {
 		this.connectionManager = connectionManager;
 		this.storeNumber = storeNumber;
 	}
+	
+	public Item[] getSaleItems() {
+		List<Item> resultList = null;
+
+		
+		resultList = (List<Item>)sendRequest(new Request(Request.Type.sale_search, null));
+
+		// Return null if the server returned null (indicating an error)
+		if (resultList == null) return null;
+
+		return resultList.toArray(new Item[0]);
+	}
 
 	public Item[] searchItems(String query) {
 
@@ -43,8 +55,7 @@ public class RequestManager {
 			resultList = cacheManager.doSearch(query);
 
 		} else {
-			resultList = (List<Item>)sendRequest(
-					new Request(Request.Type.item_search, query));
+			resultList = (List<Item>)sendRequest(new Request(Request.Type.item_search, query));
 
 			if (resultList != null) {
 				// This result wasn't in the cache (or it's stale), so add it now
@@ -68,8 +79,7 @@ public class RequestManager {
 			//resultList = cacheManager.doSearch(query);
 
 		} else {
-			resultList = (List<Project>)sendRequest(new Request(
-					Request.Type.project_search, query));
+			resultList = (List<Project>)sendRequest(new Request(Request.Type.project_search, query));
 
 			// This result wasn't in the cache (or it's stale), so add it now
 			//cacheManager.add(query, resultList);

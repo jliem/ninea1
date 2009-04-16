@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class Item implements Serializable, Searchable {
 	private String name;
 	private double price;
+	private double salePrice;
 	private String description;
 	private boolean inStock;
 	private long imageID;
@@ -87,5 +88,13 @@ public class Item implements Serializable, Searchable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public double getSalePrice() {
+		return salePrice;
+	}
+
+	public void setSalePrice(double salePrice) {
+		this.salePrice = salePrice;
 	}
 }

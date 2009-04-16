@@ -36,6 +36,8 @@ public class KioskServer {
 		switch (req.type) {
 			case item_search:
 				return dbm.itemSearch((String)req.data);
+			case sale_search:
+				return dbm.saleSearch();
 			case project_search:
 			case update_request:	
 		}

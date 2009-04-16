@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Request implements Serializable {
 
 	public enum Type {project_search, project_list, project_email,
-		item_search, item_list,
+		item_search, item_list, sale_search,
 		update_request, results};
 
 	public Object data;
