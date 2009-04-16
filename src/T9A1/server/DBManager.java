@@ -26,6 +26,9 @@ public class DBManager {
 	private PreparedStatement item_search;
 	private static final String item_search_q = "SELECT * FROM PRODUCT_INFO INNER JOIN PRODUCTS ON PRODUCT_INFO.PRODUCT_ID = PRODUCTS.PRODUCT_ID WHERE (PRODUCT_INFO.NAME LIKE ? OR PRODUCT_INFO.DESCRIPTION LIKE ?)";
 
+	// grab sale items
+	private PreparedStatement sale_search;
+	private static final String sale_search_q = "SELECT * FROM PRODUCT_INFO INNER JOIN PRODUCTS ON PRODUCT_INFO.PRODUCT_ID = PRODUCTS.PRODUCT_ID WHERE PRODUCTS.SALE_PRICE IS NOT NULL";
 
 	/**
 	 * Initializes the JDBC driver
@@ -187,8 +190,9 @@ public class DBManager {
 	 */
 	protected void initPreparedStatements() {
 		item_search = createPreparedStatement(item_search_q);
+		sale_search = createPreparedStatement(sale_search_q);
 		
-		if (item_search == null) {
+		if (item_search == null || sale_search == null) {
 			System.err.println("Couldn't create PreparedStatements, exiting.");
 			System.exit(1);
 		}
@@ -198,6 +202,7 @@ public class DBManager {
 	 * Searches the db for specified item 
 	 * 
 	 * @param query String containing the item to search for
+	 * 
 	 * @return a list of Items matching the query
 	 */
 	public List<Item> itemSearch(String query) {
@@ -209,29 +214,69 @@ public class DBManager {
 				item_search.setString(2, "%" + query + "%");
 
 /* DEBUG */ System.out.println("item search for " + query);
-				ResultSet rs = item_search.executeQuery();  // restrict max results?
-				Item i;
+				ResultSet rs = item_search.executeQuery();
+				// restrict max results?
 				// TODO(poje): strip trailing s from query if no results are returned on first try
 				while (rs.next()) {
-					i = new Item();
-
-					i.setId(rs.getLong("PRODUCT_ID"));
-					i.setName(rs.getString("NAME"));
-					i.setDescription(rs.getString("DESCRIPTION"));
-					i.setInStock(rs.getInt("STOCK_STATUS") > 0);
-					i.setPrice(rs.getDouble("PRICE"));
-					i.setLocation(new Location(rs.getInt("LOCATION_AISLE"), rs.getInt("LOCATION_BIN")));
-					i.setImageID(rs.getLong("IMAGE_ID"));
-
-					results.add(i);
+					results.add(inflateItemFromRS(rs));
 				}
 			} catch (SQLException e) {
-				System.out.println("Error executing search: " + e.getMessage());
+				System.out.println("Error executing item search: " + e.getMessage());
 				return null;
 			}
 		}
 
 		return results;
+	}
+	
+	/**
+	 * Searches the db for items on sale
+	 * 
+	 * @param query String containing the tag to search for
+	 * 
+	 * @return a list of Items matching the query
+	 */
+	public List<Item> saleSearch() {
+		List<Item> results = new LinkedList<Item>();
+
+		synchronized (sale_search) {
+			try {
+/* DEBUG */ System.out.println("sale search for ");
+				ResultSet rs = sale_search.executeQuery();
+				// restrict max results?
+				// TODO(poje): strip trailing s from query if no results are returned on first try
+				while (rs.next()) {
+					results.add(inflateItemFromRS(rs));
+				}
+			} catch (SQLException e) {
+				System.out.println("Error executing tag search: " + e.getMessage());
+				return null;
+			}
+		}
+
+		return results;
+	}
+	
+	/**
+	 * Inflates an Item from the current result in the ResultSet
+	 * 
+	 * @param rs ResultSet to inflate from
+	 * 
+	 * @return an inflated Item
+	 */
+	protected Item inflateItemFromRS(ResultSet rs) throws SQLException {
+		Item i = new Item();
+		
+		i.setId(rs.getLong("PRODUCT_ID"));
+		i.setName(rs.getString("NAME"));
+		i.setDescription(rs.getString("DESCRIPTION"));
+		i.setInStock(rs.getInt("STOCK_STATUS") > 0);
+		i.setPrice(rs.getDouble("PRICE"));
+		i.setSalePrice(rs.getDouble("SALE_PRICE"));
+		i.setLocation(new Location(rs.getInt("LOCATION_AISLE"), rs.getInt("LOCATION_BIN")));
+		i.setImageID(rs.getLong("IMAGE_ID"));
+		
+		return i;
 	}
 
 	// does a quick functionality check
