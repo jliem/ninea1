@@ -1,4 +1,4 @@
-<project name="capstone" default="compile-all" basedir=".">
+<project name="capstone" default="dist" basedir=".">
 	<description>
 		build file for T9A1 capstone project
 	</description>
@@ -34,7 +34,7 @@
 
 	<!-- compiles everything -->
 	<target name="compile-all" depends="compile-client, compile-server"
-				description="compile source">
+			description="compile source">
 	</target>
 	
 	<target name="dist-common" unless="common-dist">
@@ -70,8 +70,18 @@
 					<attribute name="Implementation-Version" value="1.0.0beta2"/>
 				-->
 				<attribute name="Main-Class" value="T9A1.client.Kiosk"/>
-			</manifest>
+			</manifest>	
 		</jar>
+		
+		<copy todir="${dist}/resources/maps">
+			<fileset dir="${src}/client/gui/maps"/>
+		</copy>
+		<copy todir="${dist}/resources/images/item">
+			<fileset dir="${src}/client/gui/images/item"/>
+		</copy>
+		<copy todir="${dist}/resources/images/project">
+			<fileset dir="${src}/client/gui/images/project"/>
+		</copy>
 	</target>
 	
 	<!-- packages everything -->
