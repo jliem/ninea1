@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Johannes
  *
  */
-public class Item implements Serializable {
+public class Item implements Serializable, Searchable {
 	private String name;
 	private double price;
 	private String description;
