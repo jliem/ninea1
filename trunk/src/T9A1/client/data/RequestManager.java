@@ -43,16 +43,12 @@ public class RequestManager {
 			resultList = cacheManager.doSearch(query);
 
 		} else {
-			Request response = (Request)connectionManager.sendRequest(Request.Type.item_search,
-					query);
+			resultList = (List<Item>)sendRequest(
+					new Request(Request.Type.item_search, query));
 
-			if (response != null) {
-				resultList = (List<Item>)response.data;
-
+			if (resultList != null) {
 				// This result wasn't in the cache (or it's stale), so add it now
 				cacheManager.add(query, resultList);
-			} else {
-				resultList = null;
 			}
 		}
 
@@ -72,8 +68,8 @@ public class RequestManager {
 			//resultList = cacheManager.doSearch(query);
 
 		} else {
-			resultList = (List<Project>)connectionManager.sendRequest(Request.Type.project_search,
-					query);
+			resultList = (List<Project>)sendRequest(new Request(
+					Request.Type.project_search, query));
 
 			// This result wasn't in the cache (or it's stale), so add it now
 			//cacheManager.add(query, resultList);
@@ -83,6 +79,56 @@ public class RequestManager {
 		if (resultList == null) return null;
 
 		return resultList.toArray(new Project[0]);
+	}
+
+	public Project[] getProjectList(String email) {
+		List<Project> resultList = null;
+
+		Request r = new Request(Request.Type.project_list, email);
+		resultList = (List<Project>)sendRequest(r);
+
+		// Return null if the server returned null (indicating an error)
+		if (resultList == null) return null;
+
+		return resultList.toArray(new Project[0]);
+	}
+
+	public Item[] getShoppingList(String email) {
+		List<Item> resultList = null;
+
+		Request r = new Request(Request.Type.item_list, email);
+		resultList = (List<Item>)sendRequest(r);
+
+		// Return null if the server returned null (indicating an error)
+		if (resultList == null) return null;
+
+		return resultList.toArray(new Item[0]);
+	}
+
+	/**
+	 * E-mails the project to the specified e-mail address.
+	 *
+	 * @param project the project to send
+	 * @param email the destination email address
+	 * @return true if the server request was made successfully, false otherwise
+	 * (does not guarantee success of delivery)
+	 */
+	public boolean emailProject(Project project, String email) {
+		// TODO: Not finished yet, need to send e-mail too
+		Request r = new Request(Request.Type.project_email, project);
+		sendRequest(r);
+
+		return true;
+	}
+
+	private Object sendRequest(Request request) {
+		Request response = (Request)connectionManager.sendRequest(request);
+
+		if (response != null) {
+			return response.data;
+		}
+
+		return null;
 	}
 
 	public int getStoreNumber() {

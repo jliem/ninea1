@@ -10,7 +10,9 @@ import java.io.Serializable;
  */
 public class Request implements Serializable {
 
-	public enum Type {project_search, item_search, update_request, results};
+	public enum Type {project_search, project_list, project_email,
+		item_search, item_list,
+		update_request, results};
 
 	public Object data;
 	public Type type;
@@ -20,7 +22,7 @@ public class Request implements Serializable {
 		this.type = type;
 		this.data = data;
 	}
-	
+
 	public Request(Type type, String data) {
 		this.type = type;
 		this.data = data;
