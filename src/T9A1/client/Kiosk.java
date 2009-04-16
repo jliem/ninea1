@@ -13,7 +13,7 @@ public class Kiosk {
 		if (args.length > 0) {
 			new KioskClientFactory(args).createKioskGUI();
 		} else {
-			System.out.println("Usage: java Kiosk [storeNumber]");
+			System.out.println("Usage: java Kiosk [storeNumber] [-ide_image_path]");
 		}
 	}
 }

@@ -14,13 +14,21 @@ public class KioskClientFactory {
 	/** The store's number. */
 	private int storeNumber = 0;
 
+	/** The path for resources */
+	private String resource_path;
+
 	/**
 	 * Creates a new KioskClientFactory.
 	 * @param args an array whose first element should be the store number
 	 */
 	public KioskClientFactory(String[] args) {
-		if (args.length > 0) {
-			storeNumber = Integer.parseInt(args[0]);
+		resource_path = "resources/";
+		for (int i = 0; i < args.length; i++) {
+			if (args[i].equals("-ide_resource_path")) {
+				resource_path = "client/gui/";
+			} else {
+				storeNumber = Integer.parseInt(args[i]);
+			}
 		}
 	}
 
@@ -30,7 +38,7 @@ public class KioskClientFactory {
 	 */
 	public KioskGUI createKioskGUI(){
 		RequestManager im = this.createInventoryManager();
-		KioskGUI gui = new KioskGUI(im);
+		KioskGUI gui = new KioskGUI(im, resource_path);
 
 		return gui;
 	}

@@ -26,7 +26,7 @@ import T9A1.common.Location;
  */
 public class Map {
 	/** The location of the map images. */
-	public static final String MAP_PATH = "client/gui/maps/";
+	public static String MAP_PATH;
 	/** The filetype of the map image. */
 	public static final String FILETYPE = ".gif";
 

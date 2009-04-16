@@ -36,7 +36,7 @@ import T9A1.common.Project;
 public class ProjectPanel extends JPanel implements SearchResult{
 
 	/** The location of the product images. */
-	private final String IMAGE_PATH = "client/gui/images/project/";
+	public static String IMAGE_PATH;
 	/** The name of the default product image. */
 	private final String NO_IMAGE = "no_image";
 	/** The filetype of the product images. */
