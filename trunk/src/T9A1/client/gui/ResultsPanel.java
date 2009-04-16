@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import T9A1.common.Item;
@@ -49,7 +50,9 @@ public class ResultsPanel extends JPanel {
 		searchTerm = s;
 		type = t;
 
-		add(new JScrollPane(new ListPanel(gui, results)), BorderLayout.CENTER);
+		JScrollPane list = new JScrollPane(new ListPanel(gui, results));
+		list.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		add(list, BorderLayout.CENTER);
 
 		//Creates and adds a panel to go at the top of the page that displays data on the results.
 		JPanel displayResults = new JPanel(new GridBagLayout());

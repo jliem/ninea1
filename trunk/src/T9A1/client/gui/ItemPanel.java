@@ -33,7 +33,7 @@ import T9A1.common.Location;
  * @author Catie
  */
 public class ItemPanel extends JPanel implements SearchResult{
-	
+
 	/** holds the path for images */
 	public static String IMAGE_PATH;
 	/** The name of the default product image. */
@@ -64,7 +64,7 @@ public class ItemPanel extends JPanel implements SearchResult{
 
 		addMouseListener(new MouseOverListener());
 		setBackground(GUIConstants.LIGHT_ORANGE);
-		setPreferredSize(new Dimension(gui.getWidth() - 40, 110));
+		setPreferredSize(new Dimension(gui.getWidth() - 20, 110));
 
 		ImageContainer i = new ImageContainer();
 		con.gridheight = 4;
