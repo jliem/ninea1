@@ -135,11 +135,11 @@ public class ProjectPanel extends JPanel implements SearchResult{
 			add(mats, con);
 		}
 
-		con.gridheight = 3;
 		con.fill = GridBagConstraints.HORIZONTAL;
 		con.gridwidth = 1;
+		con.gridheight = 4;
 		con.weightx = 1;
-		con.gridx = 4;
+		con.gridx = 2;
 		con.gridy = 0;
 		con.insets = insets;
 		add(Box.createGlue(), con);

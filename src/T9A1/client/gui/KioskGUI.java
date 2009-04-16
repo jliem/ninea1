@@ -42,7 +42,7 @@ public class KioskGUI {
 		ProjectPanel.IMAGE_PATH = resource_path + "images/project/";
 		ItemPanel.IMAGE_PATH = resource_path + "images/item/";
 		Map.MAP_PATH = resource_path + "maps/";
-		
+
 		inventoryManager = im;
 		map = new Map(im.getStoreNumber());
 
@@ -75,6 +75,14 @@ public class KioskGUI {
 	}
 
 	/**
+	 * Returns the height of the GUI.
+	 * @return the height of the GUI
+	 */
+	public int getHeight(){
+		return gui.getHeight();
+	}
+
+	/**
 	 * Returns the Map associated with the current GUI.
 	 * @return a Map object that represents the store map
 	 */
@@ -102,9 +110,27 @@ public class KioskGUI {
 		Searchable[] results = inventoryManager.searchProjects(s);
 		if(results == null || results.length == 0){
 			results = new Searchable[1];
-			String[] tools = {"Hammers", "Nails", "Shit"};
-			String[] materials = {"Food", "Water", "Golf Balls"};
+			String[] tools = {"Hammers", "Nails", "Faucet", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit"};
+			String[] materials = {"Food", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls"};
 			String[] instructions = {
+					"Do some shit!",
+					"Do some other shit!",
+					"Do some shit while upside down.",
+					"Do some shit!",
+					"Do some other shit!",
+					"Do some shit while upside down.",
+					"Do some shit!",
+					"Do some other shit!",
+					"Do some shit while upside down.",
+					"Do some shit!",
+					"Do some other shit!",
+					"Do some shit while upside down.",
+					"Do some shit!",
+					"Do some other shit!",
+					"Do some shit while upside down.",
+					"Do some shit!",
+					"Do some other shit!",
+					"Do some shit while upside down.",
 					"Do some shit!",
 					"Do some other shit!",
 					"Do some shit while upside down."};

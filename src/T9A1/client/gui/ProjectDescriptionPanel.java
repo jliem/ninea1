@@ -15,12 +15,17 @@ import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import T9A1.common.Project;
 
 public class ProjectDescriptionPanel extends JPanel {
+	private final double PERCENTAGE = 0.7;
 
 	/** The location of the product images. */
 	private final String IMAGE_PATH = "client/gui/images/project/";
@@ -34,6 +39,9 @@ public class ProjectDescriptionPanel extends JPanel {
 	private ProjectPanel projectPanel;
 	private Project project;
 
+	private JList materialsList;
+	private StepPanel stepPanel;
+
 	public ProjectDescriptionPanel(KioskGUI gui, ProjectPanel projectPanel){
 		this.gui = gui;
 		this.map = gui.getMap();
@@ -44,7 +52,8 @@ public class ProjectDescriptionPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 
 		addProjectPanel();
-		add(new JScrollPane(new StepPanel()), BorderLayout.CENTER);
+		addStepPanel();
+		addListPanel();
 		addButtonPanel();
 	}
 
@@ -59,6 +68,62 @@ public class ProjectDescriptionPanel extends JPanel {
 		con.weightx = 1;
 		top.add(Box.createGlue(), con);
 		add(top, BorderLayout.NORTH);
+	}
+
+	public void addStepPanel(){
+		stepPanel = new StepPanel();
+
+		JScrollPane scroll = new JScrollPane(stepPanel);
+		scroll.setMinimumSize(new Dimension((int)(gui.getWidth() * PERCENTAGE), gui.getHeight() - 375));
+		System.out.println("" + gui.getWidth() + " " + (int)(gui.getWidth() * PERCENTAGE));
+
+		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBackground(GUIConstants.ORANGE);
+		panel.add(scroll);
+
+		add(panel, BorderLayout.CENTER);
+	}
+
+	public void addListPanel(){
+		String[] t = project.getTools();
+		String[] m = project.getMaterials();
+		String[] l = new String[t.length + m.length + 2];
+
+		l[0] = "Tools";
+		for(int i = 0; i < t.length; i++)
+			l[i + 1] = "     " + t[i];
+
+		l[t.length + 1] = "Materials";
+		for(int i = 0; i < m.length; i++)
+			l[i + t.length + 2] = "     " + m[i];
+
+		materialsList = new JList(l);
+		materialsList.setFont(GUIConstants.MEDIUM_FONT);
+		materialsList.setBackground(GUIConstants.LIGHT_ORANGE);
+		materialsList.setSelectionBackground(GUIConstants.DARK_ORANGE);
+
+		JPanel panel = new JPanel(new GridBagLayout());
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridy = 0;
+		c.insets = new Insets(10, 10, 10, 10);
+		c.ipadx  = 50;
+		c.ipady = 20;
+		c.fill = GridBagConstraints.VERTICAL;
+		c.anchor = GridBagConstraints.CENTER;
+		JScrollPane scroll = new JScrollPane(materialsList);
+		scroll.setMinimumSize(new Dimension(
+				(int)(gui.getWidth() * (1 - PERCENTAGE)), gui.getHeight() - 375));
+		panel.add(scroll, c);
+
+		JButton button = new JButton("Search");
+		button.setFont(GUIConstants.MEDIUM_FONT);
+		button.addActionListener(new SearchMaterialsListener());
+		c.gridy = 1;
+		panel.add(button, c);
+
+		panel.setBackground(GUIConstants.ORANGE);
+		this.add(panel, BorderLayout.EAST);
 	}
 
 	public void addButtonPanel(){
@@ -101,6 +166,13 @@ public class ProjectDescriptionPanel extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			gui.newSearch();
+		}
+	}
+
+	private class SearchMaterialsListener implements ActionListener{
+
+		public void actionPerformed(ActionEvent arg0) {
+			gui.itemSearch(materialsList.getSelectedValue().toString().trim());
 		}
 	}
 
@@ -151,6 +223,12 @@ public class ProjectDescriptionPanel extends JPanel {
 				c.gridx = 1;
 				c.gridheight = 1;
 				this.add(stepText, c);
+
+				c.anchor = GridBagConstraints.WEST;
+				c.gridy = i * 2;
+				c.gridx = 2;
+				c.gridheight = 2;
+				this.add(Box.createHorizontalGlue(), c);
 			}
 		}
 	}
