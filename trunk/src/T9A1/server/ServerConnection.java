@@ -6,15 +6,11 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import T9A1.common.Item;
 import T9A1.common.Request;
 
 /**
@@ -61,7 +57,7 @@ public class ServerConnection{
 	 *
 	 */
 	class Producer implements Runnable{
-		public boolean debug=true;
+		public boolean debug=false;
 		public boolean running=true;
 		protected int threadNum;
 		protected BlockingQueue buffer;
@@ -121,7 +117,7 @@ public class ServerConnection{
 	 * @author Chase
 	 */
 	class Consumer implements Runnable{
-		public boolean debug = true;
+		public boolean debug = false;
 		protected int threadNum;
 		protected BlockingQueue buffer;
 		Consumer(BlockingQueue theBuffer, int threadNum){
@@ -136,7 +132,6 @@ public class ServerConnection{
 		public void run(){
 			debug("Consumer Thread " + threadNum + ": STARTING");
 			while(true){
-				Request outgoing = null;
 				Request request = null;
 				Socket client = null;
 				try{
@@ -145,23 +140,12 @@ public class ServerConnection{
 
 					client = (Socket)(al.get(0));
 					request = (Request)(al.get(1));
-
-					System.out.println("Consumer Thread " + threadNum + ": " + request.data + " is removed from the buffer" );
-					if(request.type == Request.Type.item_search){
-						outgoing = new Request(Request.Type.results,
-								kioskServer.handleRequest((String)request.data));
-						sendRequest(client, outgoing);
+					
+					if (request != null) {
+						request.data = kioskServer.handleRequest(request);
+						request.type = Request.Type.results;
 					}
-					else if(request.type == Request.Type.project_search){
-						outgoing = new Request(Request.Type.project_search, null);
-						sendRequest(client, outgoing);
-					}
-					else if(request.type == Request.Type.update_request){
-
-					} else {
-						// Unhandled type, send back null to indicate error
-						sendRequest(client, null);
-					}
+					sendRequest(client, request);  // send response
 				}catch(Throwable e){
 					e.printStackTrace();
 					debug("Consumer error");

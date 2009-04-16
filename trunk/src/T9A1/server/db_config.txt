@@ -1,5 +1,0 @@
-db_url: javajunkies.webhop.net
-db_port: 3306
-db_name: inventory
-db_user: t9a1
-db_pass: ****
