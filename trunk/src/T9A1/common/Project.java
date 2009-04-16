@@ -16,18 +16,33 @@ public class Project implements Serializable, Searchable {
 	private String[] materials;
 
 	private long id;
+	private int hours;
+	private int minutes;
 
-	public Project(String title, String[] tools, String[] instructions,
-			String[] materials, long id) {
+	public Project(String title, String[] tools, String[] materials,
+			String[] instructions, long id, int hours, int minutes) {
 		this.title = title;
 		this.tools = tools;
 		this.instructions = instructions;
 		this.materials = materials;
 		this.id = id;
+		this.hours = hours;
+		this.minutes = minutes;
+	}
+
+	public Project(String title, String[] tools, String[] materials,
+			String[] instructions, long id, int minutes) {
+		this.title = title;
+		this.tools = tools;
+		this.instructions = instructions;
+		this.materials = materials;
+		this.id = id;
+		this.hours = minutes / 60;
+		this.minutes = minutes % 60;
 	}
 
 	public Project() {
-		this(null, null, null, null, 0);
+		this(null, null, null, null, 0, 0, 0);
 	}
 
 	public String getTitle() {
@@ -68,5 +83,21 @@ public class Project implements Serializable, Searchable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public int getHours() {
+		return hours;
+	}
+
+	public void setHours(int hours) {
+		this.hours = hours;
+	}
+
+	public int getMinutes() {
+		return minutes;
+	}
+
+	public void setMinutes(int minutes) {
+		this.minutes = minutes;
 	}
 }
