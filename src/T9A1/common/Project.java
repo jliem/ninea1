@@ -2,18 +2,13 @@ package T9A1.common;
 
 import java.io.Serializable;
 
-import javax.swing.JPanel;
-
-import T9A1.client.gui.ItemPanel;
-import T9A1.client.gui.KioskGUI;
-
 /**
  * Represents a project.
  *
  * @author Johannes
  *
  */
-public class Project implements Serializable, Searchable {
+public class Project implements Serializable {
 
 	private String title;
 	private String[] tools;
@@ -73,9 +68,5 @@ public class Project implements Serializable, Searchable {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public JPanel getListPanel(KioskGUI gui){
-		return new JPanel();// ItemPanel(gui, this);
 	}
 }
