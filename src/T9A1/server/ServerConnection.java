@@ -42,6 +42,7 @@ public class ServerConnection{
 
 		try{
 	         this.server = new ServerSocket(4321);
+	         this.server.setSoTimeout(0);
 	         debug("Server Established");
 	      }
 	      catch (IOException e){
@@ -140,7 +141,7 @@ public class ServerConnection{
 
 					client = (Socket)(al.get(0));
 					request = (Request)(al.get(1));
-					
+
 					if (request != null) {
 						request.data = kioskServer.handleRequest(request);
 						request.type = Request.Type.results;
