@@ -46,10 +46,14 @@ public class RequestManager {
 			Request response = (Request)connectionManager.sendRequest(Request.Type.item_search,
 					query);
 
-			resultList = (List<Item>)response.data;
+			if (response != null) {
+				resultList = (List<Item>)response.data;
 
-			// This result wasn't in the cache (or it's stale), so add it now
-			cacheManager.add(query, resultList);
+				// This result wasn't in the cache (or it's stale), so add it now
+				cacheManager.add(query, resultList);
+			} else {
+				resultList = null;
+			}
 		}
 
 		// Return null if the server returned null (indicating an error)
