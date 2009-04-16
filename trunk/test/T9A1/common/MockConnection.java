@@ -13,7 +13,7 @@ import T9A1.common.Request.Type;
  */
 public class MockConnection implements IConnection {
 
-	private Object response = new ArrayList<Item>();
+	private Object response = null;
 
 	/**
 	 * {@inheritDoc}
