@@ -5,6 +5,7 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import T9A1.common.Item;
+import T9A1.common.Request;
 
 /**
  * Tests for the kiosk server.
@@ -20,7 +21,7 @@ public class KioskServerTest extends TestCase {
 	}
 
 	public void testHandleRequest() {
-		List<Item> result = ks.handleRequest("foo");
+		Object result = ks.handleRequest(new Request(Request.Type.item_search, "foo"));
 
 		assertNotNull(result);
 	}
