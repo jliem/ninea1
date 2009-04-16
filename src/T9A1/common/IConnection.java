@@ -10,8 +10,6 @@ import java.util.List;
  */
 public interface IConnection {
 
-	public Object sendRequest(Request.Type type, Object data);
-
 	/**
 	 * Send request method for client, that sends then blocks for reponse
 	 * @author Chase

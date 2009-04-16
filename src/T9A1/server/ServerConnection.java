@@ -88,7 +88,7 @@ public class ServerConnection{
 								ArrayList<Object> al = new ArrayList<Object>();
 								al.add(client); al.add(request);
 								buffer.add(al);
-								debug("Producer Thread " + threadNum + ": " + request.data + " added to buffer");
+								debug("Producer Thread " + threadNum + ": " + request.get(Request.Key.query) + " added to buffer");
 							}catch(IOException e){
 								debug("IO Error in streams");
 							} catch (ClassNotFoundException e) {
@@ -143,7 +143,7 @@ public class ServerConnection{
 					request = (Request)(al.get(1));
 
 					if (request != null) {
-						request.data = kioskServer.handleRequest(request);
+						request.put(Request.Key.data, kioskServer.handleRequest(request));
 						request.type = Request.Type.results;
 					}
 					sendRequest(client, request);  // send response

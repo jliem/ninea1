@@ -1,6 +1,7 @@
 package T9A1.common;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * Represents a request made to the server.
@@ -10,22 +11,26 @@ import java.io.Serializable;
  */
 public class Request implements Serializable {
 
-	public enum Type {project_search, project_list, project_email,
-		item_search, item_list, sale_search,
+	public enum Type {project_search, customer_project_list, project_email,
+		item_search, customer_item_list, sale_search,
 		update_request, results};
 
-	public Object data;
-	public Type type;
-	public boolean isString = false;
+	public enum Key {store_id, query, email, data, project};
 
-	public Request(Type type, Object data) {
+	private HashMap<Key, Object> map;
+
+	public Type type;
+
+	public Request(Type type) {
 		this.type = type;
-		this.data = data;
+		map = new HashMap<Key, Object>();
 	}
 
-	public Request(Type type, String data) {
-		this.type = type;
-		this.data = data;
-		this.isString = true;
+	public Object get(Key key) {
+		return map.get(key);
+	}
+
+	public Object put(Key key, Object value) {
+		return map.put(key, value);
 	}
 }

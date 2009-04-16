@@ -22,8 +22,9 @@ public class RequestManagerNoConnectionTest extends RequestManagerTest {
 	}
 
 	public void testEmptySearch() {
-		mockConn.setResponse(new Request(Request.Type.item_search,
-				new ArrayList()));
+		Request r = new Request(Request.Type.item_search);
+		r.put(Request.Key.data, new ArrayList());
+		mockConn.setResponse(r);
 
 		super.testEmptySearch();
 	}

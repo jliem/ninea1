@@ -17,12 +17,12 @@ public class KioskServer {
 
 	protected KioskServer(DBManager dbm) {
 		this.dbm = dbm;
-		
+
 		if (!dbm.connect()) {
 			System.err.println("No DB connection, exiting.");
 			System.exit(1);
 		}
-		
+
 		new ServerConnection(this);
 	}
 
@@ -35,13 +35,13 @@ public class KioskServer {
 	public Object handleRequest(Request req) {
 		switch (req.type) {
 			case item_search:
-				return dbm.itemSearch((String)req.data);
+				return dbm.itemSearch((String)req.get(Request.Key.query));
 			case sale_search:
 				return dbm.saleSearch();
 			case project_search:
-			case update_request:	
+			case update_request:
 		}
-		
+
 		return null;  // any unknown requests
 	}
 }

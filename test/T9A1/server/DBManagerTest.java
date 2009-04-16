@@ -56,9 +56,6 @@ public class DBManagerTest extends TestCase {
 		Statement statement = dbm.execQuery(query);
 
 		assertNotNull(statement);
-
-		Exception e = null;
-
 		assertNotNull(statement.getResultSet());
 
 		statement.close();

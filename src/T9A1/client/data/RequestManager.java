@@ -2,6 +2,8 @@ package T9A1.client.data;
 
 import java.util.List;
 
+import com.sun.xml.internal.ws.handler.HandlerChainCaller.RequestOrResponse;
+
 import T9A1.common.IConnection;
 import T9A1.common.Item;
 import T9A1.common.Project;
@@ -33,12 +35,14 @@ public class RequestManager {
 		this.connectionManager = connectionManager;
 		this.storeNumber = storeNumber;
 	}
-	
+
 	public Item[] getSaleItems() {
 		List<Item> resultList = null;
 
-		
-		resultList = (List<Item>)sendRequest(new Request(Request.Type.sale_search, null));
+		Request req = new Request(Request.Type.sale_search);
+		req.put(Request.Key.store_id, this.storeNumber);
+
+		resultList = (List<Item>)sendRequest(req);
 
 		// Return null if the server returned null (indicating an error)
 		if (resultList == null) return null;
@@ -55,7 +59,11 @@ public class RequestManager {
 			resultList = cacheManager.doSearch(query);
 
 		} else {
-			resultList = (List<Item>)sendRequest(new Request(Request.Type.item_search, query));
+			Request req = new Request(Request.Type.item_search);
+			req.put(Request.Key.store_id, this.storeNumber);
+			req.put(Request.Key.query, query);
+
+			resultList = (List<Item>)sendRequest(req);
 
 			if (resultList != null) {
 				// This result wasn't in the cache (or it's stale), so add it now
@@ -79,7 +87,11 @@ public class RequestManager {
 			//resultList = cacheManager.doSearch(query);
 
 		} else {
-			resultList = (List<Project>)sendRequest(new Request(Request.Type.project_search, query));
+			Request req = new Request(Request.Type.project_search);
+			req.put(Request.Key.store_id, this.storeNumber);
+			req.put(Request.Key.query, query);
+
+			resultList = (List<Project>)sendRequest(req);
 
 			// This result wasn't in the cache (or it's stale), so add it now
 			//cacheManager.add(query, resultList);
@@ -94,8 +106,11 @@ public class RequestManager {
 	public Project[] getProjectList(String email) {
 		List<Project> resultList = null;
 
-		Request r = new Request(Request.Type.project_list, email);
-		resultList = (List<Project>)sendRequest(r);
+		Request req = new Request(Request.Type.customer_project_list);
+		req.put(Request.Key.store_id, this.storeNumber);
+		req.put(Request.Key.email, email);
+
+		resultList = (List<Project>)sendRequest(req);
 
 		// Return null if the server returned null (indicating an error)
 		if (resultList == null) return null;
@@ -106,8 +121,11 @@ public class RequestManager {
 	public Item[] getShoppingList(String email) {
 		List<Item> resultList = null;
 
-		Request r = new Request(Request.Type.item_list, email);
-		resultList = (List<Item>)sendRequest(r);
+		Request req = new Request(Request.Type.customer_item_list);
+		req.put(Request.Key.store_id, this.storeNumber);
+		req.put(Request.Key.email, email);
+
+		resultList = (List<Item>)sendRequest(req);
 
 		// Return null if the server returned null (indicating an error)
 		if (resultList == null) return null;
@@ -125,7 +143,10 @@ public class RequestManager {
 	 */
 	public boolean emailProject(Project project, String email) {
 		// TODO: Not finished yet, need to send e-mail too
-		Request r = new Request(Request.Type.project_email, project);
+		Request r = new Request(Request.Type.project_email);
+		r.put(Request.Key.store_id, storeNumber);
+		r.put(Request.Key.project, project);
+
 		sendRequest(r);
 
 		return true;
@@ -135,7 +156,7 @@ public class RequestManager {
 		Request response = (Request)connectionManager.sendRequest(request);
 
 		if (response != null) {
-			return response.data;
+			return response.get(Request.Key.data);
 		}
 
 		return null;
