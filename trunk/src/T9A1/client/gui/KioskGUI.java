@@ -35,8 +35,13 @@ public class KioskGUI {
 	/**
 	 * Creates and displays a new KioskGUI.
 	 * @param im the InventoryManager associated with the kiosk
+	 * @param resource_path the path to resources
 	 */
-	public KioskGUI(RequestManager im){
+	public KioskGUI(RequestManager im, String resource_path){
+		ProjectPanel.IMAGE_PATH = resource_path + "images/project/";
+		ItemPanel.IMAGE_PATH = resource_path + "images/item/";
+		Map.MAP_PATH = resource_path + "maps/";
+		
 		inventoryManager = im;
 		map = new Map(im.getStoreNumber());
 
