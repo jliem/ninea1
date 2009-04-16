@@ -33,7 +33,7 @@ import T9A1.common.Project;
  *
  * @author Catie
  */
-public class ProjectPanel extends JPanel{
+public class ProjectPanel extends JPanel implements SearchResult{
 
 	/** The location of the product images. */
 	private final String IMAGE_PATH = "client/gui/images/project/";
@@ -116,6 +116,10 @@ public class ProjectPanel extends JPanel{
 
 	public ProjectPanel copy(){
 		return new ProjectPanel(gui, project);
+	}
+
+	public JPanel getListPanel() {
+		return this;
 	}
 
 	/**
