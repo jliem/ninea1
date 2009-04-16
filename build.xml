@@ -30,6 +30,7 @@
 			</classpath>
 		</javac>
 		<unzip src="${src}/server/lib/mysql-connector-java-5.1.7-bin.jar" dest="${build}"/>
+		<copy todir="${build}/T9A1/server" file="${src}/server/db_config.txt"/>
 	</target>
 
 	<!-- compiles everything -->

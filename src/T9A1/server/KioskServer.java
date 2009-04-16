@@ -2,7 +2,6 @@ package T9A1.server;
 
 import java.sql.*;
 import java.util.*;
-import java.util.concurrent.*;
 import T9A1.common.*;
 
 /**
@@ -21,13 +20,14 @@ public class KioskServer {
 
 	protected KioskServer(DBManager dbm) {
 		this.dbm = dbm;
+		
 		if (!dbm.connect()) {
 			System.err.println("No DB connection, exiting.");
 			System.exit(1);
 		}
+		
 		initPreparedStatements();
-
-		ServerConnection sm = new ServerConnection(this);
+		new ServerConnection(this);
 	}
 
 	/**

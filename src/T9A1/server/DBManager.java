@@ -2,6 +2,7 @@ package T9A1.server;
 
 
 import java.sql.*;
+import java.util.Properties;
 
 
 /**
@@ -35,7 +36,18 @@ public class DBManager {
 	 * Connects to the default db
 	 */
 	public boolean connect() {
-		return connect("javajunkies.webhop.net", 3306, "inventory", "t9a1", "****");
+		boolean connected = false;
+		try {
+			Properties props = new Properties();
+			props.load(this.getClass().getClassLoader().getResourceAsStream("T9A1/server/db_config.txt"));
+			
+			connected = connect(props.getProperty("db_url"), Integer.parseInt(props.getProperty("db_port"))
+					, props.getProperty("db_name"), props.getProperty("db_user"), props.getProperty("db_pass"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return connected;
 	}
 
 	/**
@@ -61,7 +73,7 @@ public class DBManager {
 			conn = DriverManager.getConnection("jdbc:mysql://" + url + ":" + port
 					+ "/" + db, user, pass);
 			status = 2;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			status = 1;
 			System.err.println("Couldn't initialize db connection: " + e.getMessage());
 			return false;
