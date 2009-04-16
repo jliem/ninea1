@@ -65,7 +65,7 @@ public class ProjectPanel extends JPanel implements SearchResult{
 
 		addMouseListener(new MouseOverListener());
 		setBackground(GUIConstants.LIGHT_ORANGE);
-		setPreferredSize(new Dimension(gui.getWidth() - 10, 110));
+		setPreferredSize(new Dimension(gui.getWidth() - 10, 195));
 
 		ImageContainer i = new ImageContainer();
 		con.gridheight = 4;
@@ -76,7 +76,7 @@ public class ProjectPanel extends JPanel implements SearchResult{
 		add(i, con);
 
 		JLabel name = new JLabel(project.getTitle());
-		name.setFont(GUIConstants.MEDIUM_FONT);
+		name.setFont(GUIConstants.LARGE_FONT);
 		con.gridheight = 1;
 		con.gridwidth = 3;
 		con.gridx = 1;
@@ -84,6 +84,56 @@ public class ProjectPanel extends JPanel implements SearchResult{
 		con.insets = insets;
 		con.anchor = GridBagConstraints.WEST;
 		add(name, con);
+
+		JLabel times = new JLabel(project.getHours() +
+				(project.getHours() == 1 ? " Hour, " : " Hours, ") +
+				project.getMinutes() + " Minutes");
+		times.setFont(GUIConstants.SMALL_FONT);
+		con.gridheight = 1;
+		con.gridwidth = 3;
+		con.gridx = 1;
+		con.gridy = 1;
+		con.insets = insets;
+		con.anchor = GridBagConstraints.WEST;
+		add(times, con);
+
+		if(mouseover){
+			String s = "Tools: ";
+			String[] toolList = project.getTools();
+			if(toolList.length == 0)
+				s += "none";
+			else
+				for(int j = 0; j < toolList.length; j++)
+					s += toolList[j] + (j != toolList.length - 1 ? ", " : "");
+
+			JLabel tools = new JLabel(s);
+			tools.setFont(GUIConstants.SMALL_FONT);
+			con.gridheight = 1;
+			con.gridwidth = 3;
+			con.gridx = 1;
+			con.gridy = 2;
+			con.insets = insets;
+			con.anchor = GridBagConstraints.WEST;
+			add(tools, con);
+
+			s = "Materials: ";
+			String[] matList = project.getMaterials();
+			if(matList.length == 0)
+				s += "none";
+			else
+				for(int j = 0; j < matList.length; j++)
+					s += matList[j] + (j != matList.length - 1 ? ", " : "");
+
+			JLabel mats = new JLabel(s);
+			mats.setFont(GUIConstants.SMALL_FONT);
+			con.gridheight = 1;
+			con.gridwidth = 3;
+			con.gridx = 1;
+			con.gridy = 3;
+			con.insets = insets;
+			con.anchor = GridBagConstraints.WEST;
+			add(mats, con);
+		}
 
 		con.gridheight = 3;
 		con.fill = GridBagConstraints.HORIZONTAL;
@@ -148,24 +198,30 @@ public class ProjectPanel extends JPanel implements SearchResult{
 	}
 
 	/**
-	 * Displays the product's image.
+	 * Displays the project's image.
 	 * @author Catie
 	 */
 	private class ImageContainer extends JPanel{
 		ImageIcon image;
 
 		public ImageContainer(){
-			this.setMinimumSize(new Dimension(100, 100));
-			this.setPreferredSize(new Dimension(100, 100));
+			image = new ImageIcon(IMAGE_PATH + project.getId() + "_1" +  FILETYPE);
 
-			image = new ImageIcon(IMAGE_PATH + project.getId() + "_1" + FILETYPE);
+			if(image.getIconHeight() < 0)
+				image = null;
 
-			if(project.getId() == 0 || image.getIconHeight() < 0)
-				image = new ImageIcon(IMAGE_PATH + NO_IMAGE + FILETYPE);
+			this.setMinimumSize(new Dimension(150, 185));
+			this.setPreferredSize(new Dimension(150, 185));
+
+			if(image != null){
+				this.setMinimumSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
+				this.setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
+			}
 		}
 
 		public void paintComponent(Graphics g){
-			image.paintIcon(this, g, 0, 0);
+			if(image != null)
+				image.paintIcon(this, g, 0, 0);
 		}
 	}
 }

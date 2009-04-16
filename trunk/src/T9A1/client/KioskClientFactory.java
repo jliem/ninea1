@@ -27,7 +27,9 @@ public class KioskClientFactory {
 			if (args[i].equals("-ide_resource_path")) {
 				resource_path = "client/gui/";
 			} else {
-				storeNumber = Integer.parseInt(args[i]);
+				try{
+					storeNumber = Integer.parseInt(args[i]);
+				}catch(Exception e){}
 			}
 		}
 	}

@@ -36,19 +36,7 @@ public class DBManager {
 	 * Connects to the default db
 	 */
 	public boolean connect() {
-		boolean connected = false;
-		try {
-			Properties props = new Properties();
-			props.load(this.getClass().getClassLoader().getResourceAsStream("T9A1/server/db_config.txt"));
-			
-			connected = connect(props.getProperty("db_url"), Integer.parseInt(props.getProperty("db_port"))
-					, props.getProperty("db_name"), props.getProperty("db_user"), props.getProperty("db_pass"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return connected;
-	}
+		boolean connected = false;		try {			Properties props = new Properties();			props.load(this.getClass().getClassLoader().getResourceAsStream("T9A1/server/db_config.txt"));						connected = connect(props.getProperty("db_url"), Integer.parseInt(props.getProperty("db_port"))					, props.getProperty("db_name"), props.getProperty("db_user"), props.getProperty("db_pass"));		} catch (Exception e) {			e.printStackTrace();		}				return connected;	}
 
 	/**
 	 * Connects up to the specified db

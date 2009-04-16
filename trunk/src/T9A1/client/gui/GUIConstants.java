@@ -16,9 +16,9 @@ public class GUIConstants {
 
 	public static final Font LARGE_FONT = new Font("Arial", Font.PLAIN, 40);
 
-	public static final Font MEDIUM_FONT = new Font("Arial", Font.PLAIN, 26);
+	public static final Font MEDIUM_FONT = new Font("Arial", Font.PLAIN, 28);
 
-	public static final Font SMALL_FONT = new Font("Arial", Font.PLAIN, 18);
+	public static final Font SMALL_FONT = new Font("Arial", Font.PLAIN, 20);
 
 	public static final String SEARCH = "SEARCH";
 

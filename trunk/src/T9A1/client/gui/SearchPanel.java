@@ -56,7 +56,7 @@ public class SearchPanel extends JPanel{
 		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBackground(GUIConstants.ORANGE);
 
-		JLabel label = new JLabel("Enter a search term below:");
+		JLabel label = new JLabel("Enter an item or project to search for (for instance, \"faucet\":");
 		label.setFont(GUIConstants.LARGE_FONT);
 		c.weightx = 0;
 		c.anchor = GridBagConstraints.CENTER;
@@ -111,7 +111,7 @@ public class SearchPanel extends JPanel{
 		projectSearch = new JRadioButton("Projects");
 		projectSearch.setFont(GUIConstants.LARGE_FONT);
 		projectSearch.setBackground(GUIConstants.ORANGE);
-		projectSearch.setEnabled(false);
+		//projectSearch.setEnabled(false);
 		choiceGroup.add(projectSearch);
 		choices.add(projectSearch);
 
