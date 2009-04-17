@@ -83,15 +83,15 @@ public class ResultsPanel extends JPanel {
 		//Creates and adds a panel to display the new search button.
 		JPanel button = new JPanel(new GridBagLayout());
 		button.setBackground(GUIConstants.ORANGE);
-		JButton newSearch = new JButton("New Search");
+		JButton newSearch = new JButton("<html><center>New<br />Search</center></html>");
 		newSearch.setFont(GUIConstants.MEDIUM_FONT);
 		newSearch.addActionListener(new NewSearchListener());
 		c.fill = GridBagConstraints.NONE;
 		c.gridy = 0;
 		c.gridx = 1;
 		c.weightx = 0;
-		c.ipadx = 10;
-		c.ipady = 10;
+		c.ipadx = 20;
+		c.ipady = 40;
 		c.anchor = GridBagConstraints.EAST;
 		button.add(newSearch, c);
 		c.gridx = 0;
