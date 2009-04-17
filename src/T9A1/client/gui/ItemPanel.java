@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.text.NumberFormat;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -64,7 +65,7 @@ public class ItemPanel extends JPanel implements SearchResult{
 
 		addMouseListener(new MouseOverListener());
 		setBackground(GUIConstants.LIGHT_ORANGE);
-		setPreferredSize(new Dimension(gui.getWidth() - 20, 110));
+		setPreferredSize(new Dimension(gui.getWidth(), 110));
 
 		ImageContainer i = new ImageContainer();
 		con.gridheight = 4;
@@ -77,21 +78,36 @@ public class ItemPanel extends JPanel implements SearchResult{
 		JLabel name = new JLabel(item.getName());
 		name.setFont(GUIConstants.MEDIUM_FONT);
 		con.gridheight = 1;
-		con.gridwidth = 3;
+		con.gridwidth = 4;
 		con.gridx = 1;
 		con.gridy = 0;
 		con.insets = insets;
 		con.anchor = GridBagConstraints.WEST;
 		add(name, con);
 
-		JLabel price = new JLabel("$" + Double.toString(item.getPrice()));
+		int x = 1;
+		NumberFormat nf = NumberFormat.getCurrencyInstance();
+		JLabel price = new JLabel(nf.format(item.getPrice()));
 		price.setFont(GUIConstants.SMALL_FONT);
 		con.gridheight = 1;
 		con.gridwidth = 1;
-		con.gridx = 1;
+		con.gridx = x++;
 		con.gridy = 1;
 		con.insets = insets;
 		add(price, con);
+
+		if(item.getSalePrice() > 0){
+			price.setText("<html><strike>" + price.getText() + "</strike></html>");
+			JLabel sale = new JLabel("On Sale for " + nf.format(item.getSalePrice()));
+			sale.setFont(GUIConstants.SMALL_FONT);
+			sale.setForeground(Color.red);
+			con.gridheight = 1;
+			con.gridwidth = 1;
+			con.gridx = x++;
+			con.gridy = 1;
+			con.insets = insets;
+			add(sale, con);
+		}
 
 		JLabel inStock;
 		if(item.isInStock()){
@@ -104,7 +120,7 @@ public class ItemPanel extends JPanel implements SearchResult{
 		inStock.setFont(GUIConstants.SMALL_FONT);
 		con.gridheight = 1;
 		con.gridwidth = 1;
-		con.gridx = 2;
+		con.gridx = x++;
 		con.gridy = 1;
 		con.insets = insets;
 		add(inStock, con);
@@ -113,7 +129,7 @@ public class ItemPanel extends JPanel implements SearchResult{
 		location.setFont(GUIConstants.SMALL_FONT);
 		con.gridheight = 1;
 		con.gridwidth = 1;
-		con.gridx = 3;
+		con.gridx = x;
 		con.gridy = 1;
 		con.insets = insets;
 		add(location, con);
@@ -121,7 +137,7 @@ public class ItemPanel extends JPanel implements SearchResult{
 		JLabel description = new JLabel(item.getDescription());
 		description.setFont(GUIConstants.SMALL_FONT);
 		con.gridheight = 1;
-		con.gridwidth = 6;
+		con.gridwidth = 7;
 		con.gridx = 1;
 		con.gridy = 2;
 		con.insets = insets;

@@ -12,7 +12,7 @@ public class GUIConstants {
 	public static final Color LIGHT_ORANGE = new Color(255, 245, 155);
 
 	/** A dark orange for use in the GUI. */
-	public static final Color DARK_ORANGE = new Color(255, 175, 85);
+	public static final Color DARK_ORANGE = new Color(255, 160, 65);
 
 	public static final Font LARGE_FONT = new Font("Arial", Font.PLAIN, 40);
 

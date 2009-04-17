@@ -49,6 +49,9 @@ public class ProjectPanel extends JPanel implements SearchResult{
 
 	private boolean mouseover;
 
+	private JLabel tools;
+	private JLabel materials;
+
 	/**
 	 * Creates a new ItemPanel and initializes the compact panel.
 	 * @param g The main GUI component.
@@ -68,7 +71,7 @@ public class ProjectPanel extends JPanel implements SearchResult{
 		setPreferredSize(new Dimension(gui.getWidth() - 10, 195));
 
 		ImageContainer i = new ImageContainer();
-		con.gridheight = 4;
+		con.gridheight = 5;
 		con.gridwidth = 1;
 		con.gridx = 0;
 		con.gridy = 0;
@@ -97,42 +100,45 @@ public class ProjectPanel extends JPanel implements SearchResult{
 		con.anchor = GridBagConstraints.WEST;
 		add(times, con);
 
-		if(mouseover){
-			String s = "Tools: ";
-			String[] toolList = project.getTools();
-			if(toolList.length == 0)
-				s += "none";
-			else
-				for(int j = 0; j < toolList.length; j++)
-					s += toolList[j] + (j != toolList.length - 1 ? ", " : "");
+		String s = "Tools: ";
+		String[] toolList = project.getTools();
+		if(toolList.length == 0)
+			s += "none";
+		else
+			for(int j = 0; j < toolList.length; j++)
+				s += toolList[j] + (j != toolList.length - 1 ? ", " : "");
 
-			JLabel tools = new JLabel(s);
-			tools.setFont(GUIConstants.SMALL_FONT);
-			con.gridheight = 1;
-			con.gridwidth = 3;
-			con.gridx = 1;
-			con.gridy = 2;
-			con.insets = insets;
-			con.anchor = GridBagConstraints.WEST;
-			add(tools, con);
+		tools = new JLabel(s);
+		tools.setFont(GUIConstants.SMALL_FONT);
+		con.gridheight = 1;
+		con.gridwidth = 3;
+		con.gridx = 1;
+		con.gridy = 2;
+		con.insets = insets;
+		con.anchor = GridBagConstraints.WEST;
+		add(tools, con);
 
-			s = "Materials: ";
-			String[] matList = project.getMaterials();
-			if(matList.length == 0)
-				s += "none";
-			else
-				for(int j = 0; j < matList.length; j++)
-					s += matList[j] + (j != matList.length - 1 ? ", " : "");
+		s = "Materials: ";
+		String[] matList = project.getMaterials();
+		if(matList.length == 0)
+			s += "none";
+		else
+			for(int j = 0; j < matList.length; j++)
+				s += matList[j] + (j != matList.length - 1 ? ", " : "");
 
-			JLabel mats = new JLabel(s);
-			mats.setFont(GUIConstants.SMALL_FONT);
-			con.gridheight = 1;
-			con.gridwidth = 3;
-			con.gridx = 1;
-			con.gridy = 3;
-			con.insets = insets;
-			con.anchor = GridBagConstraints.WEST;
-			add(mats, con);
+		materials = new JLabel(s);
+		materials.setFont(GUIConstants.SMALL_FONT);
+		con.gridheight = 1;
+		con.gridwidth = 3;
+		con.gridx = 1;
+		con.gridy = 3;
+		con.insets = insets;
+		con.anchor = GridBagConstraints.WEST;
+		add(materials, con);
+
+		if(!mouseover){
+			tools.setVisible(false);
+			materials.setVisible(false);
 		}
 
 		con.fill = GridBagConstraints.HORIZONTAL;
@@ -158,9 +164,15 @@ public class ProjectPanel extends JPanel implements SearchResult{
 
 	public void setMouseover(boolean b){
 		mouseover = b;
-		if(b)
+		if(b){
 			setBackground(GUIConstants.LIGHT_ORANGE);
-		else setBackground(GUIConstants.ORANGE);
+			tools.setVisible(true);
+			materials.setVisible(true);
+		}else{
+			setBackground(GUIConstants.ORANGE);
+			tools.setVisible(false);
+			materials.setVisible(false);
+		}
 		this.invalidate();
 	}
 

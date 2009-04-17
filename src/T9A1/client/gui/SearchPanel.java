@@ -39,7 +39,6 @@ public class SearchPanel extends JPanel{
 
 	/** The main GUI component. */
 	private KioskGUI gui;
-
 	/** The listener used to initiate a search. */
 	private SearchListener listener;
 
@@ -51,12 +50,38 @@ public class SearchPanel extends JPanel{
 		super(new BorderLayout());
 
 		gui = g;
+
+		initialize();
+	}
+
+	public void initialize(){
 		GridBagConstraints c = new GridBagConstraints();
+
+		//Creates and adds a panel to display the new search button.
+		JPanel button = new JPanel(new GridBagLayout());
+		button.setBackground(GUIConstants.ORANGE);
+		JButton newSearch = new JButton("<html><center>View<br />Current Sales</center></html>");
+		newSearch.setFont(GUIConstants.MEDIUM_FONT);
+		newSearch.addActionListener(new SaleSearchListener());
+		c.fill = GridBagConstraints.NONE;
+		c.gridy = 0;
+		c.gridx = 1;
+		c.weightx = 0;
+		c.ipadx = 10;
+		c.ipady = 30;
+		c.insets = new Insets(15, 0, 0, 15);
+		c.anchor = GridBagConstraints.EAST;
+		button.add(newSearch, c);
+		c.gridx = 0;
+		c.weightx = 1;
+		button.add(Box.createGlue(), c);
+		add(button, BorderLayout.NORTH);
 
 		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBackground(GUIConstants.ORANGE);
 
-		JLabel label = new JLabel("Enter an item or project to search for (for instance, \"faucet\":");
+		JLabel label = new JLabel("<html><center>Enter an item or project to<br />" +
+				"search for (i.e. faucet, hammer, repair a sink):</center></html>");
 		label.setFont(GUIConstants.LARGE_FONT);
 		c.weightx = 0;
 		c.anchor = GridBagConstraints.CENTER;
@@ -67,7 +92,7 @@ public class SearchPanel extends JPanel{
 
 		listener = new SearchListener();
 
-		searchBox = new JTextField(20);
+		searchBox = new JTextField(25);
 		searchBox.setFont(GUIConstants.LARGE_FONT);
 		searchBox.addActionListener(listener);
 		c.anchor = GridBagConstraints.EAST;
@@ -133,6 +158,12 @@ public class SearchPanel extends JPanel{
 		super.paintComponent(g);
 	}
 
+	private class SaleSearchListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			gui.saleSearch();
+		}
+	}
+
 	/**
 	 * The listener used to initiate a search.
 	 * @author Catie
@@ -163,8 +194,8 @@ public class SearchPanel extends JPanel{
 			GridBagConstraints constraints = new GridBagConstraints();
 
 			FontMetrics m = this.getFontMetrics(GUIConstants.MEDIUM_FONT);
-			int keyWidth = 70,
-				keyHeight = 50;
+			int keyWidth = 80,
+				keyHeight = 40;
 
 			Insets inset = new Insets(5, 5, 5, 5);
 			Insets none = new Insets(0, 0, 0, 0);
@@ -193,8 +224,7 @@ public class SearchPanel extends JPanel{
 							m.charsWidth(qwertyArray[i][j].toCharArray(), 0, qwertyArray[i][j].length());
 					}
 					else if(qwertyArray[i][j].equals("SPACE")){
-						constraints.ipadx = keyWidth * 8;// -
-							//m.charsWidth(qwertyArray[i][j].toCharArray(), 0, qwertyArray[i][j].length());
+						constraints.ipadx = keyWidth * 8;
 					}
 
 

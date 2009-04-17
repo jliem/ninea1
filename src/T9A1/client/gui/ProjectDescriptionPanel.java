@@ -19,6 +19,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -75,7 +76,7 @@ public class ProjectDescriptionPanel extends JPanel {
 
 		JScrollPane scroll = new JScrollPane(stepPanel);
 		scroll.setMinimumSize(new Dimension((int)(gui.getWidth() * PERCENTAGE), gui.getHeight() - 375));
-		System.out.println("" + gui.getWidth() + " " + (int)(gui.getWidth() * PERCENTAGE));
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBackground(GUIConstants.ORANGE);
@@ -113,7 +114,7 @@ public class ProjectDescriptionPanel extends JPanel {
 		c.anchor = GridBagConstraints.CENTER;
 		JScrollPane scroll = new JScrollPane(materialsList);
 		scroll.setMinimumSize(new Dimension(
-				(int)(gui.getWidth() * (1 - PERCENTAGE)), gui.getHeight() - 375));
+				(int)(gui.getWidth() * (1 - PERCENTAGE)), gui.getHeight() - 100));
 		panel.add(scroll, c);
 
 		JButton button = new JButton("Search");
@@ -132,7 +133,7 @@ public class ProjectDescriptionPanel extends JPanel {
 		Insets insets = new Insets(10, 10, 10, 10);
 		buttonPanel.setBackground(GUIConstants.ORANGE);
 
-		JButton back = new JButton("Back to Results");
+		JButton back = new JButton("<html><center>Back to<br />Results</center></html>");
 		back.addActionListener(new ReturnResultsListener());
 		back.setFont(GUIConstants.MEDIUM_FONT);
 		con.weightx = 0;
@@ -140,11 +141,13 @@ public class ProjectDescriptionPanel extends JPanel {
 		con.gridwidth = 1;
 		con.gridx = 1;
 		con.gridy = 0;
+		con.ipadx = 20;
+		con.ipady = 40;
 		con.insets = insets;
 		con.anchor = GridBagConstraints.EAST;
 		buttonPanel.add(back, con);
 
-		JButton clear = new JButton("New Search");
+		JButton clear = new JButton("<html><center>New<br />Search</center></html>");
 		clear.addActionListener(new NewSearchListener());
 		clear.setFont(GUIConstants.MEDIUM_FONT);
 		con.gridx = 2;
@@ -202,32 +205,32 @@ public class ProjectDescriptionPanel extends JPanel {
 			JLabel step, stepText;
 			for(int i = 0; i < steps.length; i++){
 				c.anchor = GridBagConstraints.CENTER;
-				c.gridy = i * 2;
+				c.gridy = i * 3;
 				c.gridx = 0;
-				c.gridheight = 2;
+				c.gridheight = 3;
 				c.insets = insets;
 				this.add(new ImageContainer(i + 1), c);
 
 				step = new JLabel("Step " + (i + 1) + ":");
 				step.setFont(GUIConstants.MEDIUM_FONT);
 				c.anchor = GridBagConstraints.WEST;
-				c.gridy = i * 2;
+				c.gridy = i * 3;
 				c.gridx = 1;
 				c.gridheight = 1;
 				this.add(step, c);
 
-				stepText = new JLabel(steps[i]);
+				stepText = new JLabel("<html><p>" + steps[i] + "</p></html>");
 				stepText.setFont(GUIConstants.SMALL_FONT);
 				c.anchor = GridBagConstraints.WEST;
-				c.gridy = i * 2 + 1;
+				c.gridy = i * 3 + 1;
 				c.gridx = 1;
 				c.gridheight = 1;
 				this.add(stepText, c);
 
 				c.anchor = GridBagConstraints.WEST;
-				c.gridy = i * 2;
+				c.gridy = i * 3;
 				c.gridx = 2;
-				c.gridheight = 2;
+				c.gridheight = 3;
 				this.add(Box.createHorizontalGlue(), c);
 			}
 		}

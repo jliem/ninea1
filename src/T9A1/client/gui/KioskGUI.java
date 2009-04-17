@@ -102,6 +102,14 @@ public class KioskGUI {
 		layoutManager.show(gui, GUIConstants.RESULTS);
 	}
 
+	public void saleSearch(){
+		Item[] results = inventoryManager.getSaleItems();
+		resultsPanel = new ResultsPanel(this, "SALE ITEMS", GUIConstants.ITEM, results);
+
+		gui.add(resultsPanel, GUIConstants.RESULTS);
+		layoutManager.show(gui, GUIConstants.RESULTS);
+	}
+
 	/**
 	 * Runs a search on a given term.
 	 * @param s the term to be searched for
@@ -110,31 +118,14 @@ public class KioskGUI {
 		Searchable[] results = inventoryManager.searchProjects(s);
 		if(results == null || results.length == 0){
 			results = new Searchable[1];
-			String[] tools = {"Hammers", "Nails", "Faucet", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit", "Nails", "Shit"};
-			String[] materials = {"Food", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls", "Water", "Golf Balls"};
+			String[] tools = {"Hammer", "Wrench"};
+			String[] materials = {"Handle", "Hinge", "Shingle", "Nail"};
 			String[] instructions = {
-					"Do some shit!",
-					"Do some other shit!",
-					"Do some shit while upside down.",
-					"Do some shit!",
-					"Do some other shit!",
-					"Do some shit while upside down.",
-					"Do some shit!",
-					"Do some other shit!",
-					"Do some shit while upside down.",
-					"Do some shit!",
-					"Do some other shit!",
-					"Do some shit while upside down.",
-					"Do some shit!",
-					"Do some other shit!",
-					"Do some shit while upside down.",
-					"Do some shit!",
-					"Do some other shit!",
-					"Do some shit while upside down.",
-					"Do some shit!",
-					"Do some other shit!",
-					"Do some shit while upside down."};
-			results[0] = new Project("Doing some shit", tools, materials, instructions, 1, 1, 30);
+					"This is an example project for use in development of the project portion of the GUI.",
+					"Feel free to choose a tool or material to the right and click \"Search\" to run a search for the chosen item.",
+					"Soon, users will be able to email projects to themselves.",
+					"Additionally, users will be able to view searches and items that they search for online at home."};
+			results[0] = new Project("Example Project for Testing", tools, materials, instructions, 1, 1, 30);
 		}
 		resultsPanel = new ResultsPanel(this, s, GUIConstants.PROJECT, results);
 		gui.add(resultsPanel, GUIConstants.RESULTS);

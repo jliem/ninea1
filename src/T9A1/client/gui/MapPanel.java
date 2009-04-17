@@ -31,6 +31,15 @@ public class MapPanel extends JPanel {
 		this.setBackground(GUIConstants.ORANGE);
 		this.setLayout(new BorderLayout());
 
+		addItemPanel();
+
+		MapDisplayPanel mapPanel = new MapDisplayPanel();
+		add(mapPanel, BorderLayout.CENTER);
+
+		addButtonPanel();
+	}
+
+	public void addItemPanel(){
 		JPanel top = new JPanel(new GridBagLayout());
 		top.setBackground(GUIConstants.ORANGE);
 		GridBagConstraints con = new GridBagConstraints();
@@ -41,15 +50,15 @@ public class MapPanel extends JPanel {
 		con.weightx = 1;
 		top.add(Box.createGlue(), con);
 		add(top, BorderLayout.NORTH);
+	}
 
-		MapDisplayPanel mapPanel = new MapDisplayPanel();
-		add(mapPanel, BorderLayout.CENTER);
-
+	public void addButtonPanel(){
+		GridBagConstraints con = new GridBagConstraints();
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
-		insets = new Insets(10, 10, 10, 10);
+		Insets insets = new Insets(10, 10, 10, 10);
 		buttonPanel.setBackground(GUIConstants.ORANGE);
 
-		JButton back = new JButton("Back to Results");
+		JButton back = new JButton("<html><center>Back to<br />Results</center></html>");
 		back.addActionListener(new ReturnResultsListener());
 		back.setFont(GUIConstants.MEDIUM_FONT);
 		con.weightx = 0;
@@ -57,11 +66,13 @@ public class MapPanel extends JPanel {
 		con.gridwidth = 1;
 		con.gridx = 1;
 		con.gridy = 0;
+		con.ipadx = 20;
+		con.ipady = 40;
 		con.insets = insets;
 		con.anchor = GridBagConstraints.EAST;
 		buttonPanel.add(back, con);
 
-		JButton clear = new JButton("New Search");
+		JButton clear = new JButton("<html><center>New<br />Search</center></html>");
 		clear.addActionListener(new NewSearchListener());
 		clear.setFont(GUIConstants.MEDIUM_FONT);
 		con.gridx = 2;
