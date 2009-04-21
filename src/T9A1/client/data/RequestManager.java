@@ -1,9 +1,6 @@
 package T9A1.client.data;
 
 import java.util.List;
-
-import com.sun.xml.internal.ws.handler.HandlerChainCaller.RequestOrResponse;
-
 import T9A1.common.IConnection;
 import T9A1.common.Item;
 import T9A1.common.Project;
