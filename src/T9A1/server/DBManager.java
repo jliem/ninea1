@@ -20,7 +20,7 @@ public class DBManager {
 	int status = 0;
 	// the db connection
 	java.sql.Connection conn = null;
-	
+
 	/** sql search statements */
 	// searching for an item
 	private PreparedStatement item_search;
@@ -29,6 +29,9 @@ public class DBManager {
 	// grab sale items
 	private PreparedStatement sale_search;
 	private static final String sale_search_q = "SELECT * FROM PRODUCT_INFO INNER JOIN PRODUCTS ON PRODUCT_INFO.PRODUCT_ID = PRODUCTS.PRODUCT_ID WHERE PRODUCTS.SALE_PRICE IS NOT NULL";
+
+	private PreparedStatement project_search;
+	private static final String project_search_q = "SELECT * FROM PROJECTS INNER JOIN PROJECT_STEPS ON PROJECTS.PROJECT_ID = PROJECT_STEPS.PROJECT_ID WHERE (PROJECT_TITLE LIKE ?) ORDER BY PROJECTS.PROJECT_ID, PROJECT_STEPS.STEP_NUM";
 
 	/**
 	 * Initializes the JDBC driver
@@ -83,17 +86,17 @@ public class DBManager {
 	 */
 	public boolean connect() {
 		boolean connected = false;
-		
+
 		try {
 			Properties props = new Properties();
 			props.load(this.getClass().getClassLoader().getResourceAsStream("T9A1/server/db_config.txt"));
-			
+
 			connected = connect(props.getProperty("db_url"), Integer.parseInt(props.getProperty("db_port"))
 					, props.getProperty("db_name"), props.getProperty("db_user"), props.getProperty("db_pass"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return connected;
 	}
 
@@ -165,19 +168,19 @@ public class DBManager {
 
 		return statement;
 	}
-	
+
 	/**
 	 * Uses the server connection to create a PreparedStatement for given query string
-	 * 
+	 *
 	 * @param query the query string
-	 * 
+	 *
 	 * @return the created PreparedStatement or null on failure
 	 */
 	protected PreparedStatement createPreparedStatement(String query) {
 		if (status < 2) {
 			return null;
 		}
-		
+
 		try {
 			return conn.prepareStatement(query);
 		} catch (SQLException e) {
@@ -191,18 +194,20 @@ public class DBManager {
 	protected void initPreparedStatements() {
 		item_search = createPreparedStatement(item_search_q);
 		sale_search = createPreparedStatement(sale_search_q);
-		
-		if (item_search == null || sale_search == null) {
+		project_search = createPreparedStatement(project_search_q);
+
+		if (item_search == null || sale_search == null
+				|| project_search == null) {
 			System.err.println("Couldn't create PreparedStatements, exiting.");
 			System.exit(1);
 		}
 	}
-	
+
 	/**
-	 * Searches the db for specified item 
-	 * 
+	 * Searches the db for specified item
+	 *
 	 * @param query String containing the item to search for
-	 * 
+	 *
 	 * @return a list of Items matching the query
 	 */
 	public List<Item> itemSearch(String query) {
@@ -228,12 +233,12 @@ public class DBManager {
 
 		return results;
 	}
-	
+
 	/**
 	 * Searches the db for items on sale
-	 * 
+	 *
 	 * @param query String containing the tag to search for
-	 * 
+	 *
 	 * @return a list of Items matching the query
 	 */
 	public List<Item> saleSearch() {
@@ -256,17 +261,46 @@ public class DBManager {
 
 		return results;
 	}
-	
+
+	public List<Project> projectSearch(String query) {
+		List<Project> results = new LinkedList<Project>();
+		HashMap<Long, Project> projectMap = new HashMap<Long, Project>();
+
+		synchronized (project_search) {
+			try {
+				project_search.setString(1, "%" + query + "%");
+
+				System.out.println("project search for " + query);
+				ResultSet rs = project_search.executeQuery();
+				// restrict max results?
+				// TODO(poje): strip trailing s from query if no results are returned on first try
+
+
+				while (rs.next()) {
+					inflateProjectFromRS(rs, projectMap);
+				}
+			} catch (SQLException e) {
+				System.out.println("Error executing project search: " + e.getMessage());
+				return null;
+			}
+		}
+
+		// Add results from the map back to the results list
+		results.addAll(projectMap.values());
+
+		return results;
+	}
+
 	/**
 	 * Inflates an Item from the current result in the ResultSet
-	 * 
+	 *
 	 * @param rs ResultSet to inflate from
-	 * 
+	 *
 	 * @return an inflated Item
 	 */
 	protected Item inflateItemFromRS(ResultSet rs) throws SQLException {
 		Item i = new Item();
-		
+
 		i.setId(rs.getLong("PRODUCT_ID"));
 		i.setName(rs.getString("NAME"));
 		i.setDescription(rs.getString("DESCRIPTION"));
@@ -275,8 +309,44 @@ public class DBManager {
 		i.setSalePrice(rs.getDouble("SALE_PRICE"));
 		i.setLocation(new Location(rs.getInt("LOCATION_AISLE"), rs.getInt("LOCATION_BIN")));
 		i.setImageID(rs.getLong("IMAGE_ID"));
-		
+
 		return i;
+	}
+
+	/**
+	 * Inflates an Project from the current result in the ResultSet
+	 *
+	 * @param rs ResultSet to inflate from
+	 *
+	 * @return an inflated Project
+	 */
+	protected void inflateProjectFromRS(ResultSet rs,
+			HashMap<Long, Project> projectMap) throws SQLException {
+
+		long id = rs.getLong("PROJECTS.PROJECT_ID");
+		String instruction = rs.getString("STEP");
+
+		// Look up whether we've already added this project
+		if (projectMap.containsKey(id)) {
+			// The project's already been added, so just add instructions
+			// to the existing one
+			Project proj = projectMap.get(id);
+			proj.addInstruction(instruction);
+		} else {
+			String title = rs.getString("PROJECT_TITLE");
+			String toolString = rs.getString("TOOLS");
+			String[] tools = toolString.split(",");
+
+			String materialString = rs.getString("MATERIALS");
+			String[] materials = materialString.split(",");
+
+			int minutes = rs.getInt("ESTIMATED_TIME");
+
+			Project p = new Project(title, tools, materials, null, id, minutes);
+			p.addInstruction(instruction);
+
+			projectMap.put(id, p);
+		}
 	}
 
 	// does a quick functionality check
@@ -285,18 +355,18 @@ public class DBManager {
 		if (!dbm.connect()) return;
 
 		Statement s = dbm.execQuery("select * from testing");
-		
+
 		if (s == null) return;
 		try {
 			ResultSet rs = s.getResultSet();
 			while (rs.next()) {
-				
+
 				System.out.println("result: [" + rs.getString(1) + "][" + rs.getInt(2) + "]");
 			}
 		} catch (Exception e) {
 			System.out.println("SQL error: " + e.getMessage());
 		}
-		
+
 		try {
 			s.close();
 		} catch (SQLException e) {}
