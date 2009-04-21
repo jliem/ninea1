@@ -1,6 +1,8 @@
 package T9A1.common;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Represents a project.
@@ -12,7 +14,7 @@ public class Project implements Serializable, Searchable {
 
 	private String title;
 	private String[] tools;
-	private String[] instructions;
+	private ArrayList<String> instructions;
 	private String[] materials;
 
 	private long id;
@@ -21,28 +23,42 @@ public class Project implements Serializable, Searchable {
 
 	public Project(String title, String[] tools, String[] materials,
 			String[] instructions, long id, int hours, int minutes) {
-		this.title = title;
-		this.tools = tools;
-		this.instructions = instructions;
-		this.materials = materials;
-		this.id = id;
+		this(title, tools, materials, instructions, id);
+
 		this.hours = hours;
 		this.minutes = minutes;
 	}
 
 	public Project(String title, String[] tools, String[] materials,
 			String[] instructions, long id, int minutes) {
-		this.title = title;
-		this.tools = tools;
-		this.instructions = instructions;
-		this.materials = materials;
-		this.id = id;
+		this(title, tools, materials, instructions, id);
+
 		this.hours = minutes / 60;
 		this.minutes = minutes % 60;
 	}
 
+	public Project(String title, String[] tools, String[] materials,
+			String[] instructions, long id) {
+
+		this.title = title;
+		this.tools = tools;
+
+		if (instructions != null) {
+			this.instructions = new ArrayList<String>(Arrays.asList(instructions));
+		} else {
+			this.instructions = new ArrayList<String>();
+		}
+
+		this.materials = materials;
+		this.id = id;
+	}
+
 	public Project() {
 		this(null, null, null, null, 0, 0, 0);
+	}
+
+	public void addInstruction(String instruction) {
+		instructions.add(instruction);
 	}
 
 	public String getTitle() {
@@ -62,10 +78,10 @@ public class Project implements Serializable, Searchable {
 	}
 
 	public String[] getInstructions() {
-		return instructions;
+		return instructions.toArray(new String[0]);
 	}
 
-	public void setInstructions(String[] instructions) {
+	public void setInstructions(ArrayList<String> instructions) {
 		this.instructions = instructions;
 	}
 

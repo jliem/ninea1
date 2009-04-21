@@ -83,22 +83,17 @@ public class RequestManager {
 		// Check if the item should be handled by the cache
 
 		// TODO(jliem): Cache is disabled for project
-		if (cacheManager.isCacheHit(query) && false) {
-			//resultList = cacheManager.doSearch(query);
 
-		} else {
-			Request req = new Request(Request.Type.project_search);
-			req.put(Request.Key.store_id, this.storeNumber);
-			req.put(Request.Key.query, query);
+		Request req = new Request(Request.Type.project_search);
+		req.put(Request.Key.store_id, this.storeNumber);
+		req.put(Request.Key.query, query);
 
-			resultList = (List<Project>)sendRequest(req);
-
-			// This result wasn't in the cache (or it's stale), so add it now
-			//cacheManager.add(query, resultList);
-		}
+		resultList = (List<Project>)sendRequest(req);
 
 		// Return null if the server returned null (indicating an error)
-		if (resultList == null) return null;
+		if (resultList == null) {
+			return null;
+		}
 
 		return resultList.toArray(new Project[0]);
 	}

@@ -39,6 +39,7 @@ public class KioskServer {
 			case sale_search:
 				return dbm.saleSearch();
 			case project_search:
+				return dbm.projectSearch((String)req.get(Request.Key.query));
 			case update_request:
 		}
 
