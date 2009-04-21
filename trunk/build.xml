@@ -45,6 +45,8 @@
 	</target>
 
 	<target name="dist-server" depends="dist-common, compile-server">	
+		<delete file="${dist}/T9A1-server-${DSTAMP}.jar"/>
+
 		<jar jarfile="${dist}/T9A1-server-${DSTAMP}.jar">
 			<fileset dir="${build}" excludes="**/client, META-INF/**"/>
 			
@@ -61,6 +63,9 @@
 	</target>
 	
 	<target name="dist-client" depends="dist-common, compile-client">
+		<delete file="${dist}/T9A1-client-${DSTAMP}.jar"/>
+		<delete dir="${dist}/resources"/>
+
 		<jar jarfile="${dist}/T9A1-client-${DSTAMP}.jar">
 			<fileset dir="${build}" excludes="**/server"/>
 			<manifest>

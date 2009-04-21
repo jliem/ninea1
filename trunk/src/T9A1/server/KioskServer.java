@@ -35,9 +35,9 @@ public class KioskServer {
 	public Object handleRequest(Request req) {
 		switch (req.type) {
 			case item_search:
-				return dbm.itemSearch((String)req.get(Request.Key.query));
+				return dbm.itemSearch((String)req.get(Request.Key.query), (Integer)req.get(Request.Key.store_id));
 			case sale_search:
-				return dbm.saleSearch();
+				return dbm.saleSearch((Integer)req.get(Request.Key.store_id));
 			case project_search:
 				return dbm.projectSearch((String)req.get(Request.Key.query));
 			case update_request:

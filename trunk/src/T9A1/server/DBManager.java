@@ -24,12 +24,13 @@ public class DBManager {
 	/** sql search statements */
 	// searching for an item
 	private PreparedStatement item_search;
-	private static final String item_search_q = "SELECT * FROM PRODUCT_INFO INNER JOIN PRODUCTS ON PRODUCT_INFO.PRODUCT_ID = PRODUCTS.PRODUCT_ID WHERE (PRODUCT_INFO.NAME LIKE ? OR PRODUCT_INFO.DESCRIPTION LIKE ?)";
+	private static final String item_search_q = "SELECT * FROM PRODUCT_INFO INNER JOIN PRODUCTS ON PRODUCT_INFO.PRODUCT_ID = PRODUCTS.PRODUCT_ID WHERE ((PRODUCT_INFO.NAME LIKE ? OR PRODUCT_INFO.DESCRIPTION LIKE ?) AND PRODUCTS.STORE_ID = ?)";
 
 	// grab sale items
 	private PreparedStatement sale_search;
-	private static final String sale_search_q = "SELECT * FROM PRODUCT_INFO INNER JOIN PRODUCTS ON PRODUCT_INFO.PRODUCT_ID = PRODUCTS.PRODUCT_ID WHERE PRODUCTS.SALE_PRICE IS NOT NULL";
-
+	private static final String sale_search_q = "SELECT * FROM PRODUCT_INFO INNER JOIN PRODUCTS ON PRODUCT_INFO.PRODUCT_ID = PRODUCTS.PRODUCT_ID WHERE ((PRODUCTS.SALE_PRICE IS NOT NULL) AND PRODUCTS.STORE_ID = ?)";
+	
+	// search projects
 	private PreparedStatement project_search;
 	private static final String project_search_q = "SELECT * FROM PROJECTS INNER JOIN PROJECT_STEPS ON PROJECTS.PROJECT_ID = PROJECT_STEPS.PROJECT_ID WHERE (PROJECT_TITLE LIKE ?) ORDER BY PROJECTS.PROJECT_ID, PROJECT_STEPS.STEP_NUM";
 
@@ -207,21 +208,20 @@ public class DBManager {
 	 * Searches the db for specified item
 	 *
 	 * @param query String containing the item to search for
+	 * @param store_id the store_id to search on
 	 *
 	 * @return a list of Items matching the query
 	 */
-	public List<Item> itemSearch(String query) {
+	public List<Item> itemSearch(String query, long store_id) {
 		List<Item> results = new LinkedList<Item>();
 
 		synchronized (item_search) {
 			try {
 				item_search.setString(1, "%" + query + "%");
 				item_search.setString(2, "%" + query + "%");
+				item_search.setLong(3, store_id);
 
-/* DEBUG */ System.out.println("item search for " + query);
 				ResultSet rs = item_search.executeQuery();
-				// restrict max results?
-				// TODO(poje): strip trailing s from query if no results are returned on first try
 				while (rs.next()) {
 					results.add(inflateItemFromRS(rs));
 				}
@@ -237,19 +237,18 @@ public class DBManager {
 	/**
 	 * Searches the db for items on sale
 	 *
-	 * @param query String containing the tag to search for
+	 * @param store_id the store_id to get sale items for
 	 *
 	 * @return a list of Items matching the query
 	 */
-	public List<Item> saleSearch() {
+	public List<Item> saleSearch(long store_id) {
 		List<Item> results = new LinkedList<Item>();
 
 		synchronized (sale_search) {
 			try {
-/* DEBUG */ System.out.println("sale search for ");
+				sale_search.setLong(1, store_id);
+				
 				ResultSet rs = sale_search.executeQuery();
-				// restrict max results?
-				// TODO(poje): strip trailing s from query if no results are returned on first try
 				while (rs.next()) {
 					results.add(inflateItemFromRS(rs));
 				}
@@ -262,6 +261,13 @@ public class DBManager {
 		return results;
 	}
 
+	/**
+	 * Searches the db for projects
+	 * 
+	 * @param query a query to search projects for
+	 * 
+	 * @return a list of Projects resulting from the query
+	 */
 	public List<Project> projectSearch(String query) {
 		List<Project> results = new LinkedList<Project>();
 		HashMap<Long, Project> projectMap = new HashMap<Long, Project>();
@@ -272,9 +278,6 @@ public class DBManager {
 
 				System.out.println("project search for " + query);
 				ResultSet rs = project_search.executeQuery();
-				// restrict max results?
-				// TODO(poje): strip trailing s from query if no results are returned on first try
-
 
 				while (rs.next()) {
 					inflateProjectFromRS(rs, projectMap);
