@@ -27,43 +27,53 @@ import T9A1.common.Item;
 import T9A1.common.Location;
 
 /**
- * A class for getting different item displays. The compact panel can be
- * used in a list of items, while the full panel displays the item's information
- * along with the item's location plotted on a store map.
+ * @author Catie Donnelly
  *
- * @author Catie
+ * A long, thin panel containing information on a particular item. Intended
+ * for use in a ListPanel as search results, the ItemPanel displays a picture of the
+ * item, its name, price (including a discounted price if the item is on sale), stock
+ * information, and location within the store.
  */
 public class ItemPanel extends JPanel implements SearchResult{
 
-	/** holds the path for images */
+	/** Holds the path for images */
 	public static String IMAGE_PATH;
-	/** The name of the default product image. */
+	/** The name of the image to use when no other image is available */
 	private final String NO_IMAGE = "no_image";
-	/** The filetype of the product images. */
+	/** The filetype of the product images */
 	private final String FILETYPE = ".jpg";
 
-	/** The item that the panels represent. */
+	/** The item that the panel represents */
 	private Item item;
-	/** The main GUI component. */
+	/** The main GUI component */
 	private KioskGUI gui;
 
+	/** Determines whether or not the panel should react on mouseover */
 	private boolean mouseover;
 
 	/**
-	 * Creates a new ItemPanel and initializes the compact panel.
-	 * @param g The main GUI component.
-	 * @param i The Item that this panel represents.
+	 * Creates a new ItemPanel. Sets mouseover to <code>true</code> as a default.
+	 * @param gui The main GUI component.
+	 * @param item The Item that this panel represents.
 	 */
 	public ItemPanel(KioskGUI gui, Item item){
 		this.item = item;
 		this.gui = gui;
-		mouseover = true;
 
+		mouseover = true;
+		addMouseListener(new MouseOverListener());
+
+		initialize();
+	}
+
+	/**
+	 * Initializes and configures the ItemPanel components.
+	 */
+	public void initialize(){
 		setLayout(new GridBagLayout());
 		GridBagConstraints con = new GridBagConstraints();
 		Insets insets = new Insets(3, 10, 3, 10);
 
-		addMouseListener(new MouseOverListener());
 		setBackground(GUIConstants.LIGHT_ORANGE);
 		setPreferredSize(new Dimension(gui.getWidth(), 110));
 
@@ -154,12 +164,16 @@ public class ItemPanel extends JPanel implements SearchResult{
 	}
 
 	/**
-	 * Instructs the main GUI component to display the image.
+	 * Instructs the main GUI component to display the full panel associated with this object's item.
 	 */
 	private void showItem(){
 		gui.showItem(this);
 	}
 
+	/**
+	 * Provides the 
+	 * @return
+	 */
 	public Item getItem(){
 		return item;
 	}
