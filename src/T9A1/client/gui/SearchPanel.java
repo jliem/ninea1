@@ -1,6 +1,7 @@
 package T9A1.client.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -26,8 +27,8 @@ public class SearchPanel extends JPanel{
 	/** An array that represents a QWERTY keyboard. */
 	private final String[][] qwertyArray =
 			{{"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"},
-			{"A", "S", "D", "F", "G", "H", "J", "K", "L", "BACK"},
-			{"Z", "X", "C", "V", "B", "N", "M", "ENTER"},
+			{"A", "S", "D", "F", "G", "H", "J", "K", "L", "BKSP"},
+			{"Z", "X", "C", "V", "B", "N", "M", "GO"},
 			{"SPACE"}};
 
 	/** The JTextField used to input the search term. */
@@ -68,7 +69,7 @@ public class SearchPanel extends JPanel{
 		c.gridx = 1;
 		c.weightx = 0;
 		c.ipadx = 10;
-		c.ipady = 30;
+		c.ipady = 25;
 		c.insets = new Insets(15, 0, 0, 15);
 		c.anchor = GridBagConstraints.EAST;
 		button.add(newSearch, c);
@@ -78,6 +79,9 @@ public class SearchPanel extends JPanel{
 		add(button, BorderLayout.NORTH);
 
 		JPanel panel = new JPanel(new GridBagLayout());
+		Dimension size = new Dimension(500, 500);
+		panel.setMinimumSize(size);
+		panel.setPreferredSize(size);
 		panel.setBackground(GUIConstants.ORANGE);
 
 		JLabel label = new JLabel("<html><center>Enter an item or project to<br />" +
@@ -194,8 +198,8 @@ public class SearchPanel extends JPanel{
 			GridBagConstraints constraints = new GridBagConstraints();
 
 			FontMetrics m = this.getFontMetrics(GUIConstants.MEDIUM_FONT);
-			int keyWidth = 80,
-				keyHeight = 40;
+			int keyWidth = 70,
+				keyHeight = 35;
 
 			Insets inset = new Insets(5, 5, 5, 5);
 			Insets none = new Insets(0, 0, 0, 0);
@@ -219,7 +223,7 @@ public class SearchPanel extends JPanel{
 					constraints.ipady = keyHeight;
 					constraints.insets = inset;
 
-					if(qwertyArray[i][j].equals("ENTER")){
+					if(qwertyArray[i][j].equals("GO")){
 						constraints.ipadx = keyWidth * 2 -
 							m.charsWidth(qwertyArray[i][j].toCharArray(), 0, qwertyArray[i][j].length());
 					}
