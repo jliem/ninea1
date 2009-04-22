@@ -20,10 +20,10 @@ public class GUIConstants {
 	public static final Color DARK_ORANGE = new Color(255, 160, 65);
 
 	/** Arial font, size 40 */
-	public static final Font LARGE_FONT = new Font("Arial", Font.PLAIN, 34);
+	public static final Font LARGE_FONT = new Font("Arial", Font.PLAIN, 30);
 
 	/** Arial font, size 28 */
-	public static final Font MEDIUM_FONT = new Font("Arial", Font.PLAIN, 26);
+	public static final Font MEDIUM_FONT = new Font("Arial", Font.PLAIN, 25);
 
 	/** Arial font, size 20 */
 	public static final Font SMALL_FONT = new Font("Arial", Font.PLAIN, 20);

@@ -69,8 +69,8 @@ public class SearchPanel extends JPanel{
 		c.gridx = 1;
 		c.weightx = 0;
 		c.ipadx = 10;
-		c.ipady = 25;
-		c.insets = new Insets(15, 0, 0, 15);
+		c.ipady = 15;
+		c.insets = new Insets(10, 0, 0, 10);
 		c.anchor = GridBagConstraints.EAST;
 		button.add(newSearch, c);
 		c.gridx = 0;
@@ -107,7 +107,7 @@ public class SearchPanel extends JPanel{
 		panel.add(searchBox, c);
 
 		search = new JButton("GO");
-		search.setFont(GUIConstants.LARGE_FONT);
+		search.setFont(GUIConstants.MEDIUM_FONT);
 		search.addActionListener(listener);
 		searchBox.addActionListener(listener);
 		c.anchor = GridBagConstraints.WEST;
@@ -198,8 +198,8 @@ public class SearchPanel extends JPanel{
 			GridBagConstraints constraints = new GridBagConstraints();
 
 			FontMetrics m = this.getFontMetrics(GUIConstants.MEDIUM_FONT);
-			int keyWidth = 70,
-				keyHeight = 35;
+			int keyWidth = 60,
+				keyHeight = 30;
 
 			Insets inset = new Insets(5, 5, 5, 5);
 			Insets none = new Insets(0, 0, 0, 0);
