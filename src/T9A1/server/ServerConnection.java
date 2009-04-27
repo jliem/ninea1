@@ -76,15 +76,16 @@ public class ServerConnection{
 			while(running){
 				Socket client = null;
 			    try {
-			    	//THIS IS WHERE THE THREAD BLOCKS
+			    	//Thread blocks until a connection is accepted
 			    	client = server.accept();
 			    	numConnections = numConnections + 1;
 			    		if(client != null){
 			    			try {
-			    				//BufferedReader streamIn = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			    				ObjectInputStream streamIn = new ObjectInputStream(client.getInputStream());
-			    				Request request = (Request)streamIn.readObject();
-
+			    				//Connection accepted open an input stream
+			      				ObjectInputStream streamIn = new ObjectInputStream(client.getInputStream());
+			    				//Reads for objects in the stream
+			      				Request request = (Request)streamIn.readObject();
+			      				//Now create an array list to add to the Queue containing the connectiona and the request
 								ArrayList<Object> al = new ArrayList<Object>();
 								al.add(client); al.add(request);
 								buffer.add(al);
@@ -136,12 +137,12 @@ public class ServerConnection{
 				Request request = null;
 				Socket client = null;
 				try{
-					//THIS IS WHERE THE THREAD BLOCKS
+					//The take method blocks until there is something to take
 					ArrayList al = (ArrayList)(buffer.take());
-
+					//Split the arraylist off the queue
 					client = (Socket)(al.get(0));
 					request = (Request)(al.get(1));
-
+					//Call handle request then send the results
 					if (request != null) {
 						request.put(Request.Key.data, kioskServer.handleRequest(request));
 						request.type = Request.Type.results;
