@@ -14,11 +14,23 @@ import T9A1.common.Item;
 import T9A1.common.Project;
 import T9A1.common.Searchable;
 
+/**
+ * ListPanel displays a list of SearchResult panels representing Searchable objects.
+ * @author Catie
+ *
+ */
 public class ListPanel extends JPanel {
 
+	/** The main GUI component */
 	private KioskGUI gui;
+	/** The array of Searchable objects being displayed */
 	private Searchable[] results;
 
+	/**
+	 * Creates a new list panel object.
+	 * @param gui The main GUI component
+	 * @param results An array of Searchable objects representing search results
+	 */
 	public ListPanel(KioskGUI gui, Searchable[] results){
 		this.gui = gui;
 		this.results = results;
@@ -26,6 +38,9 @@ public class ListPanel extends JPanel {
 		initialize();
 	}
 
+	/**
+	 * Initializes the SearchResult panels and builds the list.
+	 */
 	private void initialize() {
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -48,6 +63,9 @@ public class ListPanel extends JPanel {
 
 	}
 
+	/**
+	 * Populates the list with ProjectPanels for project results.
+	 */
 	private void addProjects() {
 		GridBagConstraints c = new GridBagConstraints();
 		ProjectPanel ip;
@@ -71,6 +89,9 @@ public class ListPanel extends JPanel {
 		this.add(Box.createGlue(), c);
 	}
 
+	/**
+	 * Populates the list with ItemPanels for item results.
+	 */
 	private void addItems() {
 		GridBagConstraints c = new GridBagConstraints();
 		ItemPanel ip;

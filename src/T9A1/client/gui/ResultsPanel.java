@@ -30,6 +30,7 @@ public class ResultsPanel extends JPanel {
 	private KioskGUI gui;
 	/** The search term that the results were generated from. */
 	private String searchTerm;
+	/** The type of results being displayed. */
 	private String type;
 	/** An ListPanel containing search results. */
 	private Searchable[] results;
@@ -91,17 +92,13 @@ public class ResultsPanel extends JPanel {
 		c.gridx = 1;
 		c.weightx = 0;
 		c.ipadx = 20;
-		c.ipady = 40;
+		c.ipady = 20;
 		c.anchor = GridBagConstraints.EAST;
 		button.add(newSearch, c);
 		c.gridx = 0;
 		c.weightx = 1;
 		button.add(Box.createGlue(), c);
 		add(button, BorderLayout.SOUTH);
-	}
-
-	public String toString(){
-		return "";//for(ItemPanel i : (ItemPanel)list.getComponents())
 	}
 
 	/**

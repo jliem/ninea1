@@ -47,9 +47,12 @@ public class ProjectPanel extends JPanel implements SearchResult{
 	/** The main GUI component. */
 	private KioskGUI gui;
 
+	/** Determines whether or not the panel should react on mouseover */
 	private boolean mouseover;
 
+	/** Displays the tools necessary to complete the project. */
 	private JLabel tools;
+	/** displays the materials necessary to complete the project. */
 	private JLabel materials;
 
 	/**
@@ -158,10 +161,18 @@ public class ProjectPanel extends JPanel implements SearchResult{
 		gui.showProject(this);
 	}
 
+	/**
+	 * Provides the Project object that this panel represents.
+	 * @return the Project this panel represents
+	 */
 	public Project getProject(){
 		return project;
 	}
 
+	/**
+	 * Determines whether or not the panel will change colors on mouseover.
+	 * @param b a boolean representing the mouseover setting
+	 */
 	public void setMouseover(boolean b){
 		mouseover = b;
 		if(b){
@@ -176,10 +187,18 @@ public class ProjectPanel extends JPanel implements SearchResult{
 		this.invalidate();
 	}
 
+	/**
+	 * Copies the ProjectPanel.
+	 * @return a copy of the ProjectPanel
+	 */
 	public ProjectPanel copy(){
 		return new ProjectPanel(gui, project);
 	}
 
+	/**
+	 * @override from SearchResult
+	 * Returns the panel to be displayed on a list.
+	 */
 	public JPanel getListPanel() {
 		return this;
 	}
@@ -190,16 +209,25 @@ public class ProjectPanel extends JPanel implements SearchResult{
 	 */
 	private class MouseOverListener implements MouseListener{
 
+		/**
+		 * Shows full projects page when panel is clicked.
+		 */
 		public void mouseClicked(MouseEvent e) {
 			if(mouseover)
 				showItem();
 		}
 
+		/**
+		 * Highlights panel on mouseover.
+		 */
 		public void mouseEntered(MouseEvent e) {
 			if(mouseover)
 				setBackground(GUIConstants.DARK_ORANGE);
 		}
 
+		/**
+		 * Returns panel to non-highlighted state on mouse exit.
+		 */
 		public void mouseExited(MouseEvent e) {
 			if(mouseover)
 				setBackground(GUIConstants.LIGHT_ORANGE);

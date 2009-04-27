@@ -102,6 +102,9 @@ public class KioskGUI {
 		layoutManager.show(gui, GUIConstants.RESULTS);
 	}
 
+	/**
+	 * Runs an item search for all sale items.
+	 */
 	public void saleSearch(){
 		Item[] results = inventoryManager.getSaleItems();
 		resultsPanel = new ResultsPanel(this, "SALE ITEMS", GUIConstants.ITEM, results);
@@ -111,22 +114,11 @@ public class KioskGUI {
 	}
 
 	/**
-	 * Runs a search on a given term.
+	 * Runs a project search on a given term.
 	 * @param s the term to be searched for
 	 */
 	public void projectSearch(String s){
 		Searchable[] results = inventoryManager.searchProjects(s);
-		if(results == null || results.length == 0){
-			results = new Searchable[1];
-			String[] tools = {"Hammer", "Wrench"};
-			String[] materials = {"Handle", "Hinge", "Shingle", "Nail"};
-			String[] instructions = {
-					"This is an example project for use in development of the project portion of the GUI.",
-					"Feel free to choose a tool or material to the right and click \"Search\" to run a search for the chosen item.",
-					"Soon, users will be able to email projects to themselves.",
-					"Additionally, users will be able to view searches and items that they search for online at home."};
-			results[0] = new Project("Example Project for Testing", tools, materials, instructions, 1, 1, 30);
-		}
 		resultsPanel = new ResultsPanel(this, s, GUIConstants.PROJECT, results);
 		gui.add(resultsPanel, GUIConstants.RESULTS);
 		layoutManager.show(gui, GUIConstants.RESULTS);
@@ -143,6 +135,10 @@ public class KioskGUI {
 		layoutManager.show(gui, GUIConstants.MAP_PAGE);
 	}
 
+	/**
+	 * Displays a chosen project.
+	 * @param pp the ProjectPanel for the project to be displayed
+	 */
 	public void showProject(ProjectPanel pp){
 		ProjectPanel pp2 = pp.copy();
 		pp2.setMouseover(false);
