@@ -2,6 +2,12 @@ package T9A1.common;
 
 import java.util.Calendar;
 
+/**
+ * Updates the files of the kiosk at a specified time.
+ *
+ * @author Chase
+ *
+ */
 public class Updater implements Runnable{
 
 	public boolean timeToUpdate;
@@ -13,13 +19,13 @@ public class Updater implements Runnable{
 	public void run() {
 		while(true){
 			//Check the time once every minute
-			if(!updatedForDay){	
+			if(!updatedForDay){
 				try {
 					Thread.sleep(1 * 60 * 1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			
+
 				if(Calendar.HOUR_OF_DAY >= 22 && Calendar.MINUTE > 30){
 					this.timeToUpdate = true;
 					this.updatedForDay = true;
@@ -46,5 +52,5 @@ public class Updater implements Runnable{
 			return false;
 		}
 	}
-	
+
 }

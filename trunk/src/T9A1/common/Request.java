@@ -11,10 +11,18 @@ import java.util.HashMap;
  */
 public class Request implements Serializable {
 
+	/**
+	 * The valid types of requests.
+	 *
+	 */
 	public enum Type {project_search, customer_project_list, project_email,
 		item_search, customer_item_list, sale_search,
 		update_request, results};
 
+	/**
+	 * Keys for the fields in each request.
+	 *
+	 */
 	public enum Key {store_id, query, email, data, project};
 
 	private HashMap<Key, Object> map;

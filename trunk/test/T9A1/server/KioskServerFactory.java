@@ -3,7 +3,7 @@ package T9A1.server;
 /**
  * Factory to make kiosk servers.
  *
- * @author JL
+ * @author Johannes Liem
  *
  */
 public final class KioskServerFactory {

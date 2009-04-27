@@ -68,8 +68,7 @@ public class ServerConnection{
 			this.buffer = theBuffer;
 		}
 		/**
-		 * Run method from runnable interface
-		 * @author Chase
+		 * Run method from runnable interface\
 		 */
 		public void run(){
 			debug("Producer Thread " + threadNum + ": STARTING");
@@ -105,7 +104,6 @@ public class ServerConnection{
 		}
 		/**
 		 * Debug method to show debugging information
-		 * @author Chase
 		 */
 		public void debug(String s){
 			if(this.debug){
@@ -129,7 +127,6 @@ public class ServerConnection{
 		}
 		/**
 		 * Run method from runnable interface
-		 * @author Chase
 		 */
 		public void run(){
 			debug("Consumer Thread " + threadNum + ": STARTING");
@@ -155,11 +152,12 @@ public class ServerConnection{
 
 			}
 		}
+
 		/**
-		 * Send request method
-		 * @author Chase
-		 * @returns boolean
-		 * @param client, request
+		 * Sends a response from the server to the client.
+		 * @param client a Socket to the client
+		 * @param request the Request to send
+		 * @return true if the object was written without any exceptions, false otherwise
 		 */
 		public boolean sendRequest(Socket client, Request request){
 			try{
@@ -176,7 +174,6 @@ public class ServerConnection{
 		}
 		/**
 		 * Debug method to show debugging information
-		 * @author Chase
 		 */
 		public void debug(String s){
 			if(this.debug){

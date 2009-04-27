@@ -7,9 +7,9 @@ import T9A1.common.Project;
 import T9A1.common.Request;
 
 /**
- * Responsible for accessing data.
+ * Handles all data requests coming from the client.
  *
- * @author JL
+ * @author Johannes Liem
  *
  */
 public class RequestManager {
@@ -21,8 +21,7 @@ public class RequestManager {
 	public RequestManager(ICacheManager cacheManager,
 			IConnection connectionManager) {
 
-		this.cacheManager = cacheManager;
-		this.connectionManager = connectionManager;
+		this(cacheManager, connectionManager, 0);
 	}
 
 	public RequestManager(ICacheManager cacheManager,
@@ -33,6 +32,11 @@ public class RequestManager {
 		this.storeNumber = storeNumber;
 	}
 
+	/**
+	 * Returns an array of Items that are on sale.
+	 *
+	 * @return an array of Item objects
+	 */
 	public Item[] getSaleItems() {
 		List<Item> resultList = null;
 
@@ -47,6 +51,12 @@ public class RequestManager {
 		return resultList.toArray(new Item[0]);
 	}
 
+	/**
+	 * Search for items that match the specified query.
+	 *
+	 * @param query the query to use when searching
+	 * @return an array of Item objects that match the query
+	 */
 	public Item[] searchItems(String query) {
 
 		List<Item> resultList = null;
@@ -60,6 +70,7 @@ public class RequestManager {
 			req.put(Request.Key.store_id, this.storeNumber);
 			req.put(Request.Key.query, query);
 
+			// Send request to server
 			resultList = (List<Item>)sendRequest(req);
 
 			if (resultList != null) {
@@ -74,12 +85,14 @@ public class RequestManager {
 		return resultList.toArray(new Item[0]);
 	}
 
+	/**
+	 * Search for projects that match the specified query.
+	 *
+	 * @param query the query to use when searching
+	 * @return an array of Project objects that match the query
+	 */
 	public Project[] searchProjects(String query) {
 		List<Project> resultList = null;
-
-		// Check if the item should be handled by the cache
-
-		// TODO(jliem): Cache is disabled for project
 
 		Request req = new Request(Request.Type.project_search);
 		req.put(Request.Key.store_id, this.storeNumber);
@@ -95,6 +108,12 @@ public class RequestManager {
 		return resultList.toArray(new Project[0]);
 	}
 
+	/**
+	 * Retrieve a customer's previously saved list of projects.
+	 *
+	 * @param email the customer's e-mail
+	 * @return an array of Projects the customer had saved
+	 */
 	public Project[] getProjectList(String email) {
 		List<Project> resultList = null;
 
@@ -110,6 +129,12 @@ public class RequestManager {
 		return resultList.toArray(new Project[0]);
 	}
 
+	/**
+	 * Retrieve a customer's previously saved list of items.
+	 *
+	 * @param email the customer's e-mail
+	 * @return an array of Items the customer had saved
+	 */
 	public Item[] getShoppingList(String email) {
 		List<Item> resultList = null;
 
@@ -144,6 +169,12 @@ public class RequestManager {
 		return true;
 	}
 
+	/**
+	 * Helper method to dispatch requests to the server.
+	 *
+	 * @param request the Request to send
+	 * @return the response from the server
+	 */
 	private Object sendRequest(Request request) {
 		Request response = (Request)connectionManager.sendRequest(request);
 

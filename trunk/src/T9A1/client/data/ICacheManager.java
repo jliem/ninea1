@@ -7,7 +7,7 @@ import T9A1.common.Item;
 /**
  * Interface for a cache mechanism.
  *
- * @author JL
+ * @author Johannes Liem
  *
  */
 public interface ICacheManager {

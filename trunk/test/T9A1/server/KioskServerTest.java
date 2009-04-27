@@ -10,7 +10,7 @@ import T9A1.common.Request;
 /**
  * Tests for the kiosk server.
  *
- * @author JL
+ * @author Johannes Liem
  *
  */
 public class KioskServerTest extends TestCase {
@@ -20,6 +20,9 @@ public class KioskServerTest extends TestCase {
 		ks = KioskServerFactory.getServerInstance();
 	}
 
+	/**
+	 * Tests handling a basic search request.
+	 */
 	public void testHandleRequest() {
 		Request r = new Request(Request.Type.item_search);
 		r.put(Request.Key.query, "foo");

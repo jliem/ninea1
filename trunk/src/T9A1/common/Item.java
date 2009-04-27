@@ -4,9 +4,9 @@ import java.awt.Image;
 import java.io.Serializable;
 
 /**
- * Represents an item.
+ * Represents an item being sold in the store that the user can search for.
  *
- * @author Johannes
+ * @author Johannes Liem
  *
  */
 public class Item implements Serializable, Searchable {

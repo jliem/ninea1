@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 
 /**
  * Tests the CacheManager.
- * @author JL
+ * @author Johannes Liem
  *
  */
 public class CacheManagerTest extends TestCase {

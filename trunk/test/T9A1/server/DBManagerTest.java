@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 
 /**
  * Tests the database manager.
- * @author JL
+ * @author Johannes Liem
  *
  */
 public class DBManagerTest extends TestCase {
