@@ -12,7 +12,7 @@ import T9A1.common.Item;
 /**
  * Manages the cache used by RequestManager.
  *
- * @author JL
+ * @author Johannes Liem
  *
  */
 public class CacheManager implements ICacheManager {
@@ -61,7 +61,6 @@ public class CacheManager implements ICacheManager {
 	 */
 	public void add(String query, List<Item> items) {
 
-		System.out.println("Adding " + query + " to cache");
 		if (map.size() >= maxCacheEntries) {
 			// Using least-frequently-used cache algorithm
 			String lfu = heap.poll().getQuery();

@@ -7,11 +7,13 @@ import T9A1.common.Item;
 /**
  * Represents an entry in the cache. Used by the CacheManager.
  *
- * @author JL
+ * @author Johannes Liem
  *
  */
 public class CacheEntry implements Comparable<CacheEntry> {
 	private List<Item> items;
+
+	// Keeps track of how many times an item has been accessed.
 	private int count;
 	private String query;
 

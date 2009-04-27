@@ -7,7 +7,7 @@ import T9A1.common.Item;
 
 /**
  * A mock implementation of the cache manager.
- * @author JL
+ * @author Johannes Liem
  *
  */
 public class MockCacheManager implements ICacheManager {

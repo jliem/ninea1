@@ -8,7 +8,7 @@ import T9A1.common.Request.Type;
 /**
  * Mock implementation of the connection class.
  *
- * @author JL
+ * @author Johannes Liem
  *
  */
 public class MockConnection implements IConnection {

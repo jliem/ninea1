@@ -9,7 +9,7 @@ import junit.framework.TestCase;
 
 /**
  * Parent class for all request manager tests.
- * @author JL
+ * @author Johannes Liem
  *
  */
 public abstract class RequestManagerTest extends TestCase {
@@ -36,6 +36,9 @@ public abstract class RequestManagerTest extends TestCase {
 		assertEquals(arr.length, 0);
 	}
 
+	/**
+	 * Tests retrieving a project list.
+	 */
 	public void testGetProjectList() {
 		Project[] expected = null;
 
@@ -44,6 +47,9 @@ public abstract class RequestManagerTest extends TestCase {
 		this.assertEquals(expected, actual);
 	}
 
+	/**
+	 * Tests retrieving an item list.
+	 */
 	public void testGetShoppingList() {
 		Item[] expected = null;
 
@@ -52,6 +58,9 @@ public abstract class RequestManagerTest extends TestCase {
 		this.assertEquals(expected, actual);
 	}
 
+	/**
+	 * Tests e-mailing a project.
+	 */
 	public void testEmailProject() {
 		Project project = new Project();
 

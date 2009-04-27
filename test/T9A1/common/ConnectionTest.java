@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 /**
  * Tests for the connection class.
  *
- * @author JL
+ * @author Johannes Liem
  *
  */
 public class ConnectionTest extends TestCase {
@@ -23,6 +23,9 @@ public class ConnectionTest extends TestCase {
 		ks = KioskServerFactory.getServerInstance();
 	}
 
+	/**
+	 * Tests sending a request.
+	 */
 	public void testSendRequest() {
 		Request r = new Request(Request.Type.item_search);
 		r.put(Request.Key.query, "foo");

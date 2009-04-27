@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Represents a project.
+ * Represents a project consisting of a task and associated instructions
+ * and materials that the user can search for.
  *
- * @author Johannes
+ * @author Johannes Liem
  *
  */
 public class Project implements Serializable, Searchable {

@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class
+ * Represents the client's connection to the server.
+ *
  * @author Chase
  */
 
@@ -23,14 +24,13 @@ public class Connection implements IConnection {
 	 *
 	 */
 	public boolean debug = true;
-	public Connection(){
-
-
-	}
 
 	/**
-	 * Send request method for client, that sends then blocks for reponse
-	 * @author Chase
+	 * Sends a request from the client to the server, then blocks until the server
+	 * responds.
+	 *
+	 * @param request the Request being sent from the client to the server
+	 * @return the response from the server
 	 */
 	public Object sendRequest(Request request){
 		debug("Starting send request in conn manager");

@@ -5,7 +5,7 @@ import T9A1.common.*;
 /**
  * Entry point for the kiosk server.
  *
- * @author JL
+ * @author Johannes Liem
  *
  */
 public class KioskServer {

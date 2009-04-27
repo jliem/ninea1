@@ -21,6 +21,9 @@ public class RequestManagerNoConnectionTest extends RequestManagerTest {
 		requestManager = new RequestManager(new CacheManager(), mockConn);
 	}
 
+	/**
+	 * Runs a search that is expected to return no results.
+	 */
 	public void testEmptySearch() {
 		Request r = new Request(Request.Type.item_search);
 		r.put(Request.Key.data, new ArrayList());
