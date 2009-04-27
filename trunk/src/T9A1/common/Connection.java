@@ -41,10 +41,10 @@ public class Connection implements IConnection {
 			Socket           client    = new Socket(host, 4321);
 			ObjectOutputStream socketOut = new ObjectOutputStream(client.getOutputStream());
 
-		    socketOut.writeObject(request);
-		    ObjectInputStream  socketIn = null;
-		    try {
-		    	// TODO if blocks for too long it should error
+			socketOut.writeObject(request);
+			ObjectInputStream  socketIn = null;
+			try {
+				// TODO if blocks for too long it should error
 				socketIn = new ObjectInputStream(client.getInputStream());
 
 				response = (Request)(socketIn.readObject());
@@ -53,14 +53,14 @@ public class Connection implements IConnection {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	        socketOut.close(); socketIn.close(); client.close();
+			socketOut.close(); socketIn.close(); client.close();
 
-			}
-	      catch (UnknownHostException e)
-	      { System.err.println("Unknown host"); }
-	      catch (IOException e)
-	      { System.err.println("I/O error"); }
-	      return response;
+		}
+		catch (UnknownHostException e)
+		{ System.err.println("Unknown host"); }
+		catch (IOException e)
+		{ System.err.println("I/O error"); }
+		return response;
 	}
 
 	/**

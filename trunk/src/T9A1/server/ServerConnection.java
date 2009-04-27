@@ -41,15 +41,15 @@ public class ServerConnection{
 		this.kioskServer = kioskServer;
 
 		try{
-	         this.server = new ServerSocket(4321);
-	         this.server.setSoTimeout(0);
-	         debug("Server Established");
-	      }
-	      catch (IOException e){
-	         debug("Error on port: 4321 " + ", " + e);
-	         System.exit(1);
-	    }
-	    new Thread(new ServerStart(5)).start();
+			this.server = new ServerSocket(4321);
+			this.server.setSoTimeout(0);
+			debug("Server Established");
+		}
+		catch (IOException e){
+			debug("Error on port: 4321 " + ", " + e);
+			System.exit(1);
+		}
+		new Thread(new ServerStart(5)).start();
 
 	}
 	/**
@@ -74,32 +74,32 @@ public class ServerConnection{
 			debug("Producer Thread " + threadNum + ": STARTING");
 			while(running){
 				Socket client = null;
-			    try {
-			    	//Thread blocks until a connection is accepted
-			    	client = server.accept();
-			    	numConnections = numConnections + 1;
-			    		if(client != null){
-			    			try {
-			    				//Connection accepted open an input stream
-			      				ObjectInputStream streamIn = new ObjectInputStream(client.getInputStream());
-			    				//Reads for objects in the stream
-			      				Request request = (Request)streamIn.readObject();
-			      				//Now create an array list to add to the Queue containing the connectiona and the request
-								ArrayList<Object> al = new ArrayList<Object>();
-								al.add(client); al.add(request);
-								buffer.add(al);
-								debug("Producer Thread " + threadNum + ": " + request.get(Request.Key.query) + " added to buffer");
-							}catch(IOException e){
-								debug("IO Error in streams");
-							} catch (ClassNotFoundException e) {
-								debug("Class not found exception in server");
-							}
-			    		}
-			    	}
-			    catch (IOException e) {
-			    	debug("Did not accept connection");
-			    	System.exit(1);
-			    }
+				try {
+					//Thread blocks until a connection is accepted
+					client = server.accept();
+					numConnections = numConnections + 1;
+					if(client != null){
+						try {
+							//Connection accepted open an input stream
+							ObjectInputStream streamIn = new ObjectInputStream(client.getInputStream());
+							//Reads for objects in the stream
+							Request request = (Request)streamIn.readObject();
+							//Now create an array list to add to the Queue containing the connectiona and the request
+							ArrayList<Object> al = new ArrayList<Object>();
+							al.add(client); al.add(request);
+							buffer.add(al);
+							debug("Producer Thread " + threadNum + ": " + request.get(Request.Key.query) + " added to buffer");
+						}catch(IOException e){
+							debug("IO Error in streams");
+						} catch (ClassNotFoundException e) {
+							debug("Class not found exception in server");
+						}
+					}
+				}
+				catch (IOException e) {
+					debug("Did not accept connection");
+					System.exit(1);
+				}
 			}
 		}
 		/**
@@ -163,9 +163,9 @@ public class ServerConnection{
 			try{
 				ObjectOutputStream socketOut = new ObjectOutputStream(client.getOutputStream());
 				socketOut.writeObject(request);
-			    socketOut.close(); client.close();
-			    numConnections = numConnections - 1;
-			    return true;
+				socketOut.close(); client.close();
+				numConnections = numConnections - 1;
+				return true;
 			}
 			catch (UnknownHostException e)
 			{ System.err.println("Unknown host"); return false;}
