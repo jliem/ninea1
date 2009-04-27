@@ -35,17 +35,25 @@ public class ProjectDescriptionPanel extends JPanel {
 	/** The filetype of the product images. */
 	private final String FILETYPE = ".jpg";
 
+	/** The main GUI component */
 	private KioskGUI gui;
-	private Map map;
+	/** The ProjectPanel representing the Project being displayed */
 	private ProjectPanel projectPanel;
+	/** The Project being displayed */
 	private Project project;
 
+	/** A JList of all tools and materials needed for the project */
 	private JList materialsList;
+	/** A StepPanel for displaying each step in the project */
 	private StepPanel stepPanel;
 
+	/**
+	 * Creates and initializes a ProjectDescriptionPanel.
+	 * @param gui The main GUI component
+	 * @param projectPanel The ProjectPanel representing the Project being displayed
+	 */
 	public ProjectDescriptionPanel(KioskGUI gui, ProjectPanel projectPanel){
 		this.gui = gui;
-		this.map = gui.getMap();
 		this.projectPanel = projectPanel;
 		this.project = projectPanel.getProject();
 
@@ -58,6 +66,9 @@ public class ProjectDescriptionPanel extends JPanel {
 		addButtonPanel();
 	}
 
+	/**
+	 * Adds the ProjectPanel projectPanel to the top of this panel to display pertinent information.
+	 */
 	public void addProjectPanel(){
 		JPanel top = new JPanel(new GridBagLayout());
 		top.setBackground(GUIConstants.ORANGE);
@@ -71,6 +82,9 @@ public class ProjectDescriptionPanel extends JPanel {
 		add(top, BorderLayout.NORTH);
 	}
 
+	/**
+	 * Adds a StepPanel to this panel to display each step involved in the project.
+	 */
 	public void addStepPanel(){
 		stepPanel = new StepPanel();
 
@@ -85,6 +99,10 @@ public class ProjectDescriptionPanel extends JPanel {
 		add(panel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Adds the JList materials in order to display all tools and materials needed for
+	 * the given project. Also adds a button to allow users to search for any tool or material.
+	 */
 	public void addListPanel(){
 		String[] t = project.getTools();
 		String[] m = project.getMaterials();
@@ -127,6 +145,9 @@ public class ProjectDescriptionPanel extends JPanel {
 		this.add(panel, BorderLayout.EAST);
 	}
 
+	/**
+	 * Adds Return to Results and New Search buttons to the bottom of the panel.
+	 */
 	public void addButtonPanel(){
 		GridBagConstraints con = new GridBagConstraints();
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
@@ -142,7 +163,7 @@ public class ProjectDescriptionPanel extends JPanel {
 		con.gridx = 1;
 		con.gridy = 0;
 		con.ipadx = 20;
-		con.ipady = 40;
+		con.ipady = 20;
 		con.insets = insets;
 		con.anchor = GridBagConstraints.EAST;
 		buttonPanel.add(back, con);
@@ -162,7 +183,7 @@ public class ProjectDescriptionPanel extends JPanel {
 	}
 
 	/**
-	 * Listener for the New Search button.
+	 * Listener for the New Search button. Instructs GUI to return to the search page.
 	 * @author Catie
 	 */
 	private class NewSearchListener implements ActionListener{
@@ -172,6 +193,12 @@ public class ProjectDescriptionPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * Listener for the Search for Materials button. Instructs the GUI to run a search
+	 * for the selected item.
+	 * @author Catie
+	 *
+	 */
 	private class SearchMaterialsListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {
@@ -180,7 +207,8 @@ public class ProjectDescriptionPanel extends JPanel {
 	}
 
 	/**
-	 * Listener for the Return to Results button.
+	 * Listener for the Return to Results button. Instructs the GUI to display
+	 * the previous results page.
 	 * @author Catie
 	 */
 	private class ReturnResultsListener implements ActionListener{
@@ -191,6 +219,12 @@ public class ProjectDescriptionPanel extends JPanel {
 			gui.backToResults();
 		}
 	}
+
+	/**
+	 * A JPanel displaying each step in the Project process.
+	 * @author Catie
+	 *
+	 */
 	private class StepPanel extends JPanel{
 		public StepPanel(){
 			super(new GridBagLayout());
@@ -237,7 +271,7 @@ public class ProjectDescriptionPanel extends JPanel {
 	}
 
 	/**
-	 * Displays the project's image.
+	 * Displays each step's image.
 	 * @author Catie
 	 */
 	private class ImageContainer extends JPanel{

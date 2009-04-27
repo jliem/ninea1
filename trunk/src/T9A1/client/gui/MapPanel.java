@@ -19,10 +19,18 @@ import javax.swing.JPanel;
 
 public class MapPanel extends JPanel {
 
+	/** The main GUI component */
 	private KioskGUI gui;
+	/** A digital representation of the store map */
 	private Map map;
+	/** The ItemPanel representing the Item being plotted */
 	private ItemPanel itemPanel;
 
+	/**
+	 * Initializes the MapPanel object
+	 * @param gui The main GUi component
+	 * @param itemPanel The ItemPanel representing the Item being plotted
+	 */
 	public MapPanel(KioskGUI gui, ItemPanel itemPanel){
 		this.gui = gui;
 		this.map = gui.getMap();
@@ -39,6 +47,9 @@ public class MapPanel extends JPanel {
 		addButtonPanel();
 	}
 
+	/**
+	 * Adds the ItemPanel itemPanel to the top of this panel to display pertinent information.
+	 */
 	public void addItemPanel(){
 		JPanel top = new JPanel(new GridBagLayout());
 		top.setBackground(GUIConstants.ORANGE);
@@ -52,6 +63,9 @@ public class MapPanel extends JPanel {
 		add(top, BorderLayout.NORTH);
 	}
 
+	/**
+	 * Adds Back to Results and New Search buttons to the bottom of this panel.
+	 */
 	public void addButtonPanel(){
 		GridBagConstraints con = new GridBagConstraints();
 		JPanel buttonPanel = new JPanel(new GridBagLayout());
@@ -67,7 +81,7 @@ public class MapPanel extends JPanel {
 		con.gridx = 1;
 		con.gridy = 0;
 		con.ipadx = 20;
-		con.ipady = 40;
+		con.ipady = 20;
 		con.insets = insets;
 		con.anchor = GridBagConstraints.EAST;
 		buttonPanel.add(back, con);
@@ -111,13 +125,16 @@ public class MapPanel extends JPanel {
 	}
 
 	/**
-	 * Displays the map and plots the Item's location
+	 * A panel that displays the map and plots the Item's location.
 	 * @author Catie
 	 */
 	private class MapDisplayPanel extends JPanel{
-
+		/** The imagine representing the store map */
 		private ImageIcon mapImage;
 
+		/**
+		 * Initializes the MapDisplayPanel.
+		 */
 		public MapDisplayPanel(){
 			mapImage = map.getMap();
 
@@ -125,6 +142,9 @@ public class MapPanel extends JPanel {
 			this.setPreferredSize(new Dimension(mapImage.getIconWidth(), mapImage.getIconHeight()));
 		}
 
+		/**
+		 * Overrides JPanel's paintComponent method. Draws the map and plots the item location.
+		 */
 		public void paintComponent(Graphics g){
 			int startx = (getWidth() / 2) - (mapImage.getIconWidth() / 2);
 			int starty = (getHeight() / 2) - (mapImage.getIconHeight() / 2);
@@ -135,10 +155,6 @@ public class MapPanel extends JPanel {
 			if(p == null) return;
 			int x = startx + (int)p.getX();
 			int y = starty + (int)p.getY();
-			drawStar(g, x, y);
-		}
-
-		public void drawStar(Graphics g, int x, int y){
 			g.setColor(Color.yellow);
 			g.fillOval(x - 5, y - 5, 10, 10);
 		}

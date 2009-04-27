@@ -23,6 +23,10 @@ import javax.swing.SpringLayout;
  * The panel used to enter a search term.
  * @author Catie
  */
+/**
+ * @author Catie
+ *
+ */
 public class SearchPanel extends JPanel{
 	/** An array that represents a QWERTY keyboard. */
 	private final String[][] qwertyArray =
@@ -35,7 +39,9 @@ public class SearchPanel extends JPanel{
 	private JTextField searchBox;
 	/** The JButton pressed to initiate a search. */
 	private JButton search;
+	/** Instructs GUI to search for Items. */
 	private JRadioButton itemSearch;
+	/** Instructs GUi to search for Projects. */
 	private JRadioButton projectSearch;
 
 	/** The main GUI component. */
@@ -55,6 +61,9 @@ public class SearchPanel extends JPanel{
 		initialize();
 	}
 
+	/**
+	 * Initializes the panel components.
+	 */
 	public void initialize(){
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -78,6 +87,7 @@ public class SearchPanel extends JPanel{
 		button.add(Box.createGlue(), c);
 		add(button, BorderLayout.NORTH);
 
+		//add search prompt and text box
 		JPanel panel = new JPanel(new GridBagLayout());
 		Dimension size = new Dimension(500, 500);
 		panel.setMinimumSize(size);
@@ -118,6 +128,7 @@ public class SearchPanel extends JPanel{
 		c.gridy = 1;
 		panel.add(search, c);
 
+		//Add project and item choices
 		JPanel choices = new JPanel();
 		choices.setBackground(GUIConstants.ORANGE);
 		ButtonGroup choiceGroup = new ButtonGroup();
@@ -158,10 +169,11 @@ public class SearchPanel extends JPanel{
 		add(keyboard, BorderLayout.SOUTH);
 	}
 
-	public void paintComponent(Graphics g){
-		super.paintComponent(g);
-	}
-
+	/**
+	 * Instructs the gui to display the sales search page when activated.
+	 * @author Catie
+	 *
+	 */
 	private class SaleSearchListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			gui.saleSearch();
@@ -191,6 +203,9 @@ public class SearchPanel extends JPanel{
 	 * @author Catie
 	 */
 	private class OnScreenKeyboard extends JPanel implements ActionListener{
+		/**
+		 * Initializes the on screen keyboard.
+		 */
 		public OnScreenKeyboard(){
 			GridBagLayout layout = new GridBagLayout();
 			this.setLayout(layout);
@@ -198,7 +213,7 @@ public class SearchPanel extends JPanel{
 			GridBagConstraints constraints = new GridBagConstraints();
 
 			FontMetrics m = this.getFontMetrics(GUIConstants.MEDIUM_FONT);
-			int keyWidth = 60,
+			int keyWidth = 70,
 				keyHeight = 30;
 
 			Insets inset = new Insets(5, 5, 5, 5);
@@ -248,6 +263,10 @@ public class SearchPanel extends JPanel{
 			}
 		}
 
+		/**
+		 * Adds typed characters to the search text field and instructs the GUI to
+		 * perform a search on GO.
+		 */
 		public void actionPerformed(ActionEvent arg0) {
 			String s = arg0.getActionCommand();
 			if(s.equals("BACK")){

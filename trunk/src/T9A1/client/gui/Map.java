@@ -105,11 +105,17 @@ public class Map {
 	private class Parser{
 		Document dom;
 
+		/**
+		 * Initiates document parsing.
+		 */
 		public void fillOutAisles(){
 			parseXmlFile();
 			parseDocument();
 		}
 
+		/**
+		 * Loads in the XML file based on store number.
+		 */
 		private void parseXmlFile(){
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -125,7 +131,9 @@ public class Map {
 			}
 		}
 
-
+		/**
+		 * Parses the loaded XML file line by line.
+		 */
 		private void parseDocument(){
 			Element docEle = dom.getDocumentElement();
 
@@ -139,6 +147,11 @@ public class Map {
 			}
 		}
 
+		/**
+		 * Builds an Aisle object out of each XML line.
+		 * @param e An Element representing one line of XML
+		 * @return A complete Aisle object
+		 */
 		private Aisle getAisle(Element e){
 			int startX = getValue(e, "start_x");
 			int startY = getValue(e, "start_y");
@@ -152,6 +165,12 @@ public class Map {
 				return new Aisle(startX, startY, endX, endY, bins);
 		}
 
+		/**
+		 * Gets the value of a given tag from the provided element.
+		 * @param e One line of XML
+		 * @param tag The string representation of the requested tag
+		 * @return the integer value of the tag
+		 */
 		private int getValue(Element e, String tag) {
 			String s = e.getAttribute(tag);
 			int i;

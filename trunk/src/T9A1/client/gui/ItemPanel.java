@@ -171,13 +171,17 @@ public class ItemPanel extends JPanel implements SearchResult{
 	}
 
 	/**
-	 * Provides the 
-	 * @return
+	 * Provides the item associated with this panel.
+	 * @return the Item represented by this panel
 	 */
 	public Item getItem(){
 		return item;
 	}
 
+	/**
+	 * Determines whether or not the panel will change colors on mouseover.
+	 * @param b a boolean representing the mouseover setting
+	 */
 	public void setMouseover(boolean b){
 		mouseover = b;
 		if(b)
@@ -186,10 +190,18 @@ public class ItemPanel extends JPanel implements SearchResult{
 		this.invalidate();
 	}
 
+	/**
+	 * Copies the ItemPanel.
+	 * @return a copy of the ItemPanel
+	 */
 	public ItemPanel copy(){
 		return new ItemPanel(gui, item);
 	}
 
+	/**
+	 * @override from SearchResult
+	 * Returns the panel to be displayed on a list.
+	 */
 	public JPanel getListPanel() {
 		return this;
 	}
@@ -200,16 +212,25 @@ public class ItemPanel extends JPanel implements SearchResult{
 	 */
 	private class MouseOverListener implements MouseListener{
 
+		/**
+		 * Shows full map page when panel is clicked.
+		 */
 		public void mouseClicked(MouseEvent e) {
 			if(mouseover)
 				showItem();
 		}
 
+		/**
+		 * Highlights panel on mouseover.
+		 */
 		public void mouseEntered(MouseEvent e) {
 			if(mouseover)
 				setBackground(GUIConstants.DARK_ORANGE);
 		}
 
+		/**
+		 * Returns panel to non-highlighted state on mouse exit.
+		 */
 		public void mouseExited(MouseEvent e) {
 			if(mouseover)
 				setBackground(GUIConstants.LIGHT_ORANGE);
