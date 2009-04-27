@@ -1,0 +1,18 @@
+Package Structure
+
+src/
+-----
+client -- classes used to launch the client application
+client.data -- classes used by the client to get data from the server
+client.gui -- classes used to construct the client's GUI
+
+common -- classes used by both the client and the server
+
+server -- classes used by the server
+server.lib -- external libraries required by the server
+
+
+
+test/
+-----
+hierarchy is identical to the src folder, but contains classes for testing
