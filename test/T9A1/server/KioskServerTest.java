@@ -23,6 +23,7 @@ public class KioskServerTest extends TestCase {
 	public void testHandleRequest() {
 		Request r = new Request(Request.Type.item_search);
 		r.put(Request.Key.query, "foo");
+		r.put(Request.Key.store_id, 1);
 		Object result = ks.handleRequest(r);
 
 		assertNotNull(result);

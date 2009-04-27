@@ -26,6 +26,7 @@ public class ConnectionTest extends TestCase {
 	public void testSendRequest() {
 		Request r = new Request(Request.Type.item_search);
 		r.put(Request.Key.query, "foo");
+		r.put(Request.Key.store_id, 1);
 		Object result = conn.sendRequest(r);
 
 		assertNotNull(result);
