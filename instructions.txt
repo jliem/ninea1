@@ -5,7 +5,7 @@ Editing src/T9A1/server/db_config.txt will allow you to change which database th
 An ant build file is provided to compile the client and server. Executing "ant dist" will compile everything and place the client and server jar files in dist/.  The dist/resources/ directory is part of the client - keep in mind when moving.
 
 To run the server, move to the dist/ directory and execute "java -jar T9A1-server-[date].jar".
-To run the client, move to the dist/ directory and execute "java -jar T9A1-client-[data].jar [store # of this kiosk client]".
+To run the client, move to the dist/ directory and execute "java -jar T9A1-client-[date].jar [store # of this kiosk client]".
 
 
 == troubleshooting ==
