@@ -1,0 +1,15 @@
+== building / running info ==
+
+Editing src/T9A1/server/db_config.txt will allow you to change which database the server connects to: the current setup will still be in place for the time being.
+
+An ant build file is provided to compile the client and server. Executing "ant dist" will compile everything and place the client and server jar files in dist/.  The dist/resources/ directory is part of the client - keep in mind when moving.
+
+To run the server, move to the dist/ directory and execute "java -jar T9A1-server-[date].jar".
+To run the client, move to the dist/ directory and execute "java -jar T9A1-client-[data].jar [store # of this kiosk client]".
+
+
+== troubleshooting ==
+
+-Make sure that the database is working and the server is configured to connect to it properly.  Error messages should point in the right direction.
+-Remember to use the store number when starting the client.
+
